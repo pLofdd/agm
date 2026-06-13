@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>AGM للمحاماة والاستشارات القانونية</title>
+<title>AMG للمحاماة والاستشارات القانونية</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
@@ -33,7 +34,7 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
 ::-webkit-scrollbar{width:4px;height:4px;} ::-webkit-scrollbar-track{background:var(--dark);}
 ::-webkit-scrollbar-thumb{background:var(--gold-dark);border-radius:2px;}
 
-/* ──── LOGIN ──── */
+/* LOGIN */
 #loginScreen{position:fixed;inset:0;z-index:9999;
   background:radial-gradient(ellipse at 30% 40%,rgba(201,168,76,.08) 0%,transparent 60%),
              radial-gradient(ellipse at 70% 70%,rgba(26,37,80,.2) 0%,transparent 60%),var(--black);
@@ -49,73 +50,47 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
   border-radius:20px;display:flex;align-items:center;justify-content:center;
   margin:0 auto 16px;font-size:34px;color:var(--black);box-shadow:0 8px 32px rgba(201,168,76,.3);}
 
-/* ──── SIDEBAR ──── */
+/* SIDEBAR */
 #sidebar{width:var(--sidebar-w);background:var(--sidebar-bg);border-left:1px solid var(--glass-border);
   position:fixed;right:0;top:0;height:100vh;z-index:100;overflow-y:auto;
   transition:transform .3s cubic-bezier(.4,0,.2,1),background .3s;}
-.sidebar-logo{padding:20px 18px;border-bottom:1px solid var(--glass-border);
-  display:flex;align-items:center;gap:10px;}
-.logo-icon{width:40px;height:40px;background:linear-gradient(135deg,var(--gold),var(--gold-dark));
-  border-radius:10px;display:flex;align-items:center;justify-content:center;
-  font-size:16px;color:#07090D;flex-shrink:0;font-weight:900;
-  box-shadow:0 4px 14px rgba(201,168,76,.3);}
-.nav-item{display:flex;align-items:center;gap:10px;padding:9px 14px;margin:1px 8px;
-  border-radius:10px;cursor:pointer;transition:all .2s;font-size:13px;font-weight:600;color:var(--text-muted);}
+.sidebar-logo{padding:20px 18px;border-bottom:1px solid var(--glass-border);display:flex;align-items:center;gap:10px;}
+.logo-icon{width:40px;height:40px;background:linear-gradient(135deg,var(--gold),var(--gold-dark));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;color:#07090D;flex-shrink:0;font-weight:900;box-shadow:0 4px 14px rgba(201,168,76,.3);}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 14px;margin:1px 8px;border-radius:10px;cursor:pointer;transition:all .2s;font-size:13px;font-weight:600;color:var(--text-muted);}
 .nav-item:hover{background:rgba(201,168,76,.07);color:var(--gold-light);}
-.nav-item.active{background:linear-gradient(135deg,rgba(201,168,76,.14),rgba(201,168,76,.04));
-  color:var(--gold-light);border:1px solid rgba(201,168,76,.18);}
+.nav-item.active{background:linear-gradient(135deg,rgba(201,168,76,.14),rgba(201,168,76,.04));color:var(--gold-light);border:1px solid rgba(201,168,76,.18);}
 .nav-item .icon{width:18px;text-align:center;font-size:13px;}
-.nav-section-title{font-size:9px;font-weight:700;color:var(--text-muted);
-  text-transform:uppercase;letter-spacing:1.5px;padding:12px 22px 5px;}
+.nav-section-title{font-size:9px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1.5px;padding:12px 22px 5px;}
 .sidebar-profile{padding:14px;border-top:1px solid var(--glass-border);}
-
-/* sidebar overlay (mobile) */
 #sidebarOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99;backdrop-filter:blur(3px);}
 #sidebarOverlay.active{display:block;}
 
-/* ──── MAIN ──── */
+/* MAIN */
 #main{margin-right:var(--sidebar-w);min-height:100vh;transition:margin .3s ease;}
-.topbar{background:var(--topbar-bg);border-bottom:1px solid var(--glass-border);backdrop-filter:blur(20px);
-  position:sticky;top:0;z-index:90;padding:12px 24px;display:flex;align-items:center;
-  justify-content:space-between;transition:background .3s;}
+.topbar{background:var(--topbar-bg);border-bottom:1px solid var(--glass-border);backdrop-filter:blur(20px);position:sticky;top:0;z-index:90;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;transition:background .3s;}
 
-/* ──── STAT CARDS ──── */
-.stat-card{background:var(--card-bg);border:1px solid var(--glass-border);border-radius:14px;
-  padding:18px;position:relative;overflow:hidden;transition:all .3s ease;}
-.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
-  background:var(--accent,linear-gradient(90deg,var(--gold),var(--gold-dark)));}
-.stat-card:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,0,0,.15);
-  border-color:rgba(201,168,76,.25);}
+/* STAT CARDS */
+.stat-card{background:var(--card-bg);border:1px solid var(--glass-border);border-radius:14px;padding:18px;position:relative;overflow:hidden;transition:all .3s ease;}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent,linear-gradient(90deg,var(--gold),var(--gold-dark)));}
+.stat-card:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,0,0,.15);border-color:rgba(201,168,76,.25);}
 .glass-card{background:var(--card-bg);border:1px solid var(--glass-border);transition:all .3s ease;}
 .glass-card:hover{border-color:rgba(201,168,76,.28);}
 
-/* ──── BUTTONS ──── */
-.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:#07090D;
-  border:none;padding:9px 20px;border-radius:9px;font-family:'Cairo',sans-serif;
-  font-weight:700;font-size:13px;cursor:pointer;transition:all .2s;
-  display:inline-flex;align-items:center;gap:7px;white-space:nowrap;}
+/* BUTTONS */
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:#07090D;border:none;padding:9px 20px;border-radius:9px;font-family:'Cairo',sans-serif;font-weight:700;font-size:13px;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:7px;white-space:nowrap;}
 .btn-gold:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(201,168,76,.35);}
-.btn-outline{background:transparent;color:var(--gold);border:1px solid rgba(201,168,76,.35);
-  padding:8px 18px;border-radius:9px;font-family:'Cairo',sans-serif;font-weight:600;
-  font-size:13px;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:7px;white-space:nowrap;}
+.btn-outline{background:transparent;color:var(--gold);border:1px solid rgba(201,168,76,.35);padding:8px 18px;border-radius:9px;font-family:'Cairo',sans-serif;font-weight:600;font-size:13px;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:7px;white-space:nowrap;}
 .btn-outline:hover{background:rgba(201,168,76,.08);border-color:var(--gold);}
-.btn-danger{background:rgba(239,68,68,.1);color:#EF4444;border:1px solid rgba(239,68,68,.25);
-  padding:6px 12px;border-radius:7px;font-family:'Cairo',sans-serif;font-size:12px;
-  cursor:pointer;transition:all .2s;}
+.btn-danger{background:rgba(239,68,68,.1);color:#EF4444;border:1px solid rgba(239,68,68,.25);padding:6px 12px;border-radius:7px;font-family:'Cairo',sans-serif;font-size:12px;cursor:pointer;transition:all .2s;}
 .btn-danger:hover{background:rgba(239,68,68,.2);}
 .btn-sm{padding:5px 10px;font-size:11px;border-radius:6px;}
-.btn-whatsapp{background:rgba(37,211,102,.12);color:#25D366;border:1px solid rgba(37,211,102,.3);
-  padding:5px 10px;border-radius:6px;font-family:'Cairo';font-size:11px;cursor:pointer;
-  transition:all .2s;display:inline-flex;align-items:center;gap:4px;}
+.btn-whatsapp{background:rgba(37,211,102,.12);color:#25D366;border:1px solid rgba(37,211,102,.3);padding:5px 10px;border-radius:6px;font-family:'Cairo';font-size:11px;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:4px;}
 .btn-whatsapp:hover{background:rgba(37,211,102,.22);}
-.btn-edit{background:rgba(59,130,246,.1);color:#3B82F6;border:1px solid rgba(59,130,246,.25);
-  padding:5px 10px;border-radius:6px;font-family:'Cairo';font-size:11px;cursor:pointer;transition:all .2s;}
+.btn-edit{background:rgba(59,130,246,.1);color:#3B82F6;border:1px solid rgba(59,130,246,.25);padding:5px 10px;border-radius:6px;font-family:'Cairo';font-size:11px;cursor:pointer;transition:all .2s;}
 .btn-edit:hover{background:rgba(59,130,246,.2);}
-.btn-success{background:rgba(16,185,129,.12);color:#10B981;border:1px solid rgba(16,185,129,.3);
-  padding:8px 18px;border-radius:9px;font-family:'Cairo',sans-serif;font-weight:600;
-  font-size:13px;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:7px;}
+.btn-success{background:rgba(16,185,129,.12);color:#10B981;border:1px solid rgba(16,185,129,.3);padding:8px 18px;border-radius:9px;font-family:'Cairo',sans-serif;font-weight:600;font-size:13px;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:7px;}
 
-/* ──── BADGES ──── */
+/* BADGES */
 .badge{padding:2px 9px;border-radius:20px;font-size:10px;font-weight:700;}
 .badge-active{background:rgba(16,185,129,.13);color:#10B981;border:1px solid rgba(16,185,129,.25);}
 .badge-pending{background:rgba(245,158,11,.13);color:#F59E0B;border:1px solid rgba(245,158,11,.25);}
@@ -124,40 +99,31 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
 .badge-blue{background:rgba(59,130,246,.13);color:#3B82F6;border:1px solid rgba(59,130,246,.25);}
 .badge-present{background:rgba(16,185,129,.13);color:#10B981;border:1px solid rgba(16,185,129,.25);}
 .badge-absent{background:rgba(239,68,68,.13);color:#EF4444;border:1px solid rgba(239,68,68,.25);}
-.archive-badge{background:rgba(139,92,246,.13);color:#8B5CF6;border:1px solid rgba(139,92,246,.25);
-  padding:2px 9px;border-radius:20px;font-size:10px;font-weight:700;}
+.archive-badge{background:rgba(139,92,246,.13);color:#8B5CF6;border:1px solid rgba(139,92,246,.25);padding:2px 9px;border-radius:20px;font-size:10px;font-weight:700;}
 
-/* ──── TABLE ──── */
+/* TABLE */
 .data-table{width:100%;border-collapse:collapse;}
-.data-table th{background:var(--table-head);color:var(--gold);font-size:11px;font-weight:700;
-  padding:11px 14px;text-align:right;border-bottom:1px solid var(--glass-border);white-space:nowrap;}
-.data-table td{padding:11px 14px;border-bottom:1px solid var(--glass-border);font-size:12px;
-  color:var(--text);white-space:nowrap;}
+.data-table th{background:var(--table-head);color:var(--gold);font-size:11px;font-weight:700;padding:11px 14px;text-align:right;border-bottom:1px solid var(--glass-border);white-space:nowrap;}
+.data-table td{padding:11px 14px;border-bottom:1px solid var(--glass-border);font-size:12px;color:var(--text);white-space:nowrap;}
 .data-table tr:hover td{background:rgba(201,168,76,.025);}
 
-/* ──── INPUT ──── */
-.form-input{width:100%;background:var(--input-bg);border:1px solid var(--glass-border);
-  border-radius:9px;padding:9px 13px;color:var(--text);font-family:'Cairo',sans-serif;
-  font-size:13px;outline:none;transition:border .2s;}
+/* INPUT */
+.form-input{width:100%;background:var(--input-bg);border:1px solid var(--glass-border);border-radius:9px;padding:9px 13px;color:var(--text);font-family:'Cairo',sans-serif;font-size:13px;outline:none;transition:border .2s;}
 .form-input:focus{border-color:rgba(201,168,76,.45);box-shadow:0 0 0 3px rgba(201,168,76,.07);}
 .form-input::placeholder{color:var(--text-muted);}
 select.form-input option{background:var(--dark2);color:var(--text);}
-.form-label{display:block;font-size:11px;font-weight:700;color:var(--text-muted);
-  margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;}
+.form-label{display:block;font-size:11px;font-weight:700;color:var(--text-muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;}
 
-/* ──── MODAL ──── */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(6px);
-  z-index:200;display:none;align-items:center;justify-content:center;padding:16px;}
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(6px);z-index:200;display:none;align-items:center;justify-content:center;padding:16px;}
 .modal-overlay.active{display:flex;}
-.modal-box{background:var(--dark2);border:1px solid var(--glass-border);border-radius:18px;
-  padding:24px;width:100%;max-width:680px;max-height:92vh;overflow-y:auto;
-  position:relative;box-shadow:0 40px 80px rgba(0,0,0,.5);}
+.modal-box{background:var(--dark2);border:1px solid var(--glass-border);border-radius:18px;padding:24px;width:100%;max-width:680px;max-height:92vh;overflow-y:auto;position:relative;box-shadow:0 40px 80px rgba(0,0,0,.5);}
 
-/* ──── PAGES ──── */
+/* PAGES */
 .page-section{display:none;}
 .page-section.active{display:block;}
 
-/* ──── ANIMATIONS ──── */
+/* ANIMATIONS */
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
 @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
@@ -166,104 +132,74 @@ select.form-input option{background:var(--dark2);color:var(--text);}
 .pulse{animation:pulse 2s infinite;}
 .spin{animation:spin .6s linear infinite;}
 
-/* ──── NOTIF ──── */
-.notif-panel{position:absolute;top:100%;left:0;width:340px;background:var(--dark2);
-  border:1px solid var(--glass-border);border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.5);
-  z-index:300;display:none;overflow:hidden;margin-top:8px;animation:slideDown .2s ease;}
+/* NOTIF */
+.notif-panel{position:absolute;top:100%;left:0;width:340px;background:var(--dark2);border:1px solid var(--glass-border);border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.5);z-index:300;display:none;overflow:hidden;margin-top:8px;animation:slideDown .2s ease;}
 .notif-panel.active{display:block;}
 
-/* ──── CALENDAR ──── */
-.cal-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:7px;
-  font-size:12px;cursor:pointer;transition:all .2s;position:relative;}
+/* CALENDAR */
+.cal-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:7px;font-size:12px;cursor:pointer;transition:all .2s;position:relative;}
 .cal-day:hover{background:rgba(201,168,76,.1);color:var(--gold);}
 .cal-day.today{background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:#07090D;font-weight:700;}
 .cal-day.has-event::after{content:'';position:absolute;bottom:2px;width:4px;height:4px;border-radius:50%;background:var(--gold);}
 
-/* ──── UPLOAD ──── */
-.upload-area{border:2px dashed rgba(201,168,76,.25);border-radius:12px;padding:28px;
-  text-align:center;cursor:pointer;transition:all .2s;}
+/* UPLOAD */
+.upload-area{border:2px dashed rgba(201,168,76,.25);border-radius:12px;padding:28px;text-align:center;cursor:pointer;transition:all .2s;}
 .upload-area:hover{border-color:var(--gold);background:rgba(201,168,76,.04);}
 
-/* ──── GOLD TEXT ──── */
-.gold-text{background:linear-gradient(135deg,var(--gold-light),var(--gold),var(--gold-dark));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+/* GOLD TEXT */
+.gold-text{background:linear-gradient(135deg,var(--gold-light),var(--gold),var(--gold-dark));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 
-/* ──── AVATAR ──── */
-.avatar{width:36px;height:36px;border-radius:50%;
-  background:linear-gradient(135deg,var(--gold),var(--gold-dark));
-  display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;
-  color:#07090D;flex-shrink:0;overflow:hidden;}
+/* AVATAR */
+.avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-dark));display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#07090D;flex-shrink:0;overflow:hidden;}
 .avatar img{width:100%;height:100%;object-fit:cover;}
 
-/* ──── AI ──── */
-.ai-bubble{background:linear-gradient(135deg,rgba(26,37,80,.5),rgba(201,168,76,.07));
-  border:1px solid rgba(201,168,76,.18);border-radius:12px;padding:12px 15px;font-size:13px;line-height:1.7;}
-.user-bubble{background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.18);
-  border-radius:12px;padding:12px 15px;font-size:13px;}
+/* AI */
+.ai-bubble{background:linear-gradient(135deg,rgba(26,37,80,.5),rgba(201,168,76,.07));border:1px solid rgba(201,168,76,.18);border-radius:12px;padding:12px 15px;font-size:13px;line-height:1.7;}
+.user-bubble{background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.18);border-radius:12px;padding:12px 15px;font-size:13px;}
 
-/* ──── SEARCH ──── */
+/* SEARCH */
 .search-wrap{position:relative;}
 .search-wrap input{padding-right:38px;}
 .search-wrap .search-icon{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:13px;}
 
-/* ──── TASK CARD ──── */
+/* TASK CARD */
 .task-card{background:var(--dark3);border-radius:10px;padding:12px;margin-bottom:8px;border-right:3px solid;}
 
-/* ──── TOAST ──── */
-#toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(120px);
-  background:var(--dark2);border:1px solid var(--glass-border);border-radius:12px;
-  padding:11px 20px;font-size:13px;font-weight:600;z-index:9000;transition:transform .3s ease;
-  display:flex;align-items:center;gap:8px;min-width:200px;box-shadow:0 8px 32px rgba(0,0,0,.5);}
+/* TOAST */
+#toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(120px);background:var(--dark2);border:1px solid var(--glass-border);border-radius:12px;padding:11px 20px;font-size:13px;font-weight:600;z-index:9000;transition:transform .3s ease;display:flex;align-items:center;gap:8px;min-width:200px;box-shadow:0 8px 32px rgba(0,0,0,.5);}
 
-/* ──── ALERT BANNER ──── */
-.alert-banner{background:linear-gradient(135deg,rgba(239,68,68,.12),rgba(245,158,11,.08));
-  border:1px solid rgba(239,68,68,.3);border-radius:12px;padding:12px 16px;
-  display:flex;align-items:center;gap:12px;margin-bottom:12px;}
-.urgent-dot{width:10px;height:10px;background:var(--danger);border-radius:50%;
-  animation:pulse 1.5s infinite;flex-shrink:0;}
-.loading-spinner{width:18px;height:18px;border:2px solid rgba(201,168,76,.3);
-  border-top-color:var(--gold);border-radius:50%;animation:spin .6s linear infinite;display:inline-block;}
+/* ALERT BANNER */
+.alert-banner{background:linear-gradient(135deg,rgba(239,68,68,.12),rgba(245,158,11,.08));border:1px solid rgba(239,68,68,.3);border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.urgent-dot{width:10px;height:10px;background:var(--danger);border-radius:50%;animation:pulse 1.5s infinite;flex-shrink:0;}
+.loading-spinner{width:18px;height:18px;border:2px solid rgba(201,168,76,.3);border-top-color:var(--gold);border-radius:50%;animation:spin .6s linear infinite;display:inline-block;}
 
-/* ──── SECTION HEADER ──── */
+/* SECTION HEADER */
 .section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px;}
 .section-title{font-size:20px;font-weight:900;}
 .section-sub{color:var(--text-muted);font-size:12px;margin-top:2px;}
 
-/* ──── PERSON CARD ──── */
-.person-card{background:var(--card-bg);border:1px solid var(--glass-border);border-radius:18px;
-  overflow:hidden;transition:all .3s ease;position:relative;}
-.person-card:hover{transform:translateY(-3px);box-shadow:0 20px 50px rgba(0,0,0,.2);
-  border-color:rgba(201,168,76,.3);}
-.person-card .card-header{height:80px;background:linear-gradient(135deg,var(--gold-dark),var(--gold));
-  position:relative;overflow:hidden;}
-.person-card .card-header::after{content:'';position:absolute;inset:0;
-  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");}
-.person-card .card-avatar{width:70px;height:70px;border-radius:50%;border:3px solid var(--card-bg);
-  position:absolute;bottom:-35px;right:16px;
-  background:linear-gradient(135deg,var(--gold),var(--gold-dark));
-  display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;
-  color:#07090D;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.3);}
+/* PERSON CARD */
+.person-card{background:var(--card-bg);border:1px solid var(--glass-border);border-radius:18px;overflow:hidden;transition:all .3s ease;position:relative;}
+.person-card:hover{transform:translateY(-3px);box-shadow:0 20px 50px rgba(0,0,0,.2);border-color:rgba(201,168,76,.3);}
+.person-card .card-header{height:80px;background:linear-gradient(135deg,var(--gold-dark),var(--gold));position:relative;overflow:hidden;}
+.person-card .card-header::after{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");}
+.person-card .card-avatar{width:70px;height:70px;border-radius:50%;border:3px solid var(--card-bg);position:absolute;bottom:-35px;right:16px;background:linear-gradient(135deg,var(--gold),var(--gold-dark));display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;color:#07090D;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.3);}
 .person-card .card-avatar img{width:100%;height:100%;object-fit:cover;}
 .person-card .card-body{padding:42px 16px 16px;}
-.person-card .card-actions{display:flex;gap:5px;flex-wrap:wrap;margin-top:12px;
-  padding-top:12px;border-top:1px solid var(--glass-border);}
+.person-card .card-actions{display:flex;gap:5px;flex-wrap:wrap;margin-top:12px;padding-top:12px;border-top:1px solid var(--glass-border);}
 
-/* ──── SESSION HISTORY ──── */
-.session-log-item{border-radius:12px;background:var(--dark3);padding:14px;
-  margin-bottom:10px;border-right:3px solid var(--gold);position:relative;}
+/* SESSION HISTORY */
+.session-log-item{border-radius:12px;background:var(--dark3);padding:14px;margin-bottom:10px;border-right:3px solid var(--gold);position:relative;}
 
-/* ──── PHOTO UPLOAD ──── */
+/* PHOTO UPLOAD */
 .photo-upload-wrap{position:relative;display:inline-block;cursor:pointer;}
 .photo-upload-wrap input{display:none;}
-.photo-upload-wrap .overlay{position:absolute;inset:0;border-radius:50%;background:rgba(0,0,0,.4);
-  display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;font-size:18px;color:#fff;}
+.photo-upload-wrap .overlay{position:absolute;inset:0;border-radius:50%;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;font-size:18px;color:#fff;}
 .photo-upload-wrap:hover .overlay{opacity:1;}
 
-/* ══ CASE CARDS ══ */
-.case-card{background:var(--card-bg);border:1px solid var(--glass-border);border-radius:20px;
-  overflow:hidden;transition:all .35s cubic-bezier(.25,.8,.25,1);position:relative;display:flex;flex-direction:column;}
-.case-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;
-  background:var(--case-accent,linear-gradient(90deg,var(--gold),var(--gold-dark)));}
+/* CASE CARDS */
+.case-card{background:var(--card-bg);border:1px solid var(--glass-border);border-radius:20px;overflow:hidden;transition:all .35s cubic-bezier(.25,.8,.25,1);position:relative;display:flex;flex-direction:column;}
+.case-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--case-accent,linear-gradient(90deg,var(--gold),var(--gold-dark)));}
 .case-card:hover{transform:translateY(-4px) scale(1.01);box-shadow:0 24px 60px rgba(0,0,0,.25);border-color:rgba(201,168,76,.35);}
 .case-card .cc-top{padding:18px 18px 12px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
 .case-card .cc-num{font-size:22px;font-weight:900;line-height:1;}
@@ -279,58 +215,68 @@ select.form-input option{background:var(--dark2);color:var(--text);}
 .cc-progress{height:5px;border-radius:4px;background:var(--dark3);margin:10px 18px 0;overflow:hidden;}
 .cc-progress-bar{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--gold),var(--gold-dark));transition:width .6s ease;}
 
-/* ══ STORAGE INDICATOR ══ */
-.storage-indicator{display:flex;align-items:center;gap:8px;padding:10px 14px;
-  background:rgba(201,168,76,.06);border-radius:10px;border:1px solid rgba(201,168,76,.15);margin-bottom:12px;}
+/* STORAGE INDICATOR */
+.storage-indicator{display:flex;align-items:center;gap:8px;padding:10px 14px;background:rgba(201,168,76,.06);border-radius:10px;border:1px solid rgba(201,168,76,.15);margin-bottom:12px;}
 .storage-bar{flex:1;height:6px;background:var(--dark3);border-radius:3px;overflow:hidden;}
 .storage-bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--success),var(--gold));transition:width .5s;}
 
-/* ── MOBILE BOTTOM NAV ── */
-.mobile-bottom-nav{
-  display:none;position:fixed;bottom:0;left:0;right:0;z-index:95;
-  background:var(--topbar-bg);backdrop-filter:blur(20px);
-  border-top:1px solid var(--glass-border);
-  padding:6px 0 env(safe-area-inset-bottom,6px);
-  grid-template-columns:repeat(5,1fr);gap:0;
-}
-.mob-nav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:2px;padding:6px 4px;cursor:pointer;transition:all .2s;
-  font-size:9px;font-weight:700;color:var(--text-muted);}
+/* MOBILE BOTTOM NAV */
+.mobile-bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;z-index:95;background:var(--topbar-bg);backdrop-filter:blur(20px);border-top:1px solid var(--glass-border);padding:6px 0 env(safe-area-inset-bottom,6px);grid-template-columns:repeat(5,1fr);gap:0;}
+.mob-nav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:6px 4px;cursor:pointer;transition:all .2s;font-size:9px;font-weight:700;color:var(--text-muted);}
 .mob-nav-item i{font-size:18px;transition:all .2s;}
 .mob-nav-item.active{color:var(--gold);}
 .mob-nav-item.active i{transform:scale(1.15);}
 
-/* ── MOBILE DRAWER ── */
-.mobile-menu-drawer{
-  position:fixed;bottom:0;left:0;right:0;z-index:150;
-  background:var(--dark2);border-top:1px solid var(--glass-border);
-  border-radius:24px 24px 0 0;padding:12px 16px 24px;
-  transform:translateY(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);
-  max-height:80vh;overflow-y:auto;
-}
+/* MOBILE DRAWER */
+.mobile-menu-drawer{position:fixed;bottom:0;left:0;right:0;z-index:150;background:var(--dark2);border-top:1px solid var(--glass-border);border-radius:24px 24px 0 0;padding:12px 16px 24px;transform:translateY(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);max-height:80vh;overflow-y:auto;}
 .mobile-menu-drawer.open{transform:translateY(0);}
 .drawer-handle{width:40px;height:4px;background:var(--glass-border);border-radius:2px;margin:0 auto 16px;}
 .drawer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
-.drawer-item{display:flex;flex-direction:column;align-items:center;gap:5px;padding:12px 6px;
-  background:var(--dark3);border-radius:14px;cursor:pointer;transition:all .2s;
-  border:1px solid transparent;font-size:10px;font-weight:700;color:var(--text-muted);}
+.drawer-item{display:flex;flex-direction:column;align-items:center;gap:5px;padding:12px 6px;background:var(--dark3);border-radius:14px;cursor:pointer;transition:all .2s;border:1px solid transparent;font-size:10px;font-weight:700;color:var(--text-muted);}
 .drawer-item i{font-size:20px;color:var(--gold);}
 .drawer-item:active,.drawer-item.active{border-color:rgba(201,168,76,.3);background:rgba(201,168,76,.08);color:var(--gold);}
 .drawer-overlay{display:none;position:fixed;inset:0;z-index:149;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);}
 .drawer-overlay.open{display:block;}
 
-/* ── PRINT ── */
+/* CLIENT CARD PRINT */
 @media print{
   #sidebar,#main .topbar,.no-print,.mobile-bottom-nav{display:none !important;}
   #main{margin-right:0;}body{background:#fff;color:#000;}
+  .client-print-card{page-break-inside:avoid;}
 }
 
-/* ── LIGHT MODE ── */
+/* CLIENT PRINT CARD */
+.client-print-card{
+  width:85mm; min-height:54mm;
+  background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);
+  border-radius:8px; padding:12px; color:#fff; position:relative; overflow:hidden;
+  font-family:'Cairo',sans-serif; box-shadow:0 8px 32px rgba(0,0,0,.4);
+}
+.client-print-card::before{
+  content:''; position:absolute; top:-20px; right:-20px; width:80px; height:80px;
+  background:radial-gradient(circle,rgba(201,168,76,.3),transparent 70%); pointer-events:none;
+}
+.client-print-card::after{
+  content:'⚖'; position:absolute; bottom:-5px; left:-5px; font-size:50px;
+  color:rgba(201,168,76,.08); font-family:serif;
+}
+.card-print-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;border-bottom:1px solid rgba(201,168,76,.3);padding-bottom:8px;}
+.card-print-logo{font-size:16px;font-weight:900;color:#C9A84C;}
+.card-print-body{display:flex;gap:8px;}
+.card-print-avatar{width:45px;height:45px;border-radius:50%;border:2px solid #C9A84C;overflow:hidden;flex-shrink:0;background:linear-gradient(135deg,#C9A84C,#8B6914);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#07090D;}
+.card-print-avatar img{width:100%;height:100%;object-fit:cover;}
+.card-print-info{flex:1;font-size:10px;}
+.card-print-info .name{font-size:13px;font-weight:800;color:#C9A84C;margin-bottom:3px;}
+.card-print-info .row{display:flex;gap:5px;margin-bottom:2px;color:rgba(255,255,255,.8);}
+.card-print-info .row i{color:#C9A84C;width:12px;}
+.card-print-footer{margin-top:8px;padding-top:6px;border-top:1px solid rgba(201,168,76,.2);display:flex;justify-content:space-between;align-items:center;font-size:9px;color:rgba(255,255,255,.5);}
+
+/* LIGHT MODE */
 body.light .ai-bubble{background:linear-gradient(135deg,rgba(59,130,246,.07),rgba(201,168,76,.04));}
 body.light .task-card{background:var(--dark3);}
 body.light .session-log-item{background:var(--dark3);}
 
-/* ══════ MOBILE ══════ */
+/* MOBILE */
 @media(max-width:768px){
   :root{--sidebar-w:280px;}
   #sidebar{transform:translateX(100%);}
@@ -345,48 +291,22 @@ body.light .session-log-item{background:var(--dark3);}
   .modal-box{padding:16px;margin:6px;border-radius:14px;max-height:95vh;}
   .modal-box .grid{grid-template-columns:1fr !important;}
   .mobile-bottom-nav{display:grid;}
-
-  /* stats horizontal scroll */
   .stats-row{display:flex;overflow-x:auto;gap:10px;padding-bottom:8px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;}
   .stats-row::-webkit-scrollbar{height:0;}
   .stats-row .stat-card{min-width:150px;flex-shrink:0;scroll-snap-align:start;}
-
-  /* case cards 1 col */
   #caseCardsGrid{grid-template-columns:1fr !important;}
-  .case-card .cc-top{padding:14px 14px 10px;}
-  .case-card .cc-body{padding:0 14px 12px;}
-  .case-card .cc-footer{padding:8px 14px 12px;}
-  .case-card .cc-num{font-size:18px;}
-
-  /* person grids */
   #clientsGrid,#staffGrid{grid-template-columns:repeat(2,1fr) !important;gap:10px !important;}
-  .person-card .card-body{padding:34px 10px 12px;}
-  .person-card .card-avatar{width:56px;height:56px;font-size:20px;bottom:-28px;}
-  .person-card .card-header{height:58px;}
-  .person-card .card-body .card-actions{flex-direction:row;}
-
-  /* tasks stack */
   #tasksGrid{grid-template-columns:1fr !important;}
   #financeStatsGrid{grid-template-columns:1fr !important;}
-
   .section-title{font-size:17px;}
   .data-table{font-size:11px;}
   .data-table th,.data-table td{padding:8px 10px;}
-
-  /* calendar */
   #page-sessions .grid{grid-template-columns:1fr !important;}
   #page-sessionHistory .grid{grid-template-columns:1fr !important;}
-
-  /* payroll/finance stats */
   #page-payroll .grid,#page-finance .grid{grid-template-columns:1fr !important;}
-
-  /* settings grid */
   #page-settings .grid{grid-template-columns:1fr !important;}
-
-  /* attendance summary */
   #attendSummary{grid-template-columns:repeat(2,1fr) !important;}
 }
-
 @media(min-width:769px){
   #sidebar{transform:translateX(0) !important;}
   .mobile-bottom-nav{display:none !important;}
@@ -402,9 +322,9 @@ body.light .session-log-item{background:var(--dark3);}
   <div class="login-box">
     <div style="text-align:center;margin-bottom:28px;">
       <div class="login-logo-icon">⚖️</div>
-      <div style="font-size:22px;font-weight:900;" class="gold-text">AGM للمحاماة</div>
+      <div style="font-size:22px;font-weight:900;" class="gold-text">AMG للمحاماة</div>
       <div style="font-size:14px;color:var(--text);font-weight:700;">والاستشارات القانونية</div>
-      <div style="font-size:11px;color:var(--text-muted);margin-top:4px;">مؤسسة AGM - مصطفى محمد أباظة</div>
+      <div style="font-size:11px;color:var(--text-muted);margin-top:4px;">مؤسسة AMG - المصطفي</div>
     </div>
     <div style="display:grid;gap:14px;">
       <div><label class="form-label">اسم المستخدم</label>
@@ -414,13 +334,12 @@ body.light .session-log-item{background:var(--dark3);}
         <div class="search-wrap"><input class="form-input" type="password" id="loginPass" placeholder="أدخل كلمة المرور" onkeypress="if(event.key==='Enter')doLogin()"><span class="search-icon"><i class="fas fa-lock"></i></span></div>
       </div>
       <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;color:var(--text-muted);">
-        <input type="checkbox" id="rememberMe" style="accent-color:var(--gold);width:14px;height:14px;">
-        تذكرني (لا تطلب تسجيل الدخول مرة أخرى)
+        <input type="checkbox" id="rememberMe" style="accent-color:var(--gold);width:14px;height:14px;">تذكرني
       </label>
       <button class="btn-gold" style="width:100%;justify-content:center;padding:12px;font-size:15px;" onclick="doLogin()"><i class="fas fa-sign-in-alt"></i> دخول النظام</button>
     </div>
     <div id="loginError" style="display:none;margin-top:12px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:8px;padding:10px;text-align:center;font-size:12px;color:#EF4444;"><i class="fas fa-exclamation-circle"></i> بيانات الدخول غير صحيحة</div>
-    <div style="text-align:center;margin-top:18px;font-size:11px;color:var(--text-muted);">© 2024 <span style="color:var(--gold);font-weight:700;">AGM Law</span></div>
+    <div style="text-align:center;margin-top:18px;font-size:11px;color:var(--text-muted);">© 2026 <span style="color:var(--gold);font-weight:700;">AMG Law</span></div>
   </div>
 </div>
 
@@ -432,15 +351,15 @@ body.light .session-log-item{background:var(--dark3);}
   <div class="sidebar-logo">
     <div class="logo-icon">⚖️</div>
     <div>
-      <div style="font-size:15px;font-weight:900;" class="gold-text">AGM</div>
-      <div style="font-size:9px;color:var(--text-muted);letter-spacing:.5px;line-height:1.3;">مصطفى محمد أباظة<br>للمحاماة والاستشارات</div>
+      <div style="font-size:15px;font-weight:900;" class="gold-text">AMG</div>
+      <div style="font-size:9px;color:var(--text-muted);letter-spacing:.5px;line-height:1.3;">مجموعه المصطفي<br>للمحاماة والاستشارات</div>
     </div>
     <button onclick="closeSidebar()" id="sidebarCloseBtn" style="margin-right:auto;display:none;background:none;border:none;color:var(--text-muted);font-size:18px;cursor:pointer;"><i class="fas fa-times"></i></button>
   </div>
   <div class="py-2">
     <p class="nav-section-title">الرئيسية</p>
     <div class="nav-item active" onclick="showPage('dashboard')"><span class="icon"><i class="fas fa-chart-pie"></i></span>لوحة التحكم</div>
-    <p class="nav-section-title">القضايا</p>
+    <p class="nav-section-title">القضايا والتوكيلات</p>
     <div class="nav-item" onclick="showPage('cases')"><span class="icon"><i class="fas fa-gavel"></i></span>القضايا<span class="badge badge-active" id="casesCount" style="margin-right:auto;font-size:9px;">0</span></div>
     <div class="nav-item" onclick="showPage('sessions')"><span class="icon"><i class="fas fa-calendar-alt"></i></span>الجلسات</div>
     <div class="nav-item" onclick="showPage('sessionHistory')"><span class="icon"><i class="fas fa-history"></i></span>تاريخ الجلسات</div>
@@ -454,15 +373,14 @@ body.light .session-log-item{background:var(--dark3);}
     <div class="nav-item" onclick="showPage('payroll')"><span class="icon"><i class="fas fa-money-bill-wave"></i></span>الرواتب والمكافآت</div>
     <p class="nav-section-title">أدوات</p>
     <div class="nav-item" onclick="showPage('documents')"><span class="icon"><i class="fas fa-folder-open"></i></span>المستندات</div>
-    <div class="nav-item" onclick="showPage('ai')"><span class="icon"><i class="fas fa-robot"></i></span>المساعد الذكي<span class="badge badge-pending" style="font-size:8px;margin-right:auto;">AI</span></div>
     <div class="nav-item" onclick="showPage('settings')"><span class="icon"><i class="fas fa-cog"></i></span>الإعدادات</div>
   </div>
   <div class="sidebar-profile">
     <div style="display:flex;align-items:center;gap:10px;">
-      <div class="avatar" style="width:36px;height:36px;font-size:14px;" id="sidebarAvatar">م</div>
+      <div class="avatar" style="width:36px;height:36px;font-size:14px;">م</div>
       <div>
-        <div style="font-size:12px;font-weight:700;" id="sidebarName">مصطفى أباظة</div>
-        <div style="font-size:10px;color:var(--gold);font-weight:600;">المدير العام</div>
+        <div style="font-size:12px;font-weight:700;">AMG </div>
+        <div style="font-size:10px;color:var(--gold);font-weight:600;"> </div>
       </div>
       <div style="margin-right:auto;width:7px;height:7px;background:var(--success);border-radius:50%;box-shadow:0 0 6px var(--success);"></div>
     </div>
@@ -494,9 +412,7 @@ body.light .session-log-item{background:var(--dark3);}
           <div id="notifList" style="max-height:320px;overflow-y:auto;"></div>
         </div>
       </div>
-      <button onclick="toggleTheme()" style="background:rgba(201,168,76,.07);border:1px solid var(--glass-border);border-radius:9px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text);font-size:14px;">
-        <i class="fas fa-sun" id="themeIcon"></i>
-      </button>
+      <button onclick="toggleTheme()" style="background:rgba(201,168,76,.07);border:1px solid var(--glass-border);border-radius:9px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text);font-size:14px;"><i class="fas fa-sun" id="themeIcon"></i></button>
       <button onclick="doLogout()" style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:9px;padding:7px 14px;color:#EF4444;font-family:'Cairo',sans-serif;font-size:12px;cursor:pointer;" title="تسجيل الخروج"><i class="fas fa-sign-out-alt"></i></button>
     </div>
   </div>
@@ -508,7 +424,7 @@ body.light .session-log-item{background:var(--dark3);}
       <div class="section-header">
         <div>
           <h1 class="section-title gold-text">لوحة التحكم</h1>
-          <p class="section-sub">مؤسسة AGM للمحاماة - مصطفى محمد أباظة</p>
+          <p class="section-sub">مجموعة المصطفى للمحاماة والاستشارات القانونية</p>
         </div>
         <div style="display:flex;gap:8px;" class="no-print">
           <button class="btn-outline" onclick="exportPDF()"><i class="fas fa-print"></i> طباعة</button>
@@ -535,7 +451,7 @@ body.light .session-log-item{background:var(--dark3);}
         <div class="stat-card" style="--accent:linear-gradient(90deg,#8B5CF6,#6D28D9);">
           <div style="font-size:10px;color:var(--text-muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">إجمالي الإيرادات</div>
           <div style="font-size:18px;font-weight:900;color:#8B5CF6;" id="stat-revenue">0</div>
-          <div style="font-size:11px;color:var(--success);margin-top:4px;"><i class="fas fa-coins"></i> ر.س</div>
+          <div style="font-size:11px;color:var(--success);margin-top:4px;"><i class="fas fa-coins"></i> جنيه</div>
         </div>
         <div class="stat-card" style="--accent:linear-gradient(90deg,#EF4444,#DC2626);">
           <div style="font-size:10px;color:var(--text-muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">عاجلة / متأخرة</div>
@@ -600,7 +516,7 @@ body.light .session-log-item{background:var(--dark3);}
           <table class="data-table">
             <thead><tr>
               <th>رقم القضية</th><th>الموكل</th><th>النوع</th><th>المحكمة</th>
-              <th>المحامي</th><th>الجلسة القادمة</th><th>الحالة</th><th>الإيرادات</th><th>إجراءات</th>
+              <th>المحامي</th><th>الجلسة القادمة</th><th>الحالة</th><th>الأتعاب</th><th>إجراءات</th>
             </tr></thead>
             <tbody id="casesBody"></tbody>
           </table>
@@ -616,8 +532,11 @@ body.light .session-log-item{background:var(--dark3);}
     <!-- CLIENTS -->
     <div class="page-section fade-in" id="page-clients">
       <div class="section-header">
-        <div><h1 class="section-title gold-text">الموكلون</h1><p class="section-sub">إدارة بيانات الموكلين</p></div>
-        <button class="btn-gold" onclick="openModal('addClientModal')"><i class="fas fa-user-plus"></i> موكل جديد</button>
+        <div><h1 class="section-title gold-text">الموكلون</h1><p class="section-sub">إدارة بيانات الموكلين والتوكيلات</p></div>
+        <div style="display:flex;gap:8px;">
+          <button class="btn-outline" onclick="openModal('printAllCardsModal')"><i class="fas fa-id-card"></i> طباعة الكروت</button>
+          <button class="btn-gold" onclick="openModal('addClientModal')"><i class="fas fa-user-plus"></i> موكل جديد</button>
+        </div>
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px;" id="clientsGrid"></div>
       <div id="clientsEmpty" style="text-align:center;padding:60px;color:var(--text-muted);display:none;"><i class="fas fa-users" style="font-size:40px;margin-bottom:12px;opacity:.2;display:block;"></i><p>لا يوجد موكلون مسجلون</p></div>
@@ -729,24 +648,39 @@ body.light .session-log-item{background:var(--dark3);}
     <!-- FINANCE -->
     <div class="page-section fade-in" id="page-finance">
       <div class="section-header">
-        <div><h1 class="section-title gold-text">النظام المالي</h1><p class="section-sub">المدفوعات والأتعاب</p></div>
+        <div><h1 class="section-title gold-text">النظام المالي</h1><p class="section-sub">المدفوعات والأتعاب - بالجنيه المصري</p></div>
         <button class="btn-gold" onclick="openModal('addPaymentModal')"><i class="fas fa-plus"></i> تسجيل دفعة</button>
       </div>
-      <div id="financeStatsGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px;">
+      <div id="financeStatsGrid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px;">
         <div class="stat-card" style="--accent:linear-gradient(90deg,#10B981,#059669);">
           <div style="font-size:10px;color:var(--text-muted);font-weight:700;margin-bottom:8px;">إجمالي الإيرادات</div>
-          <div style="font-size:20px;font-weight:900;color:#10B981;" id="totalIncome">0 ر.س</div>
+          <div style="font-size:18px;font-weight:900;color:#10B981;" id="totalIncome">0 ج.م</div>
         </div>
         <div class="stat-card" style="--accent:linear-gradient(90deg,#EF4444,#DC2626);">
           <div style="font-size:10px;color:var(--text-muted);font-weight:700;margin-bottom:8px;">إجمالي المصروفات</div>
-          <div style="font-size:20px;font-weight:900;color:#EF4444;" id="totalExpense">0 ر.س</div>
+          <div style="font-size:18px;font-weight:900;color:#EF4444;" id="totalExpense">0 ج.م</div>
         </div>
         <div class="stat-card" style="--accent:linear-gradient(90deg,#C9A84C,#8B6914);">
+          <div style="font-size:10px;color:var(--text-muted);font-weight:700;margin-bottom:8px;">أتعاب القضايا</div>
+          <div style="font-size:18px;font-weight:900;" class="gold-text" id="totalCaseFees">0 ج.م</div>
+        </div>
+        <div class="stat-card" style="--accent:linear-gradient(90deg,#8B5CF6,#6D28D9);">
           <div style="font-size:10px;color:var(--text-muted);font-weight:700;margin-bottom:8px;">صافي الربح</div>
-          <div style="font-size:20px;font-weight:900;" class="gold-text" id="netProfit">0 ر.س</div>
+          <div style="font-size:18px;font-weight:900;color:#8B5CF6;" id="netProfit">0 ج.م</div>
+        </div>
+      </div>
+      <!-- Case Fees Summary -->
+      <div class="glass-card" style="border-radius:14px;padding:16px;margin-bottom:18px;">
+        <h3 style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:12px;"><i class="fas fa-gavel" style="margin-left:6px;"></i>أتعاب القضايا</h3>
+        <div style="overflow-x:auto;">
+          <table class="data-table">
+            <thead><tr><th>رقم القضية</th><th>الموكل</th><th>الأتعاب الكلية</th><th>المدفوع</th><th>المتبقي</th><th>نسبة السداد</th></tr></thead>
+            <tbody id="caseFeesBody"></tbody>
+          </table>
         </div>
       </div>
       <div class="glass-card" style="border-radius:14px;overflow:hidden;">
+        <div style="padding:12px 16px;border-bottom:1px solid var(--glass-border);font-size:13px;font-weight:700;color:var(--gold);">سجل المعاملات المالية</div>
         <div style="overflow-x:auto;">
           <table class="data-table"><thead><tr><th>التاريخ</th><th>الموكل/القضية</th><th>البيان</th><th>النوع</th><th>المبلغ</th><th>الحالة</th><th>حذف</th></tr></thead>
           <tbody id="paymentsBody"></tbody></table>
@@ -764,15 +698,15 @@ body.light .session-log-item{background:var(--dark3);}
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px;">
         <div class="stat-card" style="--accent:linear-gradient(90deg,#8B5CF6,#6D28D9);">
           <div style="font-size:10px;color:var(--text-muted);font-weight:700;margin-bottom:8px;">إجمالي الرواتب</div>
-          <div style="font-size:20px;font-weight:900;color:#8B5CF6;" id="totalSalaries">0 ر.س</div>
+          <div style="font-size:18px;font-weight:900;color:#8B5CF6;" id="totalSalaries">0 ج.م</div>
         </div>
         <div class="stat-card" style="--accent:linear-gradient(90deg,#EF4444,#DC2626);">
           <div style="font-size:10px;color:var(--text-muted);font-weight:700;margin-bottom:8px;">إجمالي الخصومات</div>
-          <div style="font-size:20px;font-weight:900;color:#EF4444;" id="totalDeductions">0 ر.س</div>
+          <div style="font-size:18px;font-weight:900;color:#EF4444;" id="totalDeductions">0 ج.م</div>
         </div>
         <div class="stat-card" style="--accent:linear-gradient(90deg,#10B981,#059669);">
           <div style="font-size:10px;color:var(--text-muted);font-weight:700;margin-bottom:8px;">إجمالي المكافآت</div>
-          <div style="font-size:20px;font-weight:900;color:#10B981;" id="totalBonuses">0 ر.س</div>
+          <div style="font-size:18px;font-weight:900;color:#10B981;" id="totalBonuses">0 ج.م</div>
         </div>
       </div>
       <div class="glass-card" style="border-radius:14px;overflow:hidden;">
@@ -800,30 +734,6 @@ body.light .session-log-item{background:var(--dark3);}
       <div id="docsEmpty" style="text-align:center;padding:40px;color:var(--text-muted);">لا توجد مستندات مرفوعة</div>
     </div>
 
-    <!-- AI -->
-    <div class="page-section fade-in" id="page-ai">
-      <div style="margin-bottom:18px;">
-        <h1 class="section-title gold-text">المساعد الذكي</h1>
-        <p class="section-sub">مساعدك القانوني الذكي - مؤسسة AGM</p>
-      </div>
-      <div class="glass-card" style="border-radius:14px;padding:0;overflow:hidden;display:flex;flex-direction:column;height:calc(100vh - 210px);min-height:400px;">
-        <div style="padding:12px 18px;border-bottom:1px solid var(--glass-border);display:flex;align-items:center;gap:10px;background:rgba(201,168,76,.03);">
-          <div style="width:34px;height:34px;background:linear-gradient(135deg,#1A2550,#1E3A8A);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px;">🤖</div>
-          <div><div style="font-size:13px;font-weight:700;">AGM Legal AI</div><div style="font-size:10px;color:var(--success);">● متصل</div></div>
-        </div>
-        <div id="aiChat" style="flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:12px;">
-          <div style="display:flex;gap:10px;align-items:flex-start;">
-            <div style="width:30px;height:30px;background:linear-gradient(135deg,#1A2550,#2563EB);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;">🤖</div>
-            <div class="ai-bubble" style="max-width:80%;">مرحباً! أنا مساعد مؤسسة AGM للمحاماة الذكي. يمكنني مساعدتك في صياغة المذكرات والعقود، تحليل القضايا، والاستشارات القانونية. كيف يمكنني مساعدتك؟</div>
-          </div>
-        </div>
-        <div style="padding:14px;border-top:1px solid var(--glass-border);display:flex;gap:8px;">
-          <input class="form-input" type="text" id="aiInput" placeholder="اكتب سؤالك القانوني..." onkeypress="if(event.key==='Enter')sendAI()" style="flex:1;">
-          <button class="btn-gold" onclick="sendAI()"><i class="fas fa-paper-plane"></i></button>
-        </div>
-      </div>
-    </div>
-
     <!-- SETTINGS -->
     <div class="page-section fade-in" id="page-settings">
       <div style="margin-bottom:18px;"><h1 class="section-title gold-text">الإعدادات</h1><p class="section-sub">إعدادات النظام والمؤسسة</p></div>
@@ -831,38 +741,31 @@ body.light .session-log-item{background:var(--dark3);}
         <div class="glass-card" style="border-radius:14px;padding:22px;">
           <h3 style="font-size:14px;font-weight:700;margin-bottom:14px;"><i class="fas fa-building" style="color:var(--gold);margin-left:7px;"></i>بيانات المؤسسة</h3>
           <div style="display:grid;gap:11px;">
-            <div><label class="form-label">اسم المؤسسة</label><input class="form-input" id="officeName" value="AGM للمحاماة والاستشارات القانونية"></div>
+            <div><label class="form-label">اسم المؤسسة</label><input class="form-input" id="officeName" value="AMG للمحاماة والاستشارات القانونية"></div>
             <div><label class="form-label">المدير العام</label><input class="form-input" id="officeManager" value="مصطفى محمد أباظة"></div>
             <div><label class="form-label">العنوان</label><input class="form-input" id="officeAddress" placeholder="العنوان"></div>
             <div><label class="form-label">الهاتف</label><input class="form-input" id="officePhone" placeholder="+20 xx xxx xxxx"></div>
-            <div><label class="form-label">البريد الإلكتروني</label><input class="form-input" id="officeEmail" placeholder="info@agm.com"></div>
+            <div><label class="form-label">البريد الإلكتروني</label><input class="form-input" id="officeEmail" placeholder="info@AMG.com"></div>
             <button class="btn-gold" onclick="saveSettings()"><i class="fas fa-save"></i> حفظ الإعدادات</button>
           </div>
         </div>
         <div class="glass-card" style="border-radius:14px;padding:22px;">
           <h3 style="font-size:14px;font-weight:700;margin-bottom:14px;"><i class="fas fa-shield-alt" style="color:var(--gold);margin-left:7px;"></i>إدارة البيانات</h3>
-
-          <!-- Storage indicator -->
-          <div class="storage-indicator" id="storageIndicator">
+          <div class="storage-indicator">
             <i class="fas fa-database" style="color:var(--gold);font-size:13px;"></i>
-            <div style="flex:1;">
-              <div style="font-size:10px;font-weight:700;margin-bottom:4px;">مساحة التخزين المحلي</div>
-              <div class="storage-bar"><div class="storage-bar-fill" id="storageBarFill" style="width:0%"></div></div>
-            </div>
+            <div style="flex:1;"><div style="font-size:10px;font-weight:700;margin-bottom:4px;">مساحة التخزين المحلي</div>
+            <div class="storage-bar"><div class="storage-bar-fill" id="storageBarFill" style="width:0%"></div></div></div>
             <span id="storageUsed" style="font-size:11px;font-weight:700;color:var(--gold);">0 KB</span>
           </div>
-
-          <!-- تخزين الجهاز -->
           <div style="background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2);border-radius:12px;padding:14px;margin-bottom:14px;">
-            <div style="font-size:12px;font-weight:700;color:var(--gold);margin-bottom:4px;"><i class="fas fa-hdd" style="margin-left:6px;"></i>حفظ على جهازك (ملف data.json)</div>
-            <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px;">احفظ بياناتك كملف JSON على جهازك لا يضيع عند مسح المتصفح</div>
+            <div style="font-size:12px;font-weight:700;color:var(--gold);margin-bottom:4px;"><i class="fas fa-hdd" style="margin-left:6px;"></i>حفظ على جهازك</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px;">احفظ بياناتك كملف JSON على جهازك</div>
             <div style="display:grid;gap:8px;">
-              <button class="btn-gold" onclick="saveToFile()" style="justify-content:center;"><i class="fas fa-download"></i> تحميل ملف البيانات (data.json)</button>
+              <button class="btn-gold" onclick="saveToFile()" style="justify-content:center;"><i class="fas fa-download"></i> تحميل ملف البيانات</button>
               <button class="btn-outline" onclick="document.getElementById('loadDataFile').click()" style="justify-content:center;"><i class="fas fa-upload"></i> استيراد ملف بيانات</button>
               <input type="file" id="loadDataFile" style="display:none;" accept=".json" onchange="loadFromFile(event)">
             </div>
           </div>
-
           <div style="display:grid;gap:8px;">
             <button class="btn-outline" onclick="backupData()" style="justify-content:center;"><i class="fas fa-download"></i> نسخة احتياطية (JSON)</button>
             <button class="btn-outline" onclick="exportExcel()" style="justify-content:center;"><i class="fas fa-file-excel"></i> تصدير CSV</button>
@@ -916,9 +819,8 @@ body.light .session-log-item{background:var(--dark3);}
     <div class="drawer-item" onclick="showPage('finance');closeDrawer()"><i class="fas fa-coins"></i>المالية</div>
     <div class="drawer-item" onclick="showPage('payroll');closeDrawer()"><i class="fas fa-money-bill-wave"></i>الرواتب</div>
     <div class="drawer-item" onclick="showPage('documents');closeDrawer()"><i class="fas fa-folder-open"></i>المستندات</div>
-    <div class="drawer-item" onclick="showPage('ai');closeDrawer()"><i class="fas fa-robot"></i>المساعد</div>
     <div class="drawer-item" onclick="showPage('settings');closeDrawer()"><i class="fas fa-cog"></i>الإعدادات</div>
-    <div class="drawer-item" onclick="toggleTheme();closeDrawer()"><i class="fas fa-moon" id="drawerThemeIcon"></i>المظهر</div>
+    <div class="drawer-item" onclick="toggleTheme();closeDrawer()"><i class="fas fa-moon"></i>المظهر</div>
     <div class="drawer-item" onclick="doLogout()" style="color:var(--danger);"><i class="fas fa-sign-out-alt" style="color:var(--danger);"></i>خروج</div>
   </div>
 </div>
@@ -951,14 +853,15 @@ body.light .session-log-item{background:var(--dark3);}
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;" class="grid">
       <div><label class="form-label">رقم القضية</label><input class="form-input" id="caseNum" placeholder="2024-001"></div>
       <div><label class="form-label">نوع القضية</label><select class="form-input" id="caseType"><option>مدني</option><option>جنائي</option><option>تجاري</option><option>عمالي</option><option>أسري</option><option>عقاري</option><option>إداري</option></select></div>
-      <div><label class="form-label">الموكل</label><select class="form-input" id="caseClient"><option value="">-- اختر موكل --</option></select></div>
+      <div><label class="form-label">الموكل</label><select class="form-input" id="caseClient" onchange="fillCaseTawkeel()"><option value="">-- اختر موكل --</option></select></div>
+      <div><label class="form-label">رقم التوكيل</label><input class="form-input" id="caseTawkeelNum" placeholder="رقم التوكيل (يُملأ تلقائياً)" readonly style="background:rgba(201,168,76,.05);color:var(--gold);font-weight:700;"></div>
       <div><label class="form-label">المحامي المسؤول</label><select class="form-input" id="caseLawyer"><option value="">-- اختر --</option></select></div>
       <div><label class="form-label">المحكمة</label><input class="form-input" id="caseCourt" placeholder="المحكمة الابتدائية"></div>
       <div><label class="form-label">الدائرة</label><input class="form-input" id="caseDivision" placeholder="الدائرة المدنية"></div>
       <div><label class="form-label">تاريخ الجلسة القادمة</label><input class="form-input" id="caseDate" type="date"></div>
       <div><label class="form-label">الحالة</label><select class="form-input" id="caseStatus"><option value="نشطة">نشطة</option><option value="معلقة">معلقة</option><option value="مغلقة">مغلقة</option><option value="عاجلة">عاجلة</option><option value="مؤرشفة">مؤرشفة</option></select></div>
-      <div><label class="form-label">الأتعاب الإجمالية (ر.س)</label><input class="form-input" id="caseFee" type="number" placeholder="0"></div>
-      <div><label class="form-label">المبلغ المدفوع (ر.س)</label><input class="form-input" id="casePaid" type="number" placeholder="0"></div>
+      <div><label class="form-label">الأتعاب الإجمالية (ج.م)</label><input class="form-input" id="caseFee" type="number" placeholder="0"></div>
+      <div><label class="form-label">المبلغ المدفوع (ج.م)</label><input class="form-input" id="casePaid" type="number" placeholder="0"></div>
       <div style="grid-column:span 2;"><label class="form-label">ملاحظات</label><textarea class="form-input" id="caseNotes" rows="2" placeholder="ملاحظات القضية..."></textarea></div>
     </div>
     <div style="display:flex;gap:8px;margin-top:18px;justify-content:flex-end;">
@@ -983,15 +886,29 @@ body.light .session-log-item{background:var(--dark3);}
         <input type="file" id="clientPhotoInput" accept="image/*" onchange="previewPhoto(event,'clientPhotoPreview','clientPhotoData')">
       </div>
       <input type="hidden" id="clientPhotoData">
-      <div style="font-size:10px;color:var(--text-muted);margin-top:5px;">انقر لرفع صورة</div>
+      <div style="font-size:10px;color:var(--text-muted);margin-top:5px;">انقر لرفع صورة التوكيل</div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;" class="grid">
       <div><label class="form-label">الاسم الكامل</label><input class="form-input" id="clientName" placeholder="الاسم"></div>
       <div><label class="form-label">رقم الهاتف (واتساب)</label><input class="form-input" id="clientPhone" placeholder="+201234567890"></div>
+      <div><label class="form-label">رقم التوكيل</label><input class="form-input" id="clientTawkeelNum" placeholder="مثال: 2024/123" style="color:var(--gold);font-weight:700;"></div>
+      <div><label class="form-label">تاريخ التوكيل</label><input class="form-input" id="clientTawkeelDate" type="date"></div>
       <div><label class="form-label">رقم الهوية</label><input class="form-input" id="clientID" placeholder="1xxxxxxxxx"></div>
       <div><label class="form-label">البريد الإلكتروني</label><input class="form-input" id="clientEmail" type="email" placeholder="email@example.com"></div>
       <div style="grid-column:span 2;"><label class="form-label">العنوان</label><input class="form-input" id="clientAddress" placeholder="المدينة، الحي، الشارع"></div>
-      <div style="grid-column:span 2;"><label class="form-label">ملاحظات</label><textarea class="form-input" id="clientNotes" rows="2" placeholder="ملاحظات..."></textarea></div>
+      <div style="grid-column:span 2;">
+        <label class="form-label">صورة التوكيل (رفع)</label>
+        <div class="upload-area" style="padding:14px;" onclick="document.getElementById('tawkeelImgInput').click()">
+          <input type="file" id="tawkeelImgInput" accept="image/*,application/pdf" style="display:none" onchange="previewTawkeel(event)">
+          <i class="fas fa-file-contract" style="font-size:22px;color:var(--gold);margin-bottom:6px;display:block;"></i>
+          <p style="font-size:11px;color:var(--gold);">انقر لرفع صورة التوكيل</p>
+          <div id="tawkeelImgPreviewWrap" style="margin-top:8px;display:none;">
+            <img id="tawkeelImgPreview" style="max-width:120px;max-height:80px;border-radius:6px;border:1px solid var(--gold);">
+          </div>
+        </div>
+        <input type="hidden" id="tawkeelImgData">
+      </div>
+      <div style="grid-column:span 2;"><label class="form-label">بيانات عن التوكيل / ملاحظات</label><textarea class="form-input" id="clientNotes" rows="2" placeholder="بيانات التوكيل، نوعه، صلاحياته، ملاحظات..."></textarea></div>
     </div>
     <div style="display:flex;gap:8px;margin-top:18px;justify-content:flex-end;">
       <button class="btn-outline" onclick="closeModal('addClientModal')">إلغاء</button>
@@ -1022,8 +939,8 @@ body.light .session-log-item{background:var(--dark3);}
       <div><label class="form-label">التخصص</label><select class="form-input" id="staffSpec"><option>قانون مدني</option><option>قانون جنائي</option><option>قانون تجاري</option><option>قانون عمالي</option><option>قانون أسري</option><option>قانون عقاري</option><option>إداري</option><option>غير محدد</option></select></div>
       <div><label class="form-label">رقم الترخيص</label><input class="form-input" id="staffLicense" placeholder="LIC-XXXXX"></div>
       <div><label class="form-label">رقم الهاتف</label><input class="form-input" id="staffPhone" placeholder="+201234567890"></div>
-      <div><label class="form-label">البريد الإلكتروني</label><input class="form-input" id="staffEmail" type="email" placeholder="email@agm.com"></div>
-      <div><label class="form-label">الراتب الأساسي (ر.س)</label><input class="form-input" id="staffSalary" type="number" placeholder="0"></div>
+      <div><label class="form-label">البريد الإلكتروني</label><input class="form-input" id="staffEmail" type="email" placeholder="email@amg.com"></div>
+      <div><label class="form-label">الراتب الأساسي (ج.م)</label><input class="form-input" id="staffSalary" type="number" placeholder="0"></div>
       <div><label class="form-label">تاريخ التعيين</label><input class="form-input" id="staffJoinDate" type="date"></div>
       <div style="grid-column:span 2;"><label class="form-label">ملاحظات</label><textarea class="form-input" id="staffNotes" rows="2" placeholder="ملاحظات..."></textarea></div>
     </div>
@@ -1049,7 +966,7 @@ body.light .session-log-item{background:var(--dark3);}
         <div><label class="form-label">وقت الانصراف</label><input class="form-input" id="attendTimeOut" type="time"></div>
       </div>
       <div><label class="form-label">الحالة</label><select class="form-input" id="attendStatus"><option value="حاضر">حاضر</option><option value="غائب">غائب</option><option value="إجازة">إجازة</option><option value="متأخر">متأخر</option></select></div>
-      <div><label class="form-label">خصم الغياب (ر.س)</label><input class="form-input" id="attendDeduct" type="number" placeholder="0" value="0"></div>
+      <div><label class="form-label">خصم الغياب (ج.م)</label><input class="form-input" id="attendDeduct" type="number" placeholder="0" value="0"></div>
       <div><label class="form-label">ملاحظة</label><input class="form-input" id="attendNote" placeholder="ملاحظة اختيارية"></div>
     </div>
     <div style="display:flex;gap:8px;margin-top:18px;justify-content:flex-end;">
@@ -1142,7 +1059,7 @@ body.light .session-log-item{background:var(--dark3);}
       <div><label class="form-label">القضية (اختياري)</label><select class="form-input" id="payCase"></select></div>
       <div><label class="form-label">البيان</label><input class="form-input" id="payDesc" placeholder="وصف الدفعة"></div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:11px;">
-        <div><label class="form-label">المبلغ (ريال)</label><input class="form-input" id="payAmount" type="number" placeholder="0"></div>
+        <div><label class="form-label">المبلغ (ج.م)</label><input class="form-input" id="payAmount" type="number" placeholder="0"></div>
         <div><label class="form-label">النوع</label><select class="form-input" id="payType"><option value="إيراد">إيراد</option><option value="مصروف">مصروف</option></select></div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:11px;">
@@ -1220,6 +1137,36 @@ body.light .session-log-item{background:var(--dark3);}
   </div>
 </div>
 
+<!-- Client Card Print Modal -->
+<div class="modal-overlay" id="clientCardModal">
+  <div class="modal-box" style="max-width:500px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+      <h2 class="gold-text" style="font-size:17px;font-weight:800;"><i class="fas fa-id-card" style="margin-left:8px;"></i>كارت الموكل</h2>
+      <button onclick="closeModal('clientCardModal')" style="background:none;border:none;color:var(--text-muted);font-size:20px;cursor:pointer;">×</button>
+    </div>
+    <div id="clientCardPreview" style="display:flex;justify-content:center;margin-bottom:18px;"></div>
+    <div style="display:flex;gap:8px;justify-content:flex-end;">
+      <button class="btn-outline" onclick="closeModal('clientCardModal')">إغلاق</button>
+      <button class="btn-gold" onclick="printClientCard()"><i class="fas fa-print"></i> طباعة الكارت</button>
+    </div>
+  </div>
+</div>
+
+<!-- Print All Cards Modal -->
+<div class="modal-overlay" id="printAllCardsModal">
+  <div class="modal-box" style="max-width:720px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+      <h2 class="gold-text" style="font-size:17px;font-weight:800;"><i class="fas fa-id-card" style="margin-left:8px;"></i>طباعة كروت الموكلين</h2>
+      <button onclick="closeModal('printAllCardsModal')" style="background:none;border:none;color:var(--text-muted);font-size:20px;cursor:pointer;">×</button>
+    </div>
+    <div id="allCardsPreview" style="display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin-bottom:18px;max-height:60vh;overflow-y:auto;padding:10px;"></div>
+    <div style="display:flex;gap:8px;justify-content:flex-end;">
+      <button class="btn-outline" onclick="closeModal('printAllCardsModal')">إغلاق</button>
+      <button class="btn-gold" onclick="window.print()"><i class="fas fa-print"></i> طباعة الكل</button>
+    </div>
+  </div>
+</div>
+
 <!-- WhatsApp Modal -->
 <div class="modal-overlay" id="whatsappModal">
   <div class="modal-box" style="max-width:460px;">
@@ -1249,26 +1196,26 @@ body.light .session-log-item{background:var(--dark3);}
 
 <script>
 // ============================================================
-// STORAGE KEY
+// STORAGE
 // ============================================================
-const STORAGE_KEY = 'agmLawData_v5';
-const SESSION_KEY = 'agmSession_v5';
+const STORAGE_KEY = 'amgLawData_v6';
+const SESSION_KEY = 'amgSession_v6';
 
 let DB = {
   cases:[], clients:[], staff:[], sessions:[],
   tasks:[], payments:[], documents:[], attendance:[],
   salaries:[], settings:{}, activityLog:[], sessionLogs:[],
-  version:'5.0'
+  version:'6.0'
 };
 
 const CREDENTIALS = [
-  {username:'agm', password:'agm2024'},
+  {username:'amg', password:'amg2024'},
   {username:'admin', password:'admin'},
   {username:'مصطفي', password:'مؤسسة المصطفي'}
 ];
 
 // ============================================================
-// AUTH - with persistent session
+// AUTH
 // ============================================================
 function doLogin(){
   const u = document.getElementById('loginUser').value.trim();
@@ -1277,7 +1224,7 @@ function doLogin(){
   if(CREDENTIALS.find(x => x.username===u && x.password===p)){
     document.getElementById('loginError').style.display = 'none';
     if(remember){
-      localStorage.setItem(SESSION_KEY, JSON.stringify({loggedIn:true, user:u, remember:true}));
+      localStorage.setItem(SESSION_KEY, JSON.stringify({loggedIn:true, user:u}));
     } else {
       sessionStorage.setItem(SESSION_KEY, JSON.stringify({loggedIn:true, user:u}));
     }
@@ -1290,7 +1237,6 @@ function doLogin(){
 }
 
 function checkAutoLogin(){
-  // Check localStorage (remember me) first, then sessionStorage
   let session = null;
   try { session = JSON.parse(localStorage.getItem(SESSION_KEY)); } catch(e){}
   if(!session) try { session = JSON.parse(sessionStorage.getItem(SESSION_KEY)); } catch(e){}
@@ -1305,7 +1251,6 @@ function checkAutoLogin(){
 
 function doLogout(){
   if(!confirm('تسجيل الخروج؟')) return;
-  // Only clear session, NOT the data
   localStorage.removeItem(SESSION_KEY);
   sessionStorage.removeItem(SESSION_KEY);
   document.getElementById('loginScreen').style.display = 'flex';
@@ -1326,7 +1271,7 @@ function loadDB(){
         if(!DB[k]) DB[k] = [];
       });
       if(!DB.settings) DB.settings = {};
-    } catch(e){ console.error('DB load error', e); }
+    } catch(e){}
   }
 }
 
@@ -1335,7 +1280,7 @@ function saveDB(){
     localStorage.setItem(STORAGE_KEY, JSON.stringify(DB));
     updateStorageIndicator();
   } catch(e){
-    showToast('تحذير: ذاكرة التخزين ممتلئة، قم بحفظ ملف data.json', 'warning');
+    showToast('تحذير: ذاكرة التخزين ممتلئة','warning');
   }
 }
 
@@ -1344,56 +1289,43 @@ function updateStorageIndicator(){
     const data = localStorage.getItem(STORAGE_KEY) || '';
     const bytes = new Blob([data]).size;
     const kb = (bytes/1024).toFixed(1);
-    const maxKB = 5120; // 5MB
-    const pct = Math.min(100, (bytes/1024/maxKB*100)).toFixed(0);
+    const maxKB = 5120;
+    const pct = Math.min(100,(bytes/1024/maxKB*100)).toFixed(0);
     const el = document.getElementById('storageUsed');
     const bar = document.getElementById('storageBarFill');
     if(el) el.textContent = kb > 1024 ? (kb/1024).toFixed(2)+' MB' : kb+' KB';
-    if(bar) bar.style.width = pct+'%';
-    if(bar) bar.style.background = pct > 80 ? 'linear-gradient(90deg,var(--warning),var(--danger))' : 'linear-gradient(90deg,var(--success),var(--gold))';
+    if(bar){ bar.style.width=pct+'%'; bar.style.background = pct > 80 ? 'linear-gradient(90deg,var(--warning),var(--danger))' : 'linear-gradient(90deg,var(--success),var(--gold))'; }
   } catch(e){}
 }
 
 // ============================================================
-// FILE EXPORT / IMPORT (device storage)
+// FILE EXPORT / IMPORT
 // ============================================================
 function saveToFile(){
-  const data = JSON.stringify(DB, null, 2);
-  const blob = new Blob([data], {type:'application/json'});
+  const blob = new Blob([JSON.stringify(DB,null,2)],{type:'application/json'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = url;
-  a.download = `AGM_data_${new Date().toISOString().split('T')[0]}.json`;
-  a.click();
+  a.href = url; a.download = `AMG_data_${new Date().toISOString().split('T')[0]}.json`; a.click();
   URL.revokeObjectURL(url);
-  showToast('تم حفظ ملف البيانات على جهازك', 'success');
+  showToast('تم حفظ ملف البيانات','success');
   logActivity('تصدير ملف البيانات');
 }
 
 function loadFromFile(event){
-  const file = event.target.files[0];
-  if(!file) return;
+  const file = event.target.files[0]; if(!file) return;
   if(!confirm('سيتم استبدال البيانات الحالية ببيانات الملف. هل أنت متأكد؟')) return;
   const reader = new FileReader();
   reader.onload = e => {
     try {
       const imported = JSON.parse(e.target.result);
-      // Validate it's our format
-      if(!imported.cases && !imported.clients && !imported.staff){
-        showToast('الملف غير صالح', 'error');
-        return;
-      }
+      if(!imported.cases && !imported.clients && !imported.staff){ showToast('الملف غير صالح','error'); return; }
       DB = {...DB, ...imported};
-      ['cases','clients','staff','sessions','tasks','payments','documents','attendance','salaries','activityLog','sessionLogs'].forEach(k=>{
-        if(!DB[k]) DB[k] = [];
-      });
+      ['cases','clients','staff','sessions','tasks','payments','documents','attendance','salaries','activityLog','sessionLogs'].forEach(k=>{ if(!DB[k]) DB[k]=[]; });
       saveDB();
-      showToast('تم استيراد البيانات بنجاح', 'success');
+      showToast('تم استيراد البيانات بنجاح','success');
       refreshPage(currentPage);
       renderDashboard();
-    } catch(err){
-      showToast('خطأ في قراءة الملف', 'error');
-    }
+    } catch(err){ showToast('خطأ في قراءة الملف','error'); }
   };
   reader.readAsText(file);
   event.target.value = '';
@@ -1410,7 +1342,7 @@ const pageTitles = {
   dashboard:'لوحة التحكم', cases:'القضايا', clients:'الموكلون',
   staff:'الموظفون', attendance:'الحضور والغياب', sessions:'الجلسات',
   sessionHistory:'تاريخ الجلسات', tasks:'المهام', finance:'النظام المالي',
-  payroll:'الرواتب', documents:'المستندات', ai:'المساعد الذكي', settings:'الإعدادات'
+  payroll:'الرواتب', documents:'المستندات', settings:'الإعدادات'
 };
 
 function showPage(page){
@@ -1445,29 +1377,13 @@ function refreshPage(p){
 // ============================================================
 // MOBILE NAV
 // ============================================================
-function setMobNav(page){
-  document.querySelectorAll('.mob-nav-item').forEach(x => x.classList.remove('active'));
-  const el = document.getElementById('mn-'+page);
-  if(el) el.classList.add('active');
-}
+function setMobNav(page){ document.querySelectorAll('.mob-nav-item').forEach(x=>x.classList.remove('active')); const el=document.getElementById('mn-'+page); if(el) el.classList.add('active'); }
 function openDrawer(){ document.getElementById('mobileDrawer').classList.add('open'); document.getElementById('drawerOverlay').classList.add('open'); }
 function closeDrawer(){ document.getElementById('mobileDrawer').classList.remove('open'); document.getElementById('drawerOverlay').classList.remove('open'); }
 function quickAdd(){ document.getElementById('qaDrawer').classList.add('open'); document.getElementById('qaOverlay').classList.add('open'); }
 function closeQuickAdd(){ document.getElementById('qaDrawer').classList.remove('open'); document.getElementById('qaOverlay').classList.remove('open'); }
-
-function toggleSidebar(){
-  const sb = document.getElementById('sidebar');
-  const ov = document.getElementById('sidebarOverlay');
-  const btn = document.getElementById('sidebarCloseBtn');
-  const isOpen = sb.classList.toggle('open');
-  ov.classList.toggle('active', isOpen);
-  btn.style.display = isOpen ? 'block' : 'none';
-}
-function closeSidebar(){
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('sidebarOverlay').classList.remove('active');
-  document.getElementById('sidebarCloseBtn').style.display = 'none';
-}
+function toggleSidebar(){ const sb=document.getElementById('sidebar'); const ov=document.getElementById('sidebarOverlay'); const btn=document.getElementById('sidebarCloseBtn'); const isOpen=sb.classList.toggle('open'); ov.classList.toggle('active',isOpen); btn.style.display=isOpen?'block':'none'; }
+function closeSidebar(){ document.getElementById('sidebar').classList.remove('open'); document.getElementById('sidebarOverlay').classList.remove('active'); document.getElementById('sidebarCloseBtn').style.display='none'; }
 
 // ============================================================
 // MODALS
@@ -1482,20 +1398,45 @@ function openModal(id){
   if(id==='addAttendModal'){ populateSel('attendStaff',DB.staff,'name'); document.getElementById('attendDateIn').value=new Date().toISOString().split('T')[0]; }
   if(id==='addSalaryModal') populateSel('salaryStaff',DB.staff,'name');
   if(id==='addTaskModal'){ populateSel('taskOwner',DB.staff,'name'); populateSel('taskCase',DB.cases,c=>c.num); }
+  if(id==='printAllCardsModal') renderAllCards();
 }
+
 function closeModal(id){ document.getElementById(id).classList.remove('active'); }
-document.querySelectorAll('.modal-overlay').forEach(m => { m.addEventListener('click', e => { if(e.target===m) m.classList.remove('active'); }); });
+document.querySelectorAll('.modal-overlay').forEach(m=>{ m.addEventListener('click',e=>{ if(e.target===m) m.classList.remove('active'); }); });
 
 function populateSel(selId, arr, labelFn){
   const sel = document.getElementById(selId); if(!sel) return;
   const first = sel.options[0]?.outerHTML || '<option value="">--</option>';
   sel.innerHTML = first;
-  arr.forEach(item => {
+  arr.forEach(item=>{
     const o = document.createElement('option');
     o.value = item.id;
     o.textContent = typeof labelFn==='function' ? labelFn(item) : item[labelFn];
     sel.appendChild(o);
   });
+}
+
+// Fill tawkeel num when client selected in case modal
+function fillCaseTawkeel(){
+  const clientId = document.getElementById('caseClient').value;
+  const client = DB.clients.find(x=>x.id===clientId);
+  document.getElementById('caseTawkeelNum').value = client ? (client.tawkeelNum||'') : '';
+}
+
+// Preview tawkeel image
+function previewTawkeel(event){
+  const file = event.target.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    document.getElementById('tawkeelImgData').value = e.target.result;
+    const wrap = document.getElementById('tawkeelImgPreviewWrap');
+    const img = document.getElementById('tawkeelImgPreview');
+    if(file.type.startsWith('image/')){
+      img.src = e.target.result;
+      wrap.style.display = 'block';
+    }
+  };
+  reader.readAsDataURL(file);
 }
 
 // ============================================================
@@ -1506,9 +1447,10 @@ function getClientName(id){ const c=DB.clients.find(x=>x.id===id); return c?c.na
 function getStaffName(id){ const s=DB.staff.find(x=>x.id===id); return s?s.name:'غير محدد'; }
 function getCaseName(id){ const c=DB.cases.find(x=>x.id===id); return c?c.num:'غير محدد'; }
 function getClientPhoto(clientId){ const c=DB.clients.find(x=>x.id===clientId); return c?c.photo:''; }
-function formatDate(d){ if(!d)return'-'; try{ return new Date(d).toLocaleDateString('ar-SA'); }catch(e){ return d; } }
+function formatDate(d){ if(!d)return'-'; try{ return new Date(d).toLocaleDateString('ar-EG'); }catch(e){ return d; } }
 function statusBadge(s){ const m={نشطة:'badge-active',معلقة:'badge-pending',مغلقة:'badge-closed',عاجلة:'badge-urgent',مؤرشفة:'archive-badge'}; return `<span class="badge ${m[s]||'badge-pending'}">${s}</span>`; }
 function calcHours(tIn,tOut){ if(!tIn||!tOut)return 0; const[h1,m1]=tIn.split(':').map(Number); const[h2,m2]=tOut.split(':').map(Number); return Math.max(0,(h2*60+m2-h1*60-m1)/60).toFixed(1); }
+function fmt(n){ return (+(n||0)).toLocaleString('ar-EG')+' ج.م'; }
 
 function showToast(msg, type='success'){
   const t = document.getElementById('toast');
@@ -1518,7 +1460,7 @@ function showToast(msg, type='success'){
   t.style.transform = 'translateX(-50%) translateY(0)';
   setTimeout(()=>{ t.style.transform = 'translateX(-50%) translateY(120px)'; }, 3000);
 }
-function logActivity(a){ if(!DB.activityLog)DB.activityLog=[]; DB.activityLog.unshift({action:a,time:new Date().toLocaleString('ar-SA')}); if(DB.activityLog.length>100)DB.activityLog.pop(); }
+function logActivity(a){ if(!DB.activityLog)DB.activityLog=[]; DB.activityLog.unshift({action:a,time:new Date().toLocaleString('ar-EG')}); if(DB.activityLog.length>100)DB.activityLog.pop(); }
 
 function previewPhoto(event,previewId,dataId){
   const file = event.target.files[0]; if(!file)return;
@@ -1540,6 +1482,82 @@ function renderAvatar(photo,name,size=36,fontSize=13){
 }
 
 // ============================================================
+// CLIENT CARD (PRINT)
+// ============================================================
+function buildClientCard(client){
+  const cases = DB.cases.filter(x=>x.clientId===client.id);
+  const caseInfo = cases.length ? cases.map(c=>`${c.num}`).join('، ') : 'لا توجد قضايا';
+  const caseDetails = cases.length ? cases.map(c=>`<div style="font-size:9px;color:rgba(255,255,255,.7);">⚖️ ${c.num} (${c.type}) - ${c.court}</div>`).join('') : '';
+  const avatarHtml = client.photo
+    ? `<img src="${client.photo}" style="width:100%;height:100%;object-fit:cover;">`
+    : `<span style="font-size:18px;font-weight:700;color:#07090D;">${client.name?client.name[0]:'م'}</span>`;
+
+  return `<div class="client-print-card" style="display:inline-block;">
+    <div class="card-print-header">
+      <div>
+        <div class="card-print-logo">AMG</div>
+        <div style="font-size:8px;color:rgba(201,168,76,.7);">للمحاماة والاستشارات القانونية</div>
+      </div>
+      <div style="text-align:left;font-size:9px;color:rgba(255,255,255,.5);">
+        <div>مصطفى محمد أباظة</div>
+        ${client.tawkeelDate ? `<div>${formatDate(client.tawkeelDate)}</div>` : ''}
+      </div>
+    </div>
+    <div class="card-print-body">
+      <div class="card-print-avatar">${avatarHtml}</div>
+      <div class="card-print-info">
+        <div class="name">${client.name}</div>
+        ${client.tawkeelNum ? `<div class="row"><i class="fas fa-file-contract"></i><span>توكيل: <strong style="color:#C9A84C;">${client.tawkeelNum}</strong></span></div>` : ''}
+        ${client.phone ? `<div class="row"><i class="fas fa-phone"></i><span>${client.phone}</span></div>` : ''}
+        ${client.idNum ? `<div class="row"><i class="fas fa-id-card"></i><span>${client.idNum}</span></div>` : ''}
+        ${cases.length ? `<div class="row" style="margin-top:4px;flex-direction:column;align-items:flex-start;gap:1px;"><span style="color:#C9A84C;font-weight:700;font-size:9px;margin-bottom:2px;">القضايا:</span>${caseDetails}</div>` : ''}
+      </div>
+    </div>
+    <div class="card-print-footer">
+      <span>© AMG Law 2026</span>
+      ${client.notes ? `<span style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${client.notes}</span>` : ''}
+    </div>
+  </div>`;
+}
+
+function openClientCard(id){
+  const client = DB.clients.find(x=>x.id===id); if(!client) return;
+  document.getElementById('clientCardPreview').innerHTML = buildClientCard(client);
+  openModal('clientCardModal');
+}
+
+function printClientCard(){
+  const content = document.getElementById('clientCardPreview').innerHTML;
+  const w = window.open('','_blank','width=400,height=350');
+  w.document.write(`<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>body{margin:20px;background:#1a1a2e;display:flex;justify-content:center;font-family:'Cairo',sans-serif;}
+    .client-print-card{width:85mm;background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);border-radius:8px;padding:12px;color:#fff;position:relative;overflow:hidden;font-family:'Cairo',sans-serif;box-shadow:0 8px 32px rgba(0,0,0,.4);}
+    .client-print-card::before{content:'';position:absolute;top:-20px;right:-20px;width:80px;height:80px;background:radial-gradient(circle,rgba(201,168,76,.3),transparent 70%);pointer-events:none;}
+    .card-print-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;border-bottom:1px solid rgba(201,168,76,.3);padding-bottom:8px;}
+    .card-print-logo{font-size:16px;font-weight:900;color:#C9A84C;}
+    .card-print-body{display:flex;gap:8px;}
+    .card-print-avatar{width:45px;height:45px;border-radius:50%;border:2px solid #C9A84C;overflow:hidden;flex-shrink:0;background:linear-gradient(135deg,#C9A84C,#8B6914);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#07090D;}
+    .card-print-avatar img{width:100%;height:100%;object-fit:cover;}
+    .card-print-info{flex:1;font-size:10px;}
+    .card-print-info .name{font-size:13px;font-weight:800;color:#C9A84C;margin-bottom:3px;}
+    .card-print-info .row{display:flex;gap:5px;margin-bottom:2px;color:rgba(255,255,255,.8);}
+    .card-print-info .row i{color:#C9A84C;width:12px;}
+    .card-print-footer{margin-top:8px;padding-top:6px;border-top:1px solid rgba(201,168,76,.2);display:flex;justify-content:space-between;align-items:center;font-size:9px;color:rgba(255,255,255,.5);}
+    @media print{body{background:#fff;}}</style>
+    </head><body>${content}</body></html>`);
+  w.document.close();
+  setTimeout(()=>{ w.print(); w.close(); }, 500);
+}
+
+function renderAllCards(){
+  const el = document.getElementById('allCardsPreview');
+  if(!DB.clients.length){ el.innerHTML='<p style="color:var(--text-muted);">لا يوجد موكلون مسجلون</p>'; return; }
+  el.innerHTML = DB.clients.map(c=>buildClientCard(c)).join('');
+}
+
+// ============================================================
 // THEME
 // ============================================================
 let isDark = true;
@@ -1547,9 +1565,9 @@ function toggleTheme(){
   isDark = !isDark;
   document.body.classList.toggle('light',!isDark);
   document.getElementById('themeIcon').className = isDark?'fas fa-sun':'fas fa-moon';
-  localStorage.setItem('agmTheme', isDark?'dark':'light');
+  localStorage.setItem('amgTheme', isDark?'dark':'light');
 }
-(function(){ const t=localStorage.getItem('agmTheme'); if(t==='light'){ isDark=false; document.body.classList.add('light'); document.getElementById('themeIcon').className='fas fa-moon'; } })();
+(function(){ const t=localStorage.getItem('amgTheme'); if(t==='light'){ isDark=false; document.body.classList.add('light'); document.getElementById('themeIcon').className='fas fa-moon'; } })();
 
 // ============================================================
 // SESSION ALERTS
@@ -1569,11 +1587,7 @@ function checkSessionAlerts(){
 
   const notifList = document.getElementById('notifList');
   const badge = document.getElementById('notifBadge');
-  if(!alerts.length){
-    if(notifList) notifList.innerHTML='<p style="padding:14px;color:var(--text-muted);font-size:12px;text-align:center;">لا توجد جلسات قريبة</p>';
-    if(badge) badge.style.display='none';
-    return;
-  }
+  if(!alerts.length){ if(notifList) notifList.innerHTML='<p style="padding:14px;color:var(--text-muted);font-size:12px;text-align:center;">لا توجد جلسات قريبة</p>'; if(badge) badge.style.display='none'; return; }
   if(badge){ badge.style.display='flex'; badge.textContent=alerts.length; }
   if(notifList) notifList.innerHTML = alerts.map(s=>{
     const d=new Date(s.date); d.setHours(0,0,0,0);
@@ -1594,15 +1608,15 @@ function openWhatsApp(name,phone,caseNum=''){
   waCurrentName=name; waCurrentPhone=phone;
   document.getElementById('waRecipient').value=name;
   document.getElementById('waPhone').value=phone;
-  document.getElementById('waMessage').value=`السلام عليكم ورحمة الله وبركاته،\nحضرة الموكل الكريم ${name}،\n\nنأمل أن تكون في تمام الصحة والعافية.\n\n${caseNum?'بخصوص القضية رقم '+caseNum+'، ':''}يسعدنا خدمتكم.\n\nمع تحيات مؤسسة AGM للمحاماة والاستشارات القانونية`;
+  document.getElementById('waMessage').value=`السلام عليكم ورحمة الله وبركاته،\nحضرة الموكل الكريم ${name}،\n\n${caseNum?'بخصوص القضية رقم '+caseNum+'، ':''}يسعدنا خدمتكم.\n\nمع تحيات مؤسسة AMG للمحاماة والاستشارات القانونية ⚖️`;
   openModal('whatsappModal');
 }
 function setWATemplate(type){
   const name=waCurrentName;
   const templates={
-    reminder:`السلام عليكم ${name}،\n\nتذكير بموعد جلسة قضيتكم القادمة.\nيُرجى التواصل معنا لمزيد من التفاصيل.\n\nمؤسسة AGM للمحاماة ⚖️`,
-    payment:`السلام عليكم ${name}،\n\nنود التذكير بالدفعة المستحقة لقضيتكم.\nيُرجى التواصل مع المؤسسة لترتيب السداد.\n\nمع تحيات مؤسسة AGM ⚖️`,
-    greeting:`السلام عليكم ${name}،\n\nيسعدنا دائماً خدمتكم في مؤسسة AGM للمحاماة والاستشارات القانونية.\n\nنحن هنا لخدمتكم على مدار الساعة. ⚖️`
+    reminder:`السلام عليكم ${name}،\n\nتذكير بموعد جلسة قضيتكم القادمة.\nيُرجى التواصل معنا لمزيد من التفاصيل.\n\nمؤسسة AMG للمحاماة ⚖️`,
+    payment:`السلام عليكم ${name}،\n\nنود التذكير بالدفعة المستحقة لقضيتكم.\nيُرجى التواصل مع المؤسسة لترتيب السداد.\n\nمع تحيات مؤسسة AMG ⚖️`,
+    greeting:`السلام عليكم ${name}،\n\nيسعدنا دائماً خدمتكم في مؤسسة AMG للمحاماة والاستشارات القانونية.\n\nنحن هنا لخدمتكم على مدار الساعة. ⚖️`
   };
   document.getElementById('waMessage').value=templates[type]||'';
 }
@@ -1628,7 +1642,7 @@ function renderDashboard(){
   document.getElementById('stat-active').textContent=active;
   document.getElementById('stat-clients').textContent=DB.clients.length;
   document.getElementById('stat-sessions').textContent=weekSess;
-  document.getElementById('stat-revenue').textContent=revenue.toLocaleString('ar-SA')+' ر.س';
+  document.getElementById('stat-revenue').textContent=revenue.toLocaleString('ar-EG')+' ج.م';
   document.getElementById('stat-delayed').textContent=urgent;
   document.getElementById('stat-staff').textContent=DB.staff.length;
   document.getElementById('casesCount').textContent=active+urgent;
@@ -1642,8 +1656,8 @@ function renderDashboard(){
       <div><i class="fas fa-check-circle" style="color:var(--success);margin-left:6px;"></i>مغلقة: <strong style="color:var(--success);">${closed}</strong></div>
       <div><i class="fas fa-bolt" style="color:var(--danger);margin-left:6px;"></i>عاجلة: <strong style="color:var(--danger);">${urgent}</strong></div>
       <div><i class="fas fa-users" style="color:#3B82F6;margin-left:6px;"></i>الموكلون: <strong style="color:#3B82F6;">${DB.clients.length}</strong></div>
-      <div><i class="fas fa-coins" style="color:#10B981;margin-left:6px;"></i>الإيرادات: <strong style="color:#10B981;">${revenue.toLocaleString('ar-SA')} ر.س</strong></div>
-      <div><i class="fas fa-chart-line" style="color:#8B5CF6;margin-left:6px;"></i>صافي الربح: <strong style="color:#8B5CF6;">${net.toLocaleString('ar-SA')} ر.س</strong></div>
+      <div><i class="fas fa-coins" style="color:#10B981;margin-left:6px;"></i>الإيرادات: <strong style="color:#10B981;">${fmt(revenue)}</strong></div>
+      <div><i class="fas fa-chart-line" style="color:#8B5CF6;margin-left:6px;"></i>صافي الربح: <strong style="color:#8B5CF6;">${fmt(net)}</strong></div>
       <div><i class="fas fa-tasks" style="color:var(--warning);margin-left:6px;"></i>المهام المعلقة: <strong style="color:var(--warning);">${pendingTasks}</strong></div>
       <div><i class="fas fa-user-tie" style="color:var(--gold);margin-left:6px;"></i>الموظفون: <strong style="color:var(--gold);">${DB.staff.length}</strong></div>
     </div>`;
@@ -1686,14 +1700,15 @@ function addCase(){
   const clientId=document.getElementById('caseClient').value;
   if(!num||!clientId){ showToast('الرجاء إدخال رقم القضية والموكل','error'); return; }
   if(!editId && DB.cases.find(c=>c.num===num)){ showToast('رقم القضية موجود مسبقاً','error'); return; }
-  const data={num,type:document.getElementById('caseType').value,clientId,lawyerId:document.getElementById('caseLawyer').value,court:document.getElementById('caseCourt').value.trim(),division:document.getElementById('caseDivision').value.trim(),date:document.getElementById('caseDate').value,status:document.getElementById('caseStatus').value,notes:document.getElementById('caseNotes').value.trim(),fee:+document.getElementById('caseFee').value||0,paid:+document.getElementById('casePaid').value||0,archived:false};
+  const client = DB.clients.find(x=>x.id===clientId);
+  const data={num,type:document.getElementById('caseType').value,clientId,lawyerId:document.getElementById('caseLawyer').value,court:document.getElementById('caseCourt').value.trim(),division:document.getElementById('caseDivision').value.trim(),date:document.getElementById('caseDate').value,status:document.getElementById('caseStatus').value,notes:document.getElementById('caseNotes').value.trim(),fee:+document.getElementById('caseFee').value||0,paid:+document.getElementById('casePaid').value||0,tawkeelNum:client?client.tawkeelNum:'',archived:false};
   if(editId){ const c=DB.cases.find(x=>x.id===editId); if(c)Object.assign(c,data); logActivity('تعديل قضية: '+num); }
   else{ DB.cases.push({id:genId(),...data,createdAt:new Date().toISOString()}); logActivity('إضافة قضية: '+num); }
   saveDB(); closeModal('addCaseModal'); renderCases(); showToast(editId?'تم تعديل القضية':'تم إضافة القضية بنجاح');
   document.getElementById('editCaseId').value='';
   document.getElementById('caseModalTitle').textContent='إضافة قضية جديدة';
   document.getElementById('caseSaveBtn').textContent='حفظ القضية';
-  ['caseNum','caseCourt','caseDivision','caseDate','caseNotes','caseFee','casePaid'].forEach(id=>{ const el=document.getElementById(id); if(el)el.value=''; });
+  ['caseNum','caseCourt','caseDivision','caseDate','caseNotes','caseFee','casePaid','caseTawkeelNum'].forEach(id=>{ const el=document.getElementById(id); if(el)el.value=''; });
 }
 
 function editCase(id){
@@ -1706,6 +1721,7 @@ function editCase(id){
     document.getElementById('caseNum').value=c.num;
     document.getElementById('caseType').value=c.type;
     document.getElementById('caseClient').value=c.clientId;
+    document.getElementById('caseTawkeelNum').value=c.tawkeelNum||'';
     document.getElementById('caseLawyer').value=c.lawyerId;
     document.getElementById('caseCourt').value=c.court;
     document.getElementById('caseDivision').value=c.division||'';
@@ -1736,11 +1752,16 @@ function renderCases(){
   document.getElementById('caseCardsGrid').innerHTML=cases.map(c=>{
     const remaining=(c.fee||0)-(c.paid||0);
     const pct=c.fee?Math.min(100,Math.round((c.paid||0)/(c.fee||1)*100)):0;
+    const client=DB.clients.find(x=>x.id===c.clientId);
     let sessionAlert='';
-    if(c.date){ const d=new Date(c.date); d.setHours(0,0,0,0); const diff=(d-today)/(1000*60*60*24); if(diff>=0&&diff<=3)sessionAlert=`<span class="badge badge-urgent" style="font-size:9px;"><i class="fas fa-bell"></i> ${diff===0?'اليوم':diff===1?'غداً':'قريباً'}</span>`; }
-    return `<div class="case-card" style="--case-accent:${caseAccents[c.status]||'linear-gradient(90deg,var(--gold),var(--gold-dark))'};animation:fadeIn .3s ease;">
+    if(c.date){ const d=new Date(c.date); d.setHours(0,0,0,0); const diff=(d-today)/(1000*60*60*24); if(diff>=0&&diff<=3) sessionAlert=`<span class="badge badge-urgent" style="font-size:9px;"><i class="fas fa-bell"></i> ${diff===0?'اليوم':diff===1?'غداً':'قريباً'}</span>`; }
+    return `<div class="case-card" style="--case-accent:${caseAccents[c.status]||'linear-gradient(90deg,var(--gold),var(--gold-dark))'};">
       <div class="cc-top">
-        <div><div class="cc-num gold-text">${c.num}</div><div style="font-size:11px;color:var(--text-muted);margin-top:2px;">${typeIcons[c.type]||'⚖️'} ${c.type}</div></div>
+        <div>
+          <div class="cc-num gold-text">${c.num}</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">${typeIcons[c.type]||'⚖️'} ${c.type}</div>
+          ${c.tawkeelNum||client?.tawkeelNum ? `<div style="font-size:10px;color:rgba(201,168,76,.7);margin-top:1px;"><i class="fas fa-file-contract" style="margin-left:3px;"></i>توكيل: ${c.tawkeelNum||client?.tawkeelNum}</div>` : ''}
+        </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;">${statusBadge(c.status)}${sessionAlert}</div>
       </div>
       <div class="cc-body">
@@ -1753,11 +1774,11 @@ function renderCases(){
       <div class="cc-progress"><div class="cc-progress-bar" style="width:${pct}%"></div></div>
       <div style="font-size:9px;color:var(--text-muted);padding:4px 18px;display:flex;justify-content:space-between;">
         <span>المدفوع ${pct}%</span>
-        <span style="color:${remaining>0?'var(--danger)':'var(--success)'};">${remaining>0?'متبقي '+remaining.toLocaleString('ar-SA')+' ر.س':'✓ مكتمل'}</span>
+        <span style="color:${remaining>0?'var(--danger)':'var(--success)'};">${remaining>0?'متبقي '+remaining.toLocaleString('ar-EG')+' ج.م':'✓ مكتمل'}</span>
       </div>
       <div class="cc-divider"></div>
       <div class="cc-footer">
-        <div class="cc-fee-block"><span class="fee-label">الأتعاب الكلية</span><span class="fee-val gold-text">${(c.fee||0).toLocaleString('ar-SA')} ر.س</span></div>
+        <div class="cc-fee-block"><span class="fee-label">الأتعاب الكلية</span><span class="fee-val gold-text">${(c.fee||0).toLocaleString('ar-EG')} ج.م</span></div>
         <div class="cc-actions">
           <button onclick="viewCase('${c.id}')" class="btn-edit btn-sm" title="عرض"><i class="fas fa-eye"></i></button>
           <button onclick="editCase('${c.id}')" style="background:rgba(245,158,11,.1);color:#F59E0B;border:1px solid rgba(245,158,11,.25);padding:5px 8px;border-radius:6px;font-size:11px;cursor:pointer;" title="تعديل"><i class="fas fa-edit"></i></button>
@@ -1771,11 +1792,11 @@ function renderCases(){
   document.getElementById('casesBody').innerHTML=cases.map(c=>{
     const remaining=(c.fee||0)-(c.paid||0);
     return `<tr>
-      <td><span style="color:var(--gold);font-weight:700;">${c.num}</span></td>
+      <td><div style="font-size:11px;"><span style="color:var(--gold);font-weight:700;">${c.num}</span>${c.tawkeelNum?`<br><span style="color:rgba(201,168,76,.6);font-size:10px;">توكيل: ${c.tawkeelNum}</span>`:''}</div></td>
       <td><div style="display:flex;align-items:center;gap:7px;">${renderAvatar(getClientPhoto(c.clientId),getClientName(c.clientId),26,10)}${getClientName(c.clientId)}</div></td>
       <td>${c.type}</td><td>${c.court}</td><td>${getStaffName(c.lawyerId)}</td>
       <td>${c.date?formatDate(c.date):'-'}</td><td>${statusBadge(c.status)}</td>
-      <td style="font-size:11px;">${(c.fee||0).toLocaleString('ar-SA')}<br><span style="color:${remaining>0?'var(--danger)':'var(--success)'};">${remaining>0?'متبقي: '+remaining.toLocaleString('ar-SA'):'✓'}</span></td>
+      <td style="font-size:11px;">${(c.fee||0).toLocaleString('ar-EG')} ج.م<br><span style="color:${remaining>0?'var(--danger)':'var(--success)'};">${remaining>0?'متبقي: '+remaining.toLocaleString('ar-EG'):' ✓'}</span></td>
       <td><div style="display:flex;gap:3px;">
         <button onclick="viewCase('${c.id}')" class="btn-edit btn-sm"><i class="fas fa-eye"></i></button>
         <button onclick="editCase('${c.id}')" style="background:rgba(245,158,11,.1);color:#F59E0B;border:1px solid rgba(245,158,11,.25);padding:4px 7px;border-radius:6px;font-size:11px;cursor:pointer;"><i class="fas fa-edit"></i></button>
@@ -1793,29 +1814,35 @@ function archiveCase(id){ const c=DB.cases.find(x=>x.id===id); if(!c)return; c.a
 
 function viewCase(id){
   const c=DB.cases.find(x=>x.id===id); if(!c)return;
+  const client=DB.clients.find(x=>x.id===c.clientId);
   const remaining=(c.fee||0)-(c.paid||0);
   const caseSessions=DB.sessions.filter(s=>s.caseId===id);
   const casePayments=DB.payments.filter(p=>p.caseId===id);
   const caseLogs=DB.sessionLogs.filter(l=>l.caseId===id);
+  const tawkeelNum=c.tawkeelNum||client?.tawkeelNum||'غير مسجل';
+  const tawkeelDate=client?.tawkeelDate||'';
   document.getElementById('caseDetailContent').innerHTML=`
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:11px;font-size:12px;margin-bottom:14px;">
       <div><span style="color:var(--text-muted);">رقم القضية:</span> <strong style="color:var(--gold);">${c.num}</strong></div>
       <div><span style="color:var(--text-muted);">النوع:</span> <strong>${c.type}</strong></div>
       <div><span style="color:var(--text-muted);">الموكل:</span> <strong>${getClientName(c.clientId)}</strong></div>
       <div><span style="color:var(--text-muted);">المحامي:</span> <strong>${getStaffName(c.lawyerId)}</strong></div>
+      <div><span style="color:var(--text-muted);">رقم التوكيل:</span> <strong style="color:var(--gold);">${tawkeelNum}</strong></div>
+      <div><span style="color:var(--text-muted);">تاريخ التوكيل:</span> <strong>${formatDate(tawkeelDate)}</strong></div>
       <div><span style="color:var(--text-muted);">المحكمة:</span> <strong>${c.court}</strong></div>
       <div><span style="color:var(--text-muted);">الجلسة القادمة:</span> <strong>${formatDate(c.date)}</strong></div>
       <div><span style="color:var(--text-muted);">الحالة:</span> ${statusBadge(c.status)}</div>
-      <div><span style="color:var(--text-muted);">الأتعاب:</span> <strong style="color:var(--gold);">${(c.fee||0).toLocaleString('ar-SA')} ر.س</strong></div>
-      <div><span style="color:var(--text-muted);">المدفوع:</span> <strong style="color:var(--success);">${(c.paid||0).toLocaleString('ar-SA')} ر.س</strong></div>
-      <div><span style="color:var(--text-muted);">المتبقي:</span> <strong style="color:${remaining>0?'var(--danger)':'var(--success)'};">${remaining.toLocaleString('ar-SA')} ر.س</strong></div>
+      <div><span style="color:var(--text-muted);">الأتعاب:</span> <strong style="color:var(--gold);">${fmt(c.fee)}</strong></div>
+      <div><span style="color:var(--text-muted);">المدفوع:</span> <strong style="color:var(--success);">${fmt(c.paid)}</strong></div>
+      <div><span style="color:var(--text-muted);">المتبقي:</span> <strong style="color:${remaining>0?'var(--danger)':'var(--success)'};">${fmt(remaining)}</strong></div>
+      ${client?.notes?`<div style="grid-column:span 2;"><span style="color:var(--text-muted);">بيانات التوكيل:</span> ${client.notes}</div>`:''}
       <div style="grid-column:span 2;"><span style="color:var(--text-muted);">ملاحظات:</span> ${c.notes||'لا توجد'}</div>
     </div>
     <div style="margin-bottom:10px;"><div style="font-size:11px;font-weight:700;color:var(--gold);margin-bottom:6px;">📅 الجلسات (${caseSessions.length})</div>${caseSessions.map(s=>`<div style="font-size:11px;padding:4px 8px;background:var(--dark3);border-radius:5px;margin-bottom:4px;">${formatDate(s.date)} ${s.time||''} - ${s.court||'-'}</div>`).join('')||'<div style="font-size:11px;color:var(--text-muted);">لا توجد</div>'}</div>
     <div style="margin-bottom:10px;"><div style="font-size:11px;font-weight:700;color:var(--gold);margin-bottom:6px;">📜 سجل الجلسات (${caseLogs.length})</div>${caseLogs.map(l=>`<div style="font-size:11px;padding:6px 8px;background:var(--dark3);border-radius:5px;margin-bottom:4px;border-right:2px solid var(--gold);">${formatDate(l.date)} - ${l.result} - ${l.what.substring(0,60)}...</div>`).join('')||'<div style="font-size:11px;color:var(--text-muted);">لا توجد</div>'}</div>
-    <div><div style="font-size:11px;font-weight:700;color:var(--gold);margin-bottom:6px;">💰 المدفوعات (${casePayments.length})</div>${casePayments.map(p=>`<div style="font-size:11px;padding:4px 8px;background:var(--dark3);border-radius:5px;margin-bottom:4px;">${p.desc} - ${(+p.amount).toLocaleString('ar-SA')} ر.س</div>`).join('')||'<div style="font-size:11px;color:var(--text-muted);">لا توجد</div>'}</div>`;
+    <div><div style="font-size:11px;font-weight:700;color:var(--gold);margin-bottom:6px;">💰 المدفوعات (${casePayments.length})</div>${casePayments.map(p=>`<div style="font-size:11px;padding:4px 8px;background:var(--dark3);border-radius:5px;margin-bottom:4px;">${p.desc} - ${fmt(p.amount)}</div>`).join('')||'<div style="font-size:11px;color:var(--text-muted);">لا توجد</div>'}</div>`;
   document.getElementById('qrcode').innerHTML='';
-  try{ new QRCode(document.getElementById('qrcode'),{text:`AGM|${c.num}|${getClientName(c.clientId)}|${c.status}`,width:70,height:70,colorDark:'#C9A84C',colorLight:'#111827'}); }catch(e){}
+  try{ new QRCode(document.getElementById('qrcode'),{text:`AMG|${c.num}|${tawkeelNum}|${getClientName(c.clientId)}|${c.status}`,width:70,height:70,colorDark:'#C9A84C',colorLight:'#111827'}); }catch(e){}
   openModal('caseDetailModal');
 }
 
@@ -1826,7 +1853,18 @@ function addClient(){
   const editId=document.getElementById('editClientId').value;
   const name=document.getElementById('clientName').value.trim();
   if(!name){ showToast('الرجاء إدخال الاسم','error'); return; }
-  const data={name,phone:document.getElementById('clientPhone').value.trim(),email:document.getElementById('clientEmail').value.trim(),idNum:document.getElementById('clientID').value.trim(),address:document.getElementById('clientAddress').value.trim(),notes:document.getElementById('clientNotes').value.trim(),photo:document.getElementById('clientPhotoData').value||''};
+  const data={
+    name,
+    phone:document.getElementById('clientPhone').value.trim(),
+    email:document.getElementById('clientEmail').value.trim(),
+    idNum:document.getElementById('clientID').value.trim(),
+    address:document.getElementById('clientAddress').value.trim(),
+    notes:document.getElementById('clientNotes').value.trim(),
+    photo:document.getElementById('clientPhotoData').value||'',
+    tawkeelNum:document.getElementById('clientTawkeelNum').value.trim(),
+    tawkeelDate:document.getElementById('clientTawkeelDate').value,
+    tawkeelImg:document.getElementById('tawkeelImgData').value||''
+  };
   if(editId){ const c=DB.clients.find(x=>x.id===editId); if(c)Object.assign(c,data); logActivity('تعديل موكل: '+name); }
   else{ DB.clients.push({id:genId(),...data,createdAt:new Date().toISOString()}); logActivity('إضافة موكل: '+name); }
   saveDB(); closeModal('addClientModal'); renderClients(); showToast(editId?'تم تعديل الموكل':'تم إضافة الموكل');
@@ -1835,8 +1873,11 @@ function addClient(){
   document.getElementById('clientSaveBtn').textContent='حفظ الموكل';
   document.getElementById('clientPhotoPreview').innerHTML='👤';
   document.getElementById('clientPhotoData').value='';
-  ['clientName','clientPhone','clientEmail','clientID','clientAddress','clientNotes'].forEach(id=>{ const el=document.getElementById(id); if(el)el.value=''; });
+  document.getElementById('tawkeelImgData').value='';
+  document.getElementById('tawkeelImgPreviewWrap').style.display='none';
+  ['clientName','clientPhone','clientEmail','clientID','clientAddress','clientNotes','clientTawkeelNum','clientTawkeelDate'].forEach(id=>{ const el=document.getElementById(id); if(el)el.value=''; });
 }
+
 function editClient(id){
   const c=DB.clients.find(x=>x.id===id); if(!c)return;
   document.getElementById('editClientId').value=id;
@@ -1850,9 +1891,13 @@ function editClient(id){
     document.getElementById('clientID').value=c.idNum||'';
     document.getElementById('clientAddress').value=c.address||'';
     document.getElementById('clientNotes').value=c.notes||'';
+    document.getElementById('clientTawkeelNum').value=c.tawkeelNum||'';
+    document.getElementById('clientTawkeelDate').value=c.tawkeelDate||'';
     if(c.photo){ document.getElementById('clientPhotoPreview').innerHTML=`<img src="${c.photo}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`; document.getElementById('clientPhotoData').value=c.photo; }
+    if(c.tawkeelImg){ document.getElementById('tawkeelImgData').value=c.tawkeelImg; document.getElementById('tawkeelImgPreview').src=c.tawkeelImg; document.getElementById('tawkeelImgPreviewWrap').style.display='block'; }
   },100);
 }
+
 function renderClients(){
   const grid=document.getElementById('clientsGrid');
   const empty=document.getElementById('clientsEmpty');
@@ -1866,10 +1911,12 @@ function renderClients(){
       <div class="card-avatar">${c.photo?`<img src="${c.photo}" style="width:100%;height:100%;object-fit:cover;">`:'<span style="font-size:26px;">'+c.name[0]+'</span>'}</div>
       <div class="card-body">
         <div style="font-size:14px;font-weight:800;margin-bottom:3px;">${c.name}</div>
-        <div style="font-size:10px;color:var(--gold);margin-bottom:10px;">موكل مسجل</div>
+        ${c.tawkeelNum?`<div style="font-size:10px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.25);border-radius:6px;padding:2px 8px;display:inline-block;margin-bottom:8px;color:var(--gold);font-weight:700;"><i class="fas fa-file-contract" style="margin-left:4px;"></i>توكيل: ${c.tawkeelNum}</div>`:'<div style="font-size:10px;color:var(--text-muted);margin-bottom:8px;">موكل مسجل</div>'}
+        ${c.tawkeelDate?`<div style="font-size:10px;color:var(--text-muted);margin-bottom:4px;"><i class="fas fa-calendar" style="color:var(--gold);margin-left:5px;width:14px;"></i>تاريخ التوكيل: ${formatDate(c.tawkeelDate)}</div>`:''}
         ${c.phone?`<div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;"><i class="fas fa-phone" style="color:var(--gold);margin-left:5px;width:14px;"></i>${c.phone}</div>`:''}
-        ${c.email?`<div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><i class="fas fa-envelope" style="color:var(--gold);margin-left:5px;width:14px;"></i>${c.email}</div>`:''}
+        ${c.idNum?`<div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;"><i class="fas fa-id-card" style="color:var(--gold);margin-left:5px;width:14px;"></i>${c.idNum}</div>`:''}
         ${c.address?`<div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;"><i class="fas fa-map-marker-alt" style="color:var(--gold);margin-left:5px;width:14px;"></i>${c.address}</div>`:''}
+        ${c.tawkeelImg?`<div style="margin-top:8px;"><img src="${c.tawkeelImg}" style="max-width:100%;max-height:60px;border-radius:6px;border:1px solid rgba(201,168,76,.3);" title="صورة التوكيل"></div>`:''}
         <div style="display:flex;gap:8px;margin-top:10px;">
           <span style="font-size:11px;color:var(--success);"><i class="fas fa-gavel"></i> ${cc} قضية</span>
           ${activeCases?`<span class="badge badge-active">${activeCases} نشطة</span>`:''}
@@ -1877,6 +1924,7 @@ function renderClients(){
         <div class="card-actions">
           ${c.phone?`<button class="btn-whatsapp" onclick="openWhatsApp('${c.name}','${c.phone}','')"><i class="fab fa-whatsapp"></i> واتساب</button>`:''}
           <button class="btn-edit" onclick="editClient('${c.id}')"><i class="fas fa-edit"></i> تعديل</button>
+          <button onclick="openClientCard('${c.id}')" style="background:rgba(201,168,76,.1);color:var(--gold);border:1px solid rgba(201,168,76,.3);padding:5px 10px;border-radius:6px;font-family:'Cairo';font-size:11px;cursor:pointer;display:inline-flex;align-items:center;gap:4px;"><i class="fas fa-id-card"></i> كارت</button>
           <button class="btn-danger btn-sm" onclick="deleteClient('${c.id}')"><i class="fas fa-trash"></i></button>
         </div>
       </div>
@@ -1938,7 +1986,7 @@ function renderStaff(){
         <div style="font-size:14px;font-weight:800;margin-bottom:3px;">${s.name}</div>
         <div style="font-size:10px;padding:2px 8px;border-radius:9px;background:rgba(255,255,255,.06);color:${roleColor[s.role]||'#C9A84C'};display:inline-block;margin-bottom:10px;border:1px solid rgba(255,255,255,.1);">${s.role}</div>
         ${s.phone?`<div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;"><i class="fas fa-phone" style="color:var(--gold);margin-left:5px;width:14px;"></i>${s.phone}</div>`:''}
-        ${s.salary?`<div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;"><i class="fas fa-money-bill-wave" style="color:var(--gold);margin-left:5px;width:14px;"></i>${s.salary.toLocaleString('ar-SA')} ر.س</div>`:''}
+        ${s.salary?`<div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;"><i class="fas fa-money-bill-wave" style="color:var(--gold);margin-left:5px;width:14px;"></i>${fmt(s.salary)}</div>`:''}
         <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;">
           <span style="font-size:11px;color:var(--gold);"><i class="fas fa-gavel"></i> ${cases} قضية</span>
           <span class="badge ${aStatus}">${todayRec?todayRec.status:'غير مسجل'}</span>
@@ -1978,7 +2026,7 @@ function renderAttendance(){
     {label:'حاضرون',val:present,color:'var(--success)',icon:'fa-user-check'},
     {label:'غائبون',val:absent,color:'var(--danger)',icon:'fa-user-times'},
     {label:'إجازة',val:leave,color:'var(--blue)',icon:'fa-umbrella-beach'},
-    {label:'إجمالي الخصومات',val:totalDeduct.toLocaleString('ar-SA')+' ر.س',color:'var(--warning)',icon:'fa-minus-circle'}
+    {label:'إجمالي الخصومات',val:fmt(totalDeduct),color:'var(--warning)',icon:'fa-minus-circle'}
   ].map(s=>`<div class="stat-card" style="--accent:linear-gradient(90deg,${s.color},${s.color});"><div style="font-size:9px;color:var(--text-muted);font-weight:700;margin-bottom:6px;">${s.label}</div><div style="font-size:22px;font-weight:900;color:${s.color};">${s.val}</div></div>`).join('');
   if(!records.length){ tbody.innerHTML=''; empty.style.display='block'; return; }
   empty.style.display='none';
@@ -2022,19 +2070,23 @@ function renderCalendar(){
   }
   document.getElementById('calGrid').innerHTML=html;
   const sorted=[...DB.sessions].sort((a,b)=>new Date(a.date)-new Date(b.date));
-  document.getElementById('sessionsList').innerHTML=sorted.length?sorted.map(s=>`
-    <div style="padding:9px 11px;border-radius:9px;background:var(--dark3);margin-bottom:7px;border-right:3px solid var(--gold);">
+  document.getElementById('sessionsList').innerHTML=sorted.length?sorted.map(s=>{
+    const c=DB.cases.find(x=>x.id===s.caseId);
+    const client=c?DB.clients.find(x=>x.id===c.clientId):null;
+    return `<div style="padding:9px 11px;border-radius:9px;background:var(--dark3);margin-bottom:7px;border-right:3px solid var(--gold);">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;">
         <span style="font-size:12px;font-weight:600;">${getCaseName(s.caseId)}</span>
         <span style="font-size:10px;color:var(--gold);">${s.time||''}</span>
       </div>
+      ${client?`<div style="font-size:10px;color:rgba(201,168,76,.7);margin-bottom:2px;"><i class="fas fa-user" style="margin-left:3px;"></i>${client.name}</div>`:''}
       <div style="font-size:10px;color:var(--text-muted);">${formatDate(s.date)} • ${s.court||'-'}</div>
       ${s.notes?`<div style="font-size:10px;color:var(--text-muted);margin-top:2px;">${s.notes}</div>`:''}
       <div style="display:flex;gap:5px;margin-top:6px;">
         <button onclick="openWhatsAppSession('${s.caseId}')" class="btn-whatsapp" style="font-size:10px;"><i class="fab fa-whatsapp"></i></button>
         <button onclick="deleteSession('${s.id}')" class="btn-danger btn-sm"><i class="fas fa-trash"></i></button>
       </div>
-    </div>`).join(''):'<p style="color:var(--text-muted);font-size:12px;text-align:center;padding:20px;">لا توجد جلسات</p>';
+    </div>`;
+  }).join(''):'<p style="color:var(--text-muted);font-size:12px;text-align:center;padding:20px;">لا توجد جلسات</p>';
 }
 function openWhatsAppSession(caseId){ const c=DB.cases.find(x=>x.id===caseId); if(!c)return; const client=DB.clients.find(x=>x.id===c.clientId); if(!client||!client.phone){ showToast('لا يوجد رقم هاتف للموكل','error'); return; } openWhatsApp(client.name,client.phone,c.num); }
 function deleteSession(id){ if(!confirm('حذف هذه الجلسة؟'))return; DB.sessions=DB.sessions.filter(s=>s.id!==id); saveDB(); renderCalendar(); showToast('تم الحذف','warning'); checkSessionAlerts(); }
@@ -2128,15 +2180,43 @@ function addPayment(){
   const amount=+document.getElementById('payAmount').value;
   if(!client||!amount){ showToast('الرجاء إدخال الموكل والمبلغ','error'); return; }
   DB.payments.push({id:genId(),client,caseId:document.getElementById('payCase').value,desc:document.getElementById('payDesc').value.trim(),type:document.getElementById('payType').value,amount,date:document.getElementById('payDate').value,status:document.getElementById('payStatus').value});
-  saveDB(); logActivity('تسجيل دفعة: '+amount); closeModal('addPaymentModal'); renderFinance(); showToast('تم تسجيل الدفعة');
+  saveDB(); logActivity('تسجيل دفعة: '+amount+' ج.م'); closeModal('addPaymentModal'); renderFinance(); showToast('تم تسجيل الدفعة');
 }
 function renderFinance(){
   const income=DB.payments.filter(p=>p.type==='إيراد').reduce((a,b)=>a+(+b.amount),0);
   const expense=DB.payments.filter(p=>p.type==='مصروف').reduce((a,b)=>a+(+b.amount),0);
-  document.getElementById('totalIncome').textContent=income.toLocaleString('ar-SA')+' ر.س';
-  document.getElementById('totalExpense').textContent=expense.toLocaleString('ar-SA')+' ر.س';
-  document.getElementById('netProfit').textContent=(income-expense).toLocaleString('ar-SA')+' ر.س';
-  document.getElementById('stat-revenue').textContent=income.toLocaleString('ar-SA')+' ر.س';
+  const totalFee=DB.cases.reduce((a,b)=>a+(+b.fee||0),0);
+  const totalPaid=DB.cases.reduce((a,b)=>a+(+b.paid||0),0);
+  document.getElementById('totalIncome').textContent=fmt(income);
+  document.getElementById('totalExpense').textContent=fmt(expense);
+  document.getElementById('totalCaseFees').textContent=fmt(totalFee);
+  document.getElementById('netProfit').textContent=fmt(income-expense);
+  document.getElementById('stat-revenue').textContent=income.toLocaleString('ar-EG')+' ج.م';
+
+  // Case fees table
+  const caseFeesBody=document.getElementById('caseFeesBody');
+  if(caseFeesBody){
+    caseFeesBody.innerHTML=DB.cases.length?DB.cases.map(c=>{
+      const remaining=(c.fee||0)-(c.paid||0);
+      const pct=c.fee?Math.min(100,Math.round((c.paid||0)/(c.fee||1)*100)):0;
+      return `<tr>
+        <td style="color:var(--gold);font-weight:700;">${c.num}</td>
+        <td>${getClientName(c.clientId)}</td>
+        <td style="color:var(--gold);">${fmt(c.fee)}</td>
+        <td style="color:var(--success);">${fmt(c.paid)}</td>
+        <td style="color:${remaining>0?'var(--danger)':'var(--success)'};">${fmt(remaining)}</td>
+        <td>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div style="flex:1;height:6px;background:var(--dark3);border-radius:3px;overflow:hidden;min-width:60px;">
+              <div style="width:${pct}%;height:100%;background:linear-gradient(90deg,var(--gold),var(--success));border-radius:3px;"></div>
+            </div>
+            <span style="font-size:11px;font-weight:700;color:${pct>=100?'var(--success)':'var(--warning)'};">${pct}%</span>
+          </div>
+        </td>
+      </tr>`;
+    }).join(''):'<tr><td colspan="6" style="text-align:center;color:var(--text-muted);">لا توجد قضايا</td></tr>';
+  }
+
   const tbody=document.getElementById('paymentsBody');
   const empty=document.getElementById('paymentsEmpty');
   if(!DB.payments.length){ tbody.innerHTML=''; empty.style.display='block'; return; }
@@ -2147,7 +2227,7 @@ function renderFinance(){
       <td>${p.client}${p.caseId?`<br><span style="font-size:10px;color:var(--gold);">${getCaseName(p.caseId)}</span>`:''}</td>
       <td>${p.desc}</td>
       <td><span class="badge ${p.type==='إيراد'?'badge-active':'badge-urgent'}">${p.type}</span></td>
-      <td style="font-weight:700;color:${p.type==='إيراد'?'var(--success)':'var(--danger)'};">${p.type==='إيراد'?'+':'-'}${(+p.amount).toLocaleString('ar-SA')} ر.س</td>
+      <td style="font-weight:700;color:${p.type==='إيراد'?'var(--success)':'var(--danger)'};">${p.type==='إيراد'?'+':'-'}${fmt(p.amount)}</td>
       <td><span class="badge ${p.status==='مدفوع'?'badge-active':'badge-pending'}">${p.status}</span></td>
       <td><button onclick="deletePayment('${p.id}')" class="btn-danger btn-sm"><i class="fas fa-trash"></i></button></td>
     </tr>`).join('');
@@ -2165,9 +2245,9 @@ function addSalary(){
   saveDB(); logActivity('صرف راتب'); closeModal('addSalaryModal'); renderPayroll(); showToast('تم صرف الراتب');
 }
 function renderPayroll(){
-  document.getElementById('totalSalaries').textContent=DB.salaries.reduce((a,b)=>a+(+b.base||0),0).toLocaleString('ar-SA')+' ر.س';
-  document.getElementById('totalDeductions').textContent=DB.salaries.reduce((a,b)=>a+(+b.deduct||0),0).toLocaleString('ar-SA')+' ر.س';
-  document.getElementById('totalBonuses').textContent=DB.salaries.reduce((a,b)=>a+(+b.bonus||0),0).toLocaleString('ar-SA')+' ر.س';
+  document.getElementById('totalSalaries').textContent=fmt(DB.salaries.reduce((a,b)=>a+(+b.base||0),0));
+  document.getElementById('totalDeductions').textContent=fmt(DB.salaries.reduce((a,b)=>a+(+b.deduct||0),0));
+  document.getElementById('totalBonuses').textContent=fmt(DB.salaries.reduce((a,b)=>a+(+b.bonus||0),0));
   const tbody=document.getElementById('salaryBody');
   const empty=document.getElementById('salaryEmpty');
   if(!DB.salaries.length){ tbody.innerHTML=''; empty.style.display='block'; return; }
@@ -2177,10 +2257,10 @@ function renderPayroll(){
     const net=(+sal.base||0)+(+sal.bonus||0)-(+sal.deduct||0);
     return `<tr>
       <td>${sal.month||'-'}</td><td>${s?s.name:'غير معروف'}</td><td>${s?s.role:'-'}</td>
-      <td style="color:var(--gold);">${(+sal.base||0).toLocaleString('ar-SA')} ر.س</td>
-      <td style="color:var(--success);">+${(+sal.bonus||0).toLocaleString('ar-SA')}</td>
-      <td style="color:var(--danger);">-${(+sal.deduct||0).toLocaleString('ar-SA')}</td>
-      <td style="font-weight:700;color:var(--gold);">${net.toLocaleString('ar-SA')} ر.س</td>
+      <td style="color:var(--gold);">${fmt(sal.base)}</td>
+      <td style="color:var(--success);">+${fmt(sal.bonus)}</td>
+      <td style="color:var(--danger);">-${fmt(sal.deduct)}</td>
+      <td style="font-weight:700;color:var(--gold);">${fmt(net)}</td>
       <td><span class="badge ${sal.status==='مدفوع'?'badge-active':'badge-pending'}">${sal.status}</span></td>
       <td style="font-size:11px;color:var(--text-muted);">${sal.note||'-'}</td>
       <td><button onclick="deleteSalary('${sal.id}')" class="btn-danger btn-sm"><i class="fas fa-trash"></i></button></td>
@@ -2222,31 +2302,6 @@ function renderDocs(){
 function deleteDoc(id){ DB.documents=DB.documents.filter(d=>d.id!==id); saveDB(); renderDocs(); showToast('تم الحذف','warning'); }
 
 // ============================================================
-// AI ASSISTANT
-// ============================================================
-async function sendAI(){
-  const input=document.getElementById('aiInput');
-  const msg=input.value.trim(); if(!msg)return;
-  input.value='';
-  const chat=document.getElementById('aiChat');
-  chat.innerHTML+=`<div style="display:flex;flex-direction:row-reverse;gap:10px;align-items:flex-start;"><div class="avatar" style="width:30px;height:30px;font-size:12px;flex-shrink:0;">م</div><div class="user-bubble" style="max-width:80%;">${msg}</div></div>`;
-  chat.scrollTop=chat.scrollHeight;
-  const tid='t_'+genId();
-  chat.innerHTML+=`<div id="${tid}" style="display:flex;gap:10px;align-items:flex-start;"><div style="width:30px;height:30px;background:linear-gradient(135deg,#1A2550,#2563EB);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;">🤖</div><div class="ai-bubble" style="max-width:80%;"><span class="loading-spinner"></span></div></div>`;
-  chat.scrollTop=chat.scrollHeight;
-  let reply='';
-  try{
-    const sys=`أنت مساعد قانوني ذكي لمؤسسة AGM للمحاماة. المدير: مصطفى محمد أباظة. أجب بالعربية فقط. البيانات الحالية: ${DB.cases.length} قضية، ${DB.clients.length} موكل، ${DB.staff.length} موظف.`;
-    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:sys,messages:[{role:'user',content:msg}]})});
-    const data=await res.json();
-    reply=data.content?.map(b=>b.text||'').join('')||'عذراً، لم أتمكن من معالجة طلبك.';
-  }catch(e){ reply='عذراً، حدث خطأ في الاتصال.'; }
-  document.getElementById(tid)?.remove();
-  chat.innerHTML+=`<div style="display:flex;gap:10px;align-items:flex-start;"><div style="width:30px;height:30px;background:linear-gradient(135deg,#1A2550,#2563EB);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;">🤖</div><div class="ai-bubble" style="max-width:80%;">${reply.replace(/\n/g,'<br>')}</div></div>`;
-  chat.scrollTop=chat.scrollHeight;
-}
-
-// ============================================================
 // SETTINGS
 // ============================================================
 function saveSettings(){
@@ -2271,7 +2326,7 @@ function renderSettings(){
 function backupData(){
   const blob=new Blob([JSON.stringify(DB,null,2)],{type:'application/json'});
   const url=URL.createObjectURL(blob);
-  const a=document.createElement('a'); a.href=url; a.download=`AGM-backup-${new Date().toISOString().split('T')[0]}.json`; a.click();
+  const a=document.createElement('a'); a.href=url; a.download=`AMG-backup-${new Date().toISOString().split('T')[0]}.json`; a.click();
   showToast('تم تحميل النسخة الاحتياطية');
 }
 function restoreData(event){
@@ -2283,19 +2338,19 @@ function restoreData(event){
   event.target.value='';
 }
 function exportExcel(){
-  const rows=[['رقم القضية','الموكل','النوع','المحكمة','المحامي','الحالة','الأتعاب','المدفوع']];
-  DB.cases.forEach(c=>rows.push([c.num,getClientName(c.clientId),c.type,c.court,getStaffName(c.lawyerId),c.status,c.fee||0,c.paid||0]));
-  rows.push([]); rows.push(['الموظف','الوظيفة','الراتب']);
+  const rows=[['رقم القضية','الموكل','رقم التوكيل','النوع','المحكمة','المحامي','الحالة','الأتعاب','المدفوع','المتبقي']];
+  DB.cases.forEach(c=>{ const cl=DB.clients.find(x=>x.id===c.clientId); rows.push([c.num,getClientName(c.clientId),cl?.tawkeelNum||'',c.type,c.court,getStaffName(c.lawyerId),c.status,c.fee||0,c.paid||0,(c.fee||0)-(c.paid||0)]); });
+  rows.push([]); rows.push(['الموظف','الوظيفة','الراتب (ج.م)']);
   DB.staff.forEach(s=>rows.push([s.name,s.role,s.salary||0]));
   const csv=rows.map(r=>r.join(',')).join('\n');
   const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});
   const url=URL.createObjectURL(blob);
-  const a=document.createElement('a'); a.href=url; a.download='AGM_Report.csv'; a.click();
+  const a=document.createElement('a'); a.href=url; a.download='AMG_Report.csv'; a.click();
   showToast('تم تصدير البيانات');
 }
 function clearAllData(){
   if(!confirm('⚠️ سيتم مسح جميع البيانات نهائياً. هل أنت متأكد تماماً؟'))return;
-  DB={cases:[],clients:[],staff:[],sessions:[],tasks:[],payments:[],documents:[],attendance:[],salaries:[],settings:{},activityLog:[],sessionLogs:[],version:'5.0'};
+  DB={cases:[],clients:[],staff:[],sessions:[],tasks:[],payments:[],documents:[],attendance:[],salaries:[],settings:{},activityLog:[],sessionLogs:[],version:'6.0'};
   saveDB(); showToast('تم مسح البيانات','warning'); refreshPage(currentPage);
 }
 function exportPDF(){ window.print(); }
@@ -2320,7 +2375,6 @@ function initApp(){
   updateStorageIndicator();
 }
 
-// AUTO LOGIN CHECK on page load
 window.addEventListener('DOMContentLoaded', ()=>{
   checkAutoLogin();
 });
