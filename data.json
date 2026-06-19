@@ -73,6 +73,14 @@
       "time": "13:07",
       "court": "صث",
       "notes": ""
+    },
+    {
+      "id": "_ertu1zoqomqldhupt",
+      "caseId": "_epn0ei7ssmqlcgml0",
+      "date": "2026-06-18",
+      "time": "13:20",
+      "court": "m",
+      "notes": ""
     }
   ],
   "tasks": [],
@@ -101,7 +109,7 @@
   "activityLog": [
     {
       "action": "إضافة جلسة",
-      "time": "١٩‏/٦‏/٢٠٢٦، ١:٠٧:٢٣ م"
+      "time": "١٩‏/٦‏/٢٠٢٦، ١:٢٠:٠٨ م"
     },
     {
       "action": "إضافة موكل: محمود محمد",
