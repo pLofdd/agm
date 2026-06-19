@@ -187,7 +187,7 @@ select.form-input option{background:var(--dark2);color:var(--text);}
 .person-card .card-body{padding:42px 16px 16px;}
 .person-card .card-actions{display:flex;gap:5px;flex-wrap:wrap;margin-top:12px;padding-top:12px;border-top:1px solid var(--glass-border);}
 
-/* SESSION HISTORY */
+/* SESSION LOG */
 .session-log-item{border-radius:12px;background:var(--dark3);padding:14px;margin-bottom:10px;border-right:3px solid var(--gold);position:relative;}
 
 /* PHOTO UPLOAD */
@@ -537,7 +537,7 @@ body.light .session-log-item{background:var(--dark3);}
           <button class="btn-gold" onclick="openModal('addClientModal')"><i class="fas fa-user-plus"></i> موكل جديد</button>
         </div>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px;" id="clientsGrid"></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;" id="clientsGrid"></div>
       <div id="clientsEmpty" style="text-align:center;padding:60px;color:var(--text-muted);display:none;"><i class="fas fa-users" style="font-size:40px;margin-bottom:12px;opacity:.2;display:block;"></i><p>لا يوجد موكلون مسجلون</p></div>
     </div>
 
@@ -745,29 +745,39 @@ body.light .session-log-item{background:var(--dark3);}
             <div><label class="form-label">العنوان</label><input class="form-input" id="officeAddress" placeholder="العنوان"></div>
             <div><label class="form-label">الهاتف</label><input class="form-input" id="officePhone" placeholder="+20 xx xxx xxxx"></div>
             <div><label class="form-label">البريد الإلكتروني</label><input class="form-input" id="officeEmail" placeholder="info@AMG.com"></div>
-            
-            <!-- GitHub Sync Section -->
-            <div style="background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2);border-radius:12px;padding:14px;margin-top:6px;">
-              <div style="font-size:12px;font-weight:700;color:var(--gold);margin-bottom:6px;"><i class="fab fa-github"></i> مزامنة GitHub</div>
-              <div style="display:grid;gap:8px;">
-                <div><label class="form-label">GitHub Token</label>
-                  <input class="form-input" id="githubToken" type="password" placeholder="أدخل GitHub Personal Access Token" style="font-size:12px;direction:ltr;">
-                </div>
-                <div><label class="form-label">اسم المستودع (owner/repo)</label>
-                  <input class="form-input" id="githubRepo" placeholder="مثال: amg-law/data" style="font-size:12px;direction:ltr;" value="amg-law/data">
-                </div>
-                <div><label class="form-label">مسار الملف (data.json)</label>
-                  <input class="form-input" id="githubPath" placeholder="مثال: data.json" style="font-size:12px;direction:ltr;" value="data.json">
-                </div>
-                <button class="btn-gold" onclick="saveSettings()" style="justify-content:center;font-size:12px;padding:7px 14px;"><i class="fas fa-sync"></i> حفظ الإعدادات ومزامنة البيانات</button>
-                <button class="btn-outline" onclick="syncWithGitHub()" style="justify-content:center;font-size:12px;padding:7px 14px;"><i class="fab fa-github"></i> مزامنة الآن</button>
-              </div>
-            </div>
-            
-            <button class="btn-gold" onclick="saveSettings()"><i class="fas fa-save"></i> حفظ الإعدادات</button>
           </div>
         </div>
         <div class="glass-card" style="border-radius:14px;padding:22px;">
+          <h3 style="font-size:14px;font-weight:700;margin-bottom:14px;"><i class="fab fa-github" style="color:var(--gold);margin-left:7px;"></i>مزامنة GitHub</h3>
+          <div style="display:grid;gap:11px;">
+            <div>
+              <label class="form-label">GitHub Token</label>
+              <input class="form-input" id="githubToken" type="password" placeholder="أدخل GitHub Personal Access Token" style="font-size:12px;direction:ltr;">
+            </div>
+            <div>
+              <label class="form-label">اسم المستودع (owner/repo)</label>
+              <input class="form-input" id="githubRepo" placeholder="مثال: amg-law/data" style="font-size:12px;direction:ltr;" value="amg-law/data">
+            </div>
+            <div>
+              <label class="form-label">مسار الملف (data.json)</label>
+              <input class="form-input" id="githubPath" placeholder="مثال: data.json" style="font-size:12px;direction:ltr;" value="data.json">
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <button class="btn-gold" onclick="createNewGitHubFile()" style="flex:1;justify-content:center;font-size:12px;padding:7px 14px;"><i class="fas fa-file-plus"></i> إنشاء ملف جديد</button>
+              <button class="btn-outline" onclick="syncWithGitHub()" style="flex:1;justify-content:center;font-size:12px;padding:7px 14px;"><i class="fab fa-github"></i> مزامنة</button>
+            </div>
+            <div>
+              <button class="btn-gold" onclick="saveSettings()" style="width:100%;justify-content:center;"><i class="fas fa-save"></i> حفظ الإعدادات</button>
+            </div>
+            <!-- عرض حالة الملف -->
+            <div id="githubFileStatus" style="font-size:11px;color:var(--text-muted);background:var(--dark3);border-radius:8px;padding:10px;margin-top:4px;">
+              <i class="fas fa-info-circle" style="color:var(--gold);margin-left:5px;"></i>
+              <span id="githubStatusText">لم يتم التحقق من الملف</span>
+            </div>
+            <button class="btn-outline" onclick="checkGitHubFile()" style="font-size:11px;padding:5px 12px;"><i class="fas fa-sync"></i> التحقق من الملف</button>
+          </div>
+        </div>
+        <div class="glass-card" style="border-radius:14px;padding:22px;grid-column:span 2;">
           <h3 style="font-size:14px;font-weight:700;margin-bottom:14px;"><i class="fas fa-shield-alt" style="color:var(--gold);margin-left:7px;"></i>إدارة البيانات</h3>
           <div class="storage-indicator">
             <i class="fas fa-database" style="color:var(--gold);font-size:13px;"></i>
@@ -775,21 +785,13 @@ body.light .session-log-item{background:var(--dark3);}
             <div class="storage-bar"><div class="storage-bar-fill" id="storageBarFill" style="width:0%"></div></div></div>
             <span id="storageUsed" style="font-size:11px;font-weight:700;color:var(--gold);">0 KB</span>
           </div>
-          <div style="background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2);border-radius:12px;padding:14px;margin-bottom:14px;">
-            <div style="font-size:12px;font-weight:700;color:var(--gold);margin-bottom:4px;"><i class="fas fa-hdd" style="margin-left:6px;"></i>حفظ على جهازك</div>
-            <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px;">احفظ بياناتك كملف JSON على جهازك</div>
-            <div style="display:grid;gap:8px;">
-              <button class="btn-gold" onclick="saveToFile()" style="justify-content:center;"><i class="fas fa-download"></i> تحميل ملف البيانات</button>
-              <button class="btn-outline" onclick="document.getElementById('loadDataFile').click()" style="justify-content:center;"><i class="fas fa-upload"></i> استيراد ملف بيانات</button>
-              <input type="file" id="loadDataFile" style="display:none;" accept=".json" onchange="loadFromFile(event)">
-            </div>
-          </div>
-          <div style="display:grid;gap:8px;">
-            <button class="btn-outline" onclick="backupData()" style="justify-content:center;"><i class="fas fa-download"></i> نسخة احتياطية (JSON)</button>
-            <button class="btn-outline" onclick="exportExcel()" style="justify-content:center;"><i class="fas fa-file-excel"></i> تصدير CSV</button>
-            <button class="btn-outline" onclick="document.getElementById('restoreFile').click()" style="justify-content:center;"><i class="fas fa-upload"></i> استعادة نسخة احتياطية</button>
-            <input type="file" id="restoreFile" style="display:none" accept=".json" onchange="restoreData(event)">
-            <button class="btn-danger" style="justify-content:center;" onclick="if(confirm('مسح جميع البيانات نهائياً؟'))clearAllData()"><i class="fas fa-trash"></i> مسح جميع البيانات</button>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:12px;">
+            <button class="btn-gold" onclick="saveToFile()" style="justify-content:center;font-size:12px;"><i class="fas fa-download"></i> تحميل ملف</button>
+            <button class="btn-outline" onclick="document.getElementById('loadDataFile').click()" style="justify-content:center;font-size:12px;"><i class="fas fa-upload"></i> استيراد ملف</button>
+            <input type="file" id="loadDataFile" style="display:none;" accept=".json" onchange="loadFromFile(event)">
+            <button class="btn-outline" onclick="backupData()" style="justify-content:center;font-size:12px;"><i class="fas fa-download"></i> نسخة احتياطية</button>
+            <button class="btn-outline" onclick="exportExcel()" style="justify-content:center;font-size:12px;"><i class="fas fa-file-excel"></i> تصدير CSV</button>
+            <button class="btn-danger" style="justify-content:center;font-size:12px;" onclick="if(confirm('مسح جميع البيانات نهائياً؟'))clearAllData()"><i class="fas fa-trash"></i> مسح الكل</button>
           </div>
           <hr style="border:none;border-top:1px solid var(--glass-border);margin:14px 0;">
           <h4 style="font-size:12px;font-weight:700;margin-bottom:10px;">سجل الأنشطة</h4>
@@ -904,7 +906,7 @@ body.light .session-log-item{background:var(--dark3);}
         <input type="file" id="clientPhotoInput" accept="image/*" onchange="previewPhoto(event,'clientPhotoPreview','clientPhotoData')">
       </div>
       <input type="hidden" id="clientPhotoData">
-      <div style="font-size:10px;color:var(--text-muted);margin-top:5px;">انقر لرفع صورة التوكيل</div>
+      <div style="font-size:10px;color:var(--text-muted);margin-top:5px;">انقر لرفع صورة الموكل</div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;" class="grid">
       <div><label class="form-label">الاسم الكامل</label><input class="form-input" id="clientName" placeholder="الاسم"></div>
@@ -913,7 +915,9 @@ body.light .session-log-item{background:var(--dark3);}
       <div><label class="form-label">تاريخ التوكيل</label><input class="form-input" id="clientTawkeelDate" type="date"></div>
       <div><label class="form-label">رقم الهوية</label><input class="form-input" id="clientID" placeholder="1xxxxxxxxx"></div>
       <div><label class="form-label">البريد الإلكتروني</label><input class="form-input" id="clientEmail" type="email" placeholder="email@example.com"></div>
-      <div style="grid-column:span 2;"><label class="form-label">العنوان</label><input class="form-input" id="clientAddress" placeholder="المدينة، الحي، الشارع"></div>
+      <div style="grid-column:span 2;"><label class="form-label">العنوان التفصيلي</label>
+        <textarea class="form-input" id="clientAddress" rows="2" placeholder="الدولة، المحافظة، المدينة، الحي، الشارع، رقم المبني، الطابق..."></textarea>
+      </div>
       <div style="grid-column:span 2;">
         <label class="form-label">صورة التوكيل (رفع)</label>
         <div class="upload-area" style="padding:14px;" onclick="document.getElementById('tawkeelImgInput').click()">
@@ -994,17 +998,27 @@ body.light .session-log-item{background:var(--dark3);}
   </div>
 </div>
 
-<!-- Add Session -->
+<!-- Add Session - مع حقل رقم القضية -->
 <div class="modal-overlay" id="addSessionModal">
-  <div class="modal-box" style="max-width:520px;">
+  <div class="modal-box" style="max-width:580px;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
       <h2 class="gold-text" style="font-size:17px;font-weight:800;">إضافة جلسة</h2>
       <button onclick="closeModal('addSessionModal')" style="background:none;border:none;color:var(--text-muted);font-size:20px;cursor:pointer;">×</button>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;" class="grid">
-      <div><label class="form-label">القضية</label><select class="form-input" id="sessionCase"></select></div>
-      <div><label class="form-label">التاريخ</label><input class="form-input" id="sessionDate" type="date"></div>
-      <div><label class="form-label">الوقت</label><input class="form-input" id="sessionTime" type="time"></div>
+    <div style="display:grid;gap:12px;">
+      <div>
+        <label class="form-label">رقم القضية</label>
+        <div style="display:flex;gap:10px;align-items:center;">
+          <input class="form-input" id="sessionCaseNum" placeholder="أدخل رقم القضية" style="flex:1;" oninput="findCaseByNum(this.value)">
+          <button class="btn-outline" onclick="findCaseByNum(document.getElementById('sessionCaseNum').value)" style="padding:8px 12px;font-size:12px;"><i class="fas fa-search"></i></button>
+        </div>
+        <div id="sessionCaseInfo" style="margin-top:5px;font-size:12px;color:var(--gold);display:none;"></div>
+        <input type="hidden" id="sessionCase">
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;" class="grid">
+        <div><label class="form-label">التاريخ</label><input class="form-input" id="sessionDate" type="date"></div>
+        <div><label class="form-label">الوقت</label><input class="form-input" id="sessionTime" type="time"></div>
+      </div>
       <div><label class="form-label">المحكمة</label><input class="form-input" id="sessionCourt" placeholder="المحكمة"></div>
       <div style="grid-column:span 2;"><label class="form-label">ملاحظات</label><textarea class="form-input" id="sessionNotes" rows="2" placeholder="ملاحظات الجلسة..."></textarea></div>
     </div>
@@ -1323,11 +1337,11 @@ function updateStorageIndicator(){
 }
 
 // ============================================================
-// GITHUB - FETCH (جلب البيانات من GitHub)
+// GITHUB - FUNCTIONS
 // ============================================================
 async function fetchFromGitHub() {
     const token = localStorage.getItem(GITHUB_TOKEN_KEY) || '';
-    const repo = localStorage.getItem(GITHUB_REPO_KEY) || 'pLofdd/agm';
+    const repo = localStorage.getItem(GITHUB_REPO_KEY) || '';
     const path = localStorage.getItem(GITHUB_PATH_KEY) || 'data.json';
     
     if (!token || !repo) {
@@ -1382,31 +1396,135 @@ async function fetchFromGitHub() {
     }
 }
 
-// ============================================================
-// GITHUB - SYNC (المزامنة التلقائية مع حفظ المهام)
-// ============================================================
-function autoSync() {
-    clearTimeout(syncTimeout);
-    syncTimeout = setTimeout(() => {
-        const token = localStorage.getItem(GITHUB_TOKEN_KEY) || '';
-        const repo = localStorage.getItem(GITHUB_REPO_KEY) || '';
-        if (token && repo && !isSyncing) {
-            console.log('🔄 مزامنة تلقائية...');
-            syncWithGitHub();
+async function checkGitHubFile() {
+    const token = localStorage.getItem(GITHUB_TOKEN_KEY) || '';
+    const repo = localStorage.getItem(GITHUB_REPO_KEY) || '';
+    const path = localStorage.getItem(GITHUB_PATH_KEY) || 'data.json';
+    
+    const statusEl = document.getElementById('githubStatusText');
+    
+    if (!token || !repo) {
+        statusEl.textContent = '⚠️ يرجى إدخال GitHub Token واسم المستودع';
+        statusEl.style.color = 'var(--danger)';
+        return;
+    }
+    
+    statusEl.textContent = '⏳ جاري التحقق...';
+    statusEl.style.color = 'var(--text-muted)';
+    
+    try {
+        const readResp = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
+            headers: {
+                'Authorization': `token ${token}`,
+                'Accept': 'application/vnd.github.v3+json'
+            }
+        });
+        
+        if (readResp.ok) {
+            const data = await readResp.json();
+            const content = decodeURIComponent(escape(atob(data.content)));
+            const remoteDB = JSON.parse(content);
+            
+            const caseCount = remoteDB.cases?.length || 0;
+            const clientCount = remoteDB.clients?.length || 0;
+            const staffCount = remoteDB.staff?.length || 0;
+            
+            statusEl.innerHTML = `✅ الملف موجود: <strong>${path}</strong><br>
+                📊 القضايا: ${caseCount} | الموكلون: ${clientCount} | الموظفون: ${staffCount}
+                <br>📅 آخر تحديث: ${new Date(data.commit?.committer?.date || Date.now()).toLocaleString('ar-EG')}`;
+            statusEl.style.color = 'var(--success)';
+        } else if (readResp.status === 404) {
+            statusEl.textContent = '📄 الملف غير موجود. يمكنك إنشاء ملف جديد باستخدام زر "إنشاء ملف جديد"';
+            statusEl.style.color = 'var(--warning)';
+        } else {
+            const err = await readResp.json();
+            statusEl.textContent = '❌ خطأ: ' + (err.message || 'غير معروف');
+            statusEl.style.color = 'var(--danger)';
         }
-    }, 3000);
+    } catch(e) {
+        statusEl.textContent = '❌ خطأ في الاتصال: ' + e.message;
+        statusEl.style.color = 'var(--danger)';
+    }
+}
+
+async function createNewGitHubFile() {
+    const token = document.getElementById('githubToken').value || localStorage.getItem(GITHUB_TOKEN_KEY) || '';
+    const repo = document.getElementById('githubRepo').value || localStorage.getItem(GITHUB_REPO_KEY) || '';
+    const path = document.getElementById('githubPath').value || localStorage.getItem(GITHUB_PATH_KEY) || 'data.json';
+    
+    if (!token || !repo) {
+        showToast('⚠️ يرجى إدخال GitHub Token واسم المستودع', 'error');
+        return;
+    }
+    
+    // حفظ الإعدادات
+    if (token) localStorage.setItem(GITHUB_TOKEN_KEY, token);
+    if (repo) localStorage.setItem(GITHUB_REPO_KEY, repo);
+    if (path) localStorage.setItem(GITHUB_PATH_KEY, path);
+    
+    // التأكد من وجود ملف
+    try {
+        const readResp = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
+            headers: {
+                'Authorization': `token ${token}`,
+                'Accept': 'application/vnd.github.v3+json'
+            }
+        });
+        
+        if (readResp.ok) {
+            if (!confirm('⚠️ الملف موجود بالفعل. هل تريد استبداله بالبيانات الحالية؟')) {
+                return;
+            }
+        }
+    } catch(e) {}
+    
+    // إنشاء الملف
+    const jsonData = JSON.stringify(DB, null, 2);
+    const content = btoa(unescape(encodeURIComponent(jsonData)));
+    
+    try {
+        const writeResp = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `token ${token}`,
+                'Accept': 'application/vnd.github.v3+json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                message: `إنشاء ملف البيانات: ${new Date().toLocaleString('ar-EG')}`,
+                content: content,
+                branch: 'main'
+            })
+        });
+        
+        if (writeResp.ok) {
+            showToast('✅ تم إنشاء الملف بنجاح', 'success');
+            checkGitHubFile();
+            logActivity('إنشاء ملف جديد على GitHub');
+        } else {
+            const err = await writeResp.json();
+            showToast('❌ فشل الإنشاء: ' + (err.message || 'غير معروف'), 'error');
+        }
+    } catch(e) {
+        showToast('❌ خطأ: ' + e.message, 'error');
+    }
 }
 
 async function syncWithGitHub() {
     if (isSyncing) return;
     isSyncing = true;
     
-    const token = localStorage.getItem(GITHUB_TOKEN_KEY) || '';
-    const repo = localStorage.getItem(GITHUB_REPO_KEY) || 'pLofdd/agm';
-    const path = localStorage.getItem(GITHUB_PATH_KEY) || 'data.json';
+    const token = document.getElementById('githubToken').value || localStorage.getItem(GITHUB_TOKEN_KEY) || '';
+    const repo = document.getElementById('githubRepo').value || localStorage.getItem(GITHUB_REPO_KEY) || '';
+    const path = document.getElementById('githubPath').value || localStorage.getItem(GITHUB_PATH_KEY) || 'data.json';
+    
+    // حفظ الإعدادات
+    if (token) localStorage.setItem(GITHUB_TOKEN_KEY, token);
+    if (repo) localStorage.setItem(GITHUB_REPO_KEY, repo);
+    if (path) localStorage.setItem(GITHUB_PATH_KEY, path);
     
     if (!token || !repo) {
-        showToast('⚠️ يرجى إدخال GitHub Token واسم المستودع في الإعدادات', 'error');
+        showToast('⚠️ يرجى إدخال GitHub Token واسم المستودع', 'error');
         isSyncing = false;
         return;
     }
@@ -1414,6 +1532,7 @@ async function syncWithGitHub() {
     showToast('🔄 جاري المزامنة...', 'info');
     
     try {
+        // قراءة الملف أولاً
         let sha = null;
         let fileExists = false;
         let remoteData = null;
@@ -1461,7 +1580,7 @@ async function syncWithGitHub() {
             }
         }
         
-        // رفع البيانات إلى GitHub (بما فيها المهام)
+        // رفع البيانات إلى GitHub
         const jsonData = JSON.stringify(DB, null, 2);
         const content = btoa(unescape(encodeURIComponent(jsonData)));
         
@@ -1489,11 +1608,12 @@ async function syncWithGitHub() {
             console.log('✅ تم الرفع بنجاح');
             showToast('✅ تمت المزامنة مع GitHub', 'success');
             logActivity('مزامنة مع GitHub');
+            checkGitHubFile();
         } else {
             const err = await writeResp.json();
             let errorMsg = err.message || 'خطأ غير معروف';
             if (errorMsg.includes('sha')) {
-                errorMsg = 'خطأ في SHA. حاول حذف الملف من GitHub ثم أعد المحاولة.';
+                errorMsg = 'خطأ في SHA. حاول إنشاء ملف جديد أو حذف الملف من GitHub.';
             } else if (errorMsg.includes('404')) {
                 errorMsg = 'المستودع غير موجود: ' + repo;
             } else if (errorMsg.includes('401') || errorMsg.includes('403')) {
@@ -1536,7 +1656,6 @@ function loadFromFile(event){
       showToast('تم استيراد البيانات بنجاح','success');
       refreshPage(currentPage);
       renderDashboard();
-      autoSync();
     } catch(err){ showToast('خطأ في قراءة الملف','error'); }
   };
   reader.readAsText(file);
@@ -1603,7 +1722,11 @@ function closeSidebar(){ document.getElementById('sidebar').classList.remove('op
 function openModal(id){
   document.getElementById(id).classList.add('active');
   if(id==='addCaseModal'){ populateSel('caseClient',DB.clients,'name'); populateSel('caseLawyer',DB.staff,'name'); }
-  if(id==='addSessionModal') populateSel('sessionCase',DB.cases,c=>c.num+' - '+getClientName(c.clientId));
+  if(id==='addSessionModal'){ 
+    populateSel('sessionCase',DB.cases,c=>c.num+' - '+getClientName(c.clientId));
+    document.getElementById('sessionCaseNum').value = '';
+    document.getElementById('sessionCaseInfo').style.display = 'none';
+  }
   if(id==='addSessionLogModal'){ populateSel('sessionLogCase',DB.cases,c=>c.num+' - '+getClientName(c.clientId)); document.getElementById('sessionLogDate').value=new Date().toISOString().split('T')[0]; }
   if(id==='addDocModal') populateSel('docCase',DB.cases,c=>c.num+' - '+getClientName(c.clientId));
   if(id==='addPaymentModal') populateSel('payCase',DB.cases,c=>c.num+' - '+getClientName(c.clientId));
@@ -1611,6 +1734,7 @@ function openModal(id){
   if(id==='addSalaryModal') populateSel('salaryStaff',DB.staff,'name');
   if(id==='addTaskModal'){ populateSel('taskOwner',DB.staff,'name'); populateSel('taskCase',DB.cases,c=>c.num); }
   if(id==='printAllCardsModal') renderAllCards();
+  if(id==='settings') renderSettings();
 }
 
 function closeModal(id){ document.getElementById(id).classList.remove('active'); }
@@ -1647,6 +1771,39 @@ function previewTawkeel(event){
     }
   };
   reader.readAsDataURL(file);
+}
+
+// ============================================================
+// FIND CASE BY NUMBER (لإضافة الجلسة)
+// ============================================================
+function findCaseByNum(num){
+  const infoEl = document.getElementById('sessionCaseInfo');
+  const hiddenEl = document.getElementById('sessionCase');
+  if(!num.trim()){
+    infoEl.style.display = 'none';
+    hiddenEl.value = '';
+    return;
+  }
+  const found = DB.cases.find(c => c.num === num.trim());
+  if(found){
+    const client = DB.clients.find(x => x.id === found.clientId);
+    infoEl.style.display = 'block';
+    infoEl.innerHTML = `
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+        <span style="font-weight:700;color:var(--gold);">✅ ${found.num}</span>
+        <span>👤 ${client ? client.name : 'موكل غير معروف'}</span>
+        <span>⚖️ ${found.type}</span>
+        <span style="font-size:10px;color:var(--text-muted);">${found.court}</span>
+        <span class="badge ${found.status==='نشطة'?'badge-active':found.status==='عاجلة'?'badge-urgent':'badge-pending'}">${found.status}</span>
+      </div>
+    `;
+    hiddenEl.value = found.id;
+    document.getElementById('sessionCourt').value = found.court || '';
+  } else {
+    infoEl.style.display = 'block';
+    infoEl.innerHTML = `<span style="color:var(--danger);">❌ لا توجد قضية بهذا الرقم</span>`;
+    hiddenEl.value = '';
+  }
 }
 
 // ============================================================
@@ -1720,6 +1877,7 @@ function buildClientCard(client){
         ${client.tawkeelNum ? `<div class="row"><i class="fas fa-file-contract"></i><span>توكيل: <strong style="color:#C9A84C;">${client.tawkeelNum}</strong></span></div>` : ''}
         ${client.phone ? `<div class="row"><i class="fas fa-phone"></i><span>${client.phone}</span></div>` : ''}
         ${client.idNum ? `<div class="row"><i class="fas fa-id-card"></i><span>${client.idNum}</span></div>` : ''}
+        ${client.address ? `<div class="row"><i class="fas fa-map-marker-alt"></i><span style="font-size:9px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${client.address}</span></div>` : ''}
         ${cases.length ? `<div class="row" style="margin-top:4px;flex-direction:column;align-items:flex-start;gap:1px;"><span style="color:#C9A84C;font-weight:700;font-size:9px;margin-bottom:2px;">القضايا:</span>${caseDetails}</div>` : ''}
       </div>
     </div>
@@ -1780,7 +1938,7 @@ function toggleTheme(){
 (function(){ const t=localStorage.getItem('amgTheme'); if(t==='light'){ isDark=false; document.body.classList.add('light'); document.getElementById('themeIcon').className='fas fa-moon'; } })();
 
 // ============================================================
-// SESSION ALERTS - شغال
+// SESSION ALERTS
 // ============================================================
 function checkSessionAlerts(){
   const today = new Date(); today.setHours(0,0,0,0);
@@ -2032,9 +2190,8 @@ function renderCases(){
 }
 
 // ============================================================
-// DELETE FUNCTIONS - حذف نهائي مع حفظ في localStorage و GitHub
+// DELETE FUNCTIONS
 // ============================================================
-
 function deleteCase(id){ 
   if(!confirm('⚠️ هل أنت متأكد من حذف هذه القضية نهائياً؟\nسيتم حذف جميع البيانات المرتبطة بها (جلسات، مدفوعات، سجل جلسات، مهام)')) return; 
   DB.cases = DB.cases.filter(c => c.id !== id);
@@ -2162,7 +2319,7 @@ function renderClients(){
         ${c.tawkeelDate?`<div style="font-size:10px;color:var(--text-muted);margin-bottom:4px;"><i class="fas fa-calendar" style="color:var(--gold);margin-left:5px;width:14px;"></i>تاريخ التوكيل: ${formatDate(c.tawkeelDate)}</div>`:''}
         ${c.phone?`<div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;"><i class="fas fa-phone" style="color:var(--gold);margin-left:5px;width:14px;"></i>${c.phone}</div>`:''}
         ${c.idNum?`<div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;"><i class="fas fa-id-card" style="color:var(--gold);margin-left:5px;width:14px;"></i>${c.idNum}</div>`:''}
-        ${c.address?`<div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;"><i class="fas fa-map-marker-alt" style="color:var(--gold);margin-left:5px;width:14px;"></i>${c.address}</div>`:''}
+        ${c.address?`<div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;max-height:40px;overflow:hidden;"><i class="fas fa-map-marker-alt" style="color:var(--gold);margin-left:5px;width:14px;"></i>${c.address}</div>`:''}
         ${c.tawkeelImg?`<div style="margin-top:8px;"><img src="${c.tawkeelImg}" style="max-width:100%;max-height:60px;border-radius:6px;border:1px solid rgba(201,168,76,.3);" title="صورة التوكيل"></div>`:''}
         <div style="display:flex;gap:8px;margin-top:10px;">
           <span style="font-size:11px;color:var(--success);"><i class="fas fa-gavel"></i> ${cc} قضية</span>
@@ -2326,10 +2483,31 @@ function deleteAttend(id){
 // SESSIONS
 // ============================================================
 function addSession(){
-  const date=document.getElementById('sessionDate').value;
-  if(!date){ showToast('الرجاء إدخال التاريخ','error'); return; }
-  DB.sessions.push({id:genId(),caseId:document.getElementById('sessionCase').value,date,time:document.getElementById('sessionTime').value,court:document.getElementById('sessionCourt').value.trim(),notes:document.getElementById('sessionNotes').value.trim()});
-  saveDB(); logActivity('إضافة جلسة'); closeModal('addSessionModal'); renderCalendar(); showToast('تم إضافة الجلسة'); checkSessionAlerts(); autoSync();
+  const caseId = document.getElementById('sessionCase').value;
+  const date = document.getElementById('sessionDate').value;
+  if(!caseId || !date){ showToast('الرجاء اختيار القضية وإدخال التاريخ','error'); return; }
+  const caseNum = document.getElementById('sessionCaseNum').value.trim();
+  const court = document.getElementById('sessionCourt').value.trim();
+  DB.sessions.push({
+    id:genId(),
+    caseId:caseId,
+    date:date,
+    time:document.getElementById('sessionTime').value,
+    court:court || '',
+    notes:document.getElementById('sessionNotes').value.trim()
+  });
+  saveDB(); 
+  logActivity('إضافة جلسة: '+caseNum); 
+  closeModal('addSessionModal'); 
+  renderCalendar(); 
+  showToast('تم إضافة الجلسة'); 
+  checkSessionAlerts(); 
+  autoSync();
+  document.getElementById('sessionCaseNum').value = '';
+  document.getElementById('sessionCaseInfo').style.display = 'none';
+  document.getElementById('sessionCase').value = '';
+  document.getElementById('sessionTime').value = '';
+  document.getElementById('sessionNotes').value = '';
 }
 
 function renderCalendar(){
@@ -2653,7 +2831,7 @@ function saveSettings(){
   if(repo) localStorage.setItem(GITHUB_REPO_KEY, repo);
   if(path) localStorage.setItem(GITHUB_PATH_KEY, path);
   
-  autoSync();
+  checkGitHubFile();
 }
 
 function renderSettings(){
@@ -2665,7 +2843,7 @@ function renderSettings(){
   if(s.officeEmail) document.getElementById('officeEmail').value=s.officeEmail||'';
   
   const token = localStorage.getItem(GITHUB_TOKEN_KEY) || '';
-  const repo = localStorage.getItem(GITHUB_REPO_KEY) || 'pLofdd/agm';
+  const repo = localStorage.getItem(GITHUB_REPO_KEY) || '';
   const path = localStorage.getItem(GITHUB_PATH_KEY) || 'data.json';
   if(document.getElementById('githubToken')) document.getElementById('githubToken').value = token;
   if(document.getElementById('githubRepo')) document.getElementById('githubRepo').value = repo;
@@ -2674,6 +2852,8 @@ function renderSettings(){
   const log=DB.activityLog||[];
   document.getElementById('activityLog').innerHTML=log.slice(0,20).map(e=>`<div style="padding:3px 0;border-bottom:1px solid var(--glass-border);">${e.action} <span style="float:left;font-size:9px;">${e.time}</span></div>`).join('')||'<p>لا توجد أنشطة بعد</p>';
   updateStorageIndicator();
+  
+  setTimeout(() => checkGitHubFile(), 500);
 }
 
 // ============================================================
@@ -2716,7 +2896,7 @@ function clearAllData(){
 function exportPDF(){ window.print(); }
 
 // ============================================================
-// GLOBAL SEARCH - بحث بكل الكلمات
+// GLOBAL SEARCH
 // ============================================================
 function globalSearchFn(){
   const q=document.getElementById('globalSearch').value.toLowerCase().trim();
@@ -2729,7 +2909,7 @@ function globalSearchFn(){
   });
   
   DB.clients.forEach(c => {
-    const text = (c.name + ' ' + (c.phone||'') + ' ' + (c.idNum||'') + ' ' + (c.tawkeelNum||'') + ' ' + (c.notes||'')).toLowerCase();
+    const text = (c.name + ' ' + (c.phone||'') + ' ' + (c.idNum||'') + ' ' + (c.tawkeelNum||'') + ' ' + (c.notes||'') + ' ' + (c.address||'')).toLowerCase();
     if(text.includes(q)) results.push({type:'موكل', ref:c.name, detail:c.phone||c.idNum||'', id:c.id, page:'clients'});
   });
   
@@ -2752,6 +2932,21 @@ function globalSearchFn(){
   } else {
     showToast('🔍 لا توجد نتائج بحث', 'info');
   }
+}
+
+// ============================================================
+// AUTO SYNC WRAPPER
+// ============================================================
+function autoSync(){
+  clearTimeout(syncTimeout);
+  syncTimeout = setTimeout(() => {
+    const token = localStorage.getItem(GITHUB_TOKEN_KEY) || '';
+    const repo = localStorage.getItem(GITHUB_REPO_KEY) || '';
+    if(token && repo && !isSyncing){
+      console.log('🔄 مزامنة تلقائية...');
+      syncWithGitHub();
+    }
+  }, 3000);
 }
 
 // ============================================================
