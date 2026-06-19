@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -86,7 +85,7 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
 .btn-sm{padding:5px 10px;font-size:11px;border-radius:6px;}
 .btn-whatsapp{background:rgba(37,211,102,.12);color:#25D366;border:1px solid rgba(37,211,102,.3);padding:5px 10px;border-radius:6px;font-family:'Cairo';font-size:11px;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:4px;}
 .btn-whatsapp:hover{background:rgba(37,211,102,.22);}
-.btn-edit{background:rgba(59,130,246,.1);color:#3B82F6;border:1px solid rgba(59,130,246,.25);padding:5px 10px;border-radius:6px;font-family:'Cairo';font-size:11px;cursor:pointer;transition:all .2s;}
+.btn-edit{background:rgba(59,130,246,.1);color:#3B82F6;border:1px solid rgba(59,130,246,.25);padding:5px 10px;border-radius:6px;font-family:'Cairo';font-size:11px;cursor:pointer;}
 .btn-edit:hover{background:rgba(59,130,246,.2);}
 .btn-success{background:rgba(16,185,129,.12);color:#10B981;border:1px solid rgba(16,185,129,.3);padding:8px 18px;border-radius:9px;font-family:'Cairo',sans-serif;font-weight:600;font-size:13px;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:7px;}
 
@@ -746,6 +745,25 @@ body.light .session-log-item{background:var(--dark3);}
             <div><label class="form-label">العنوان</label><input class="form-input" id="officeAddress" placeholder="العنوان"></div>
             <div><label class="form-label">الهاتف</label><input class="form-input" id="officePhone" placeholder="+20 xx xxx xxxx"></div>
             <div><label class="form-label">البريد الإلكتروني</label><input class="form-input" id="officeEmail" placeholder="info@AMG.com"></div>
+            
+            <!-- GitHub Sync Section -->
+            <div style="background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2);border-radius:12px;padding:14px;margin-top:6px;">
+              <div style="font-size:12px;font-weight:700;color:var(--gold);margin-bottom:6px;"><i class="fab fa-github"></i> مزامنة GitHub</div>
+              <div style="display:grid;gap:8px;">
+                <div><label class="form-label">GitHub Token</label>
+                  <input class="form-input" id="githubToken" type="password" placeholder="أدخل GitHub Personal Access Token" style="font-size:12px;direction:ltr;">
+                </div>
+                <div><label class="form-label">اسم المستودع (owner/repo)</label>
+                  <input class="form-input" id="githubRepo" placeholder="مثال: amg-law/data" style="font-size:12px;direction:ltr;" value="amg-law/data">
+                </div>
+                <div><label class="form-label">مسار الملف (data.json)</label>
+                  <input class="form-input" id="githubPath" placeholder="مثال: data.json" style="font-size:12px;direction:ltr;" value="data.json">
+                </div>
+                <button class="btn-gold" onclick="saveSettings()" style="justify-content:center;font-size:12px;padding:7px 14px;"><i class="fas fa-sync"></i> حفظ الإعدادات ومزامنة البيانات</button>
+                <button class="btn-outline" onclick="syncWithGitHub()" style="justify-content:center;font-size:12px;padding:7px 14px;"><i class="fab fa-github"></i> مزامنة الآن</button>
+              </div>
+            </div>
+            
             <button class="btn-gold" onclick="saveSettings()"><i class="fas fa-save"></i> حفظ الإعدادات</button>
           </div>
         </div>
@@ -1200,6 +1218,9 @@ body.light .session-log-item{background:var(--dark3);}
 // ============================================================
 const STORAGE_KEY = 'amgLawData_v6';
 const SESSION_KEY = 'amgSession_v6';
+const GITHUB_TOKEN_KEY = 'amgGithubToken';
+const GITHUB_REPO_KEY = 'amgGithubRepo';
+const GITHUB_PATH_KEY = 'amgGithubPath';
 
 let DB = {
   cases:[], clients:[], staff:[], sessions:[],
@@ -1298,6 +1319,112 @@ function updateStorageIndicator(){
   } catch(e){}
 }
 
+// ============================================================
+// GITHUB SYNC
+// ============================================================
+function getGithubConfig(){
+  const token = localStorage.getItem(GITHUB_TOKEN_KEY) || '';
+  const repo = localStorage.getItem(GITHUB_REPO_KEY) || 'amg-law/data';
+  const path = localStorage.getItem(GITHUB_PATH_KEY) || 'data.json';
+  return { token, repo, path };
+}
+
+function saveGithubConfig(token, repo, path){
+  if(token) localStorage.setItem(GITHUB_TOKEN_KEY, token);
+  if(repo) localStorage.setItem(GITHUB_REPO_KEY, repo);
+  if(path) localStorage.setItem(GITHUB_PATH_KEY, path);
+}
+
+async function syncWithGitHub() {
+    const { token, repo, path } = getGithubConfig();
+    if (!token || !repo) {
+        showToast('يرجى إدخال GitHub Token واسم المستودع في الإعدادات', 'error');
+        return;
+    }
+    
+    showToast('جاري المزامنة مع GitHub...', 'info');
+    
+    try {
+        // محاولة قراءة الملف أولاً للحصول على SHA
+        let sha = null;
+        let fileExists = false;
+        
+        try {
+            const readResp = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
+                headers: {
+                    'Authorization': `token ${token}`,
+                    'Accept': 'application/vnd.github.v3+json'
+                }
+            });
+            
+            if (readResp.ok) {
+                const data = await readResp.json();
+                sha = data.sha;
+                fileExists = true;
+                console.log('✅ الملف موجود، SHA:', sha);
+            } else if (readResp.status === 404) {
+                console.log('📄 الملف غير موجود، سيتم إنشاؤه');
+                fileExists = false;
+            } else {
+                const err = await readResp.json();
+                showToast('خطأ في قراءة الملف: ' + (err.message || 'خطأ غير معروف'), 'error');
+                return;
+            }
+        } catch(e) {
+            console.log('⚠️ خطأ في القراءة، سيتم إنشاء الملف:', e.message);
+            fileExists = false;
+        }
+        
+        // تحضير المحتوى
+        const content = btoa(unescape(encodeURIComponent(JSON.stringify(DB, null, 2))));
+        
+        // بناء جسم الطلب
+        const body = {
+            message: `تحديث البيانات: ${new Date().toLocaleString('ar-EG')}`,
+            content: content,
+            branch: 'main'
+        };
+        
+        // إضافة SHA فقط إذا كان الملف موجوداً
+        if (fileExists && sha) {
+            body.sha = sha;
+            console.log('🔄 تحديث ملف موجود');
+        } else {
+            console.log('✨ إنشاء ملف جديد');
+        }
+        
+        // رفع البيانات
+        const writeResp = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `token ${token}`,
+                'Accept': 'application/vnd.github.v3+json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        });
+        
+        if (writeResp.ok) {
+            const result = await writeResp.json();
+            console.log('✅ تم الرفع بنجاح:', result);
+            showToast('✅ تم رفع البيانات إلى GitHub بنجاح', 'success');
+            logActivity('مزامنة مع GitHub');
+        } else {
+            const err = await writeResp.json();
+            console.error('❌ فشل الرفع:', err);
+            
+            // رسائل خطأ مخصصة
+            let errorMsg = err.message || 'خطأ غير معروف';
+            if (err.message && err.message.includes('sha')) {
+                errorMsg = 'خطأ في SHA. تأكد من أن الملف موجود أو حاول الحذف وإعادة المحاولة.';
+            }
+            showToast('فشل رفع البيانات: ' + errorMsg, 'error');
+        }
+    } catch(e) {
+        console.error('❌ خطأ:', e);
+        showToast('خطأ في المزامنة: ' + e.message, 'error');
+    }
+}
 // ============================================================
 // FILE EXPORT / IMPORT
 // ============================================================
@@ -1709,6 +1836,9 @@ function addCase(){
   document.getElementById('caseModalTitle').textContent='إضافة قضية جديدة';
   document.getElementById('caseSaveBtn').textContent='حفظ القضية';
   ['caseNum','caseCourt','caseDivision','caseDate','caseNotes','caseFee','casePaid','caseTawkeelNum'].forEach(id=>{ const el=document.getElementById(id); if(el)el.value=''; });
+  
+  // مزامنة مع GitHub بعد التعديل
+  syncWithGitHub();
 }
 
 function editCase(id){
@@ -1809,8 +1939,8 @@ function renderCases(){
   document.getElementById('caseTableWrap').style.display=caseViewMode==='table'?'block':'none';
 }
 
-function deleteCase(id){ if(!confirm('حذف هذه القضية؟'))return; DB.cases=DB.cases.filter(c=>c.id!==id); saveDB(); logActivity('حذف قضية'); renderCases(); showToast('تم الحذف','warning'); }
-function archiveCase(id){ const c=DB.cases.find(x=>x.id===id); if(!c)return; c.archived=!c.archived; c.status=c.archived?'مؤرشفة':c.status==='مؤرشفة'?'مغلقة':c.status; saveDB(); renderCases(); showToast(c.archived?'تم أرشفة القضية':'تم إلغاء الأرشفة','info'); }
+function deleteCase(id){ if(!confirm('حذف هذه القضية؟'))return; DB.cases=DB.cases.filter(c=>c.id!==id); saveDB(); logActivity('حذف قضية'); renderCases(); showToast('تم الحذف','warning'); syncWithGitHub(); }
+function archiveCase(id){ const c=DB.cases.find(x=>x.id===id); if(!c)return; c.archived=!c.archived; c.status=c.archived?'مؤرشفة':c.status==='مؤرشفة'?'مغلقة':c.status; saveDB(); renderCases(); showToast(c.archived?'تم أرشفة القضية':'تم إلغاء الأرشفة','info'); syncWithGitHub(); }
 
 function viewCase(id){
   const c=DB.cases.find(x=>x.id===id); if(!c)return;
@@ -1876,6 +2006,7 @@ function addClient(){
   document.getElementById('tawkeelImgData').value='';
   document.getElementById('tawkeelImgPreviewWrap').style.display='none';
   ['clientName','clientPhone','clientEmail','clientID','clientAddress','clientNotes','clientTawkeelNum','clientTawkeelDate'].forEach(id=>{ const el=document.getElementById(id); if(el)el.value=''; });
+  syncWithGitHub();
 }
 
 function editClient(id){
@@ -1931,7 +2062,7 @@ function renderClients(){
     </div>`;
   }).join('');
 }
-function deleteClient(id){ if(!confirm('حذف هذا الموكل؟'))return; DB.clients=DB.clients.filter(c=>c.id!==id); saveDB(); renderClients(); showToast('تم الحذف','warning'); }
+function deleteClient(id){ if(!confirm('حذف هذا الموكل؟'))return; DB.clients=DB.clients.filter(c=>c.id!==id); saveDB(); renderClients(); showToast('تم الحذف','warning'); syncWithGitHub(); }
 
 // ============================================================
 // STAFF
@@ -1949,6 +2080,7 @@ function addStaff(){
   document.getElementById('staffSaveBtn').textContent='حفظ';
   document.getElementById('staffPhotoPreview').innerHTML='👤';
   document.getElementById('staffPhotoData').value='';
+  syncWithGitHub();
 }
 function editStaff(id){
   const s=DB.staff.find(x=>x.id===id); if(!s)return;
@@ -2000,7 +2132,7 @@ function renderStaff(){
     </div>`;
   }).join('');
 }
-function deleteStaff(id){ if(!confirm('حذف هذا الموظف؟'))return; DB.staff=DB.staff.filter(s=>s.id!==id); saveDB(); renderStaff(); showToast('تم الحذف','warning'); }
+function deleteStaff(id){ if(!confirm('حذف هذا الموظف؟'))return; DB.staff=DB.staff.filter(s=>s.id!==id); saveDB(); renderStaff(); showToast('تم الحذف','warning'); syncWithGitHub(); }
 
 // ============================================================
 // ATTENDANCE
@@ -2011,7 +2143,7 @@ function addAttendance(){
   if(!staffId||!date){ showToast('الرجاء اختيار الموظف والتاريخ','error'); return; }
   DB.attendance=DB.attendance.filter(a=>!(a.staffId===staffId&&a.date===date));
   DB.attendance.push({id:genId(),staffId,date,timeIn:document.getElementById('attendTimeIn').value,timeOut:document.getElementById('attendTimeOut').value,status:document.getElementById('attendStatus').value,deduct:+document.getElementById('attendDeduct').value||0,note:document.getElementById('attendNote').value.trim()});
-  saveDB(); logActivity('تسجيل حضور'); closeModal('addAttendModal'); renderAttendance(); showToast('تم تسجيل الحضور');
+  saveDB(); logActivity('تسجيل حضور'); closeModal('addAttendModal'); renderAttendance(); showToast('تم تسجيل الحضور'); syncWithGitHub();
 }
 function renderAttendance(){
   const selDate=document.getElementById('attendDate')?.value||new Date().toISOString().split('T')[0];
@@ -2044,7 +2176,7 @@ function renderAttendance(){
     </tr>`;
   }).join('');
 }
-function deleteAttend(id){ DB.attendance=DB.attendance.filter(a=>a.id!==id); saveDB(); renderAttendance(); showToast('تم الحذف','warning'); }
+function deleteAttend(id){ DB.attendance=DB.attendance.filter(a=>a.id!==id); saveDB(); renderAttendance(); showToast('تم الحذف','warning'); syncWithGitHub(); }
 
 // ============================================================
 // SESSIONS
@@ -2053,7 +2185,7 @@ function addSession(){
   const date=document.getElementById('sessionDate').value;
   if(!date){ showToast('الرجاء إدخال التاريخ','error'); return; }
   DB.sessions.push({id:genId(),caseId:document.getElementById('sessionCase').value,date,time:document.getElementById('sessionTime').value,court:document.getElementById('sessionCourt').value.trim(),notes:document.getElementById('sessionNotes').value.trim()});
-  saveDB(); logActivity('إضافة جلسة'); closeModal('addSessionModal'); renderCalendar(); showToast('تم إضافة الجلسة'); checkSessionAlerts();
+  saveDB(); logActivity('إضافة جلسة'); closeModal('addSessionModal'); renderCalendar(); showToast('تم إضافة الجلسة'); checkSessionAlerts(); syncWithGitHub();
 }
 function renderCalendar(){
   const months=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
@@ -2089,7 +2221,7 @@ function renderCalendar(){
   }).join(''):'<p style="color:var(--text-muted);font-size:12px;text-align:center;padding:20px;">لا توجد جلسات</p>';
 }
 function openWhatsAppSession(caseId){ const c=DB.cases.find(x=>x.id===caseId); if(!c)return; const client=DB.clients.find(x=>x.id===c.clientId); if(!client||!client.phone){ showToast('لا يوجد رقم هاتف للموكل','error'); return; } openWhatsApp(client.name,client.phone,c.num); }
-function deleteSession(id){ if(!confirm('حذف هذه الجلسة؟'))return; DB.sessions=DB.sessions.filter(s=>s.id!==id); saveDB(); renderCalendar(); showToast('تم الحذف','warning'); checkSessionAlerts(); }
+function deleteSession(id){ if(!confirm('حذف هذه الجلسة؟'))return; DB.sessions=DB.sessions.filter(s=>s.id!==id); saveDB(); renderCalendar(); showToast('تم الحذف','warning'); checkSessionAlerts(); syncWithGitHub(); }
 function showDaySessions(ds){ const d=DB.sessions.filter(s=>s.date===ds); if(d.length) showToast(`${d.length} جلسة في ${formatDate(ds)}`,'info'); }
 function prevMonth(){ calDate.setMonth(calDate.getMonth()-1); renderCalendar(); }
 function nextMonth(){ calDate.setMonth(calDate.getMonth()+1); renderCalendar(); }
@@ -2108,6 +2240,7 @@ function addSessionLog(){
   saveDB(); logActivity('تسجيل جلسة منتهية: '+getCaseName(caseId)); closeModal('addSessionLogModal'); renderSessionHistory(); showToast('تم حفظ سجل الجلسة');
   document.getElementById('editSessionLogId').value='';
   ['sessionLogCourt','sessionLogJudge','sessionLogWhat','sessionLogNotes','sessionLogNext'].forEach(id=>{ const el=document.getElementById(id); if(el)el.value=''; });
+  syncWithGitHub();
 }
 function renderSessionHistory(){
   const filter=document.getElementById('historyFilterCase');
@@ -2138,7 +2271,7 @@ function renderSessionHistory(){
       ${l.notes?`<div style="font-size:11px;color:var(--text-muted);background:rgba(201,168,76,.05);padding:7px 10px;border-radius:7px;margin-top:6px;"><i class="fas fa-sticky-note" style="color:var(--gold);margin-left:5px;"></i>${l.notes}</div>`:''}
     </div>`).join(''):'<div style="text-align:center;padding:40px;color:var(--text-muted);"><i class="fas fa-history" style="font-size:40px;opacity:.2;margin-bottom:12px;display:block;"></i><p>لا توجد سجلات جلسات</p></div>';
 }
-function deleteSessionLog(id){ if(!confirm('حذف هذا السجل؟'))return; DB.sessionLogs=DB.sessionLogs.filter(l=>l.id!==id); saveDB(); renderSessionHistory(); showToast('تم الحذف','warning'); }
+function deleteSessionLog(id){ if(!confirm('حذف هذا السجل؟'))return; DB.sessionLogs=DB.sessionLogs.filter(l=>l.id!==id); saveDB(); renderSessionHistory(); showToast('تم الحذف','warning'); syncWithGitHub(); }
 
 // ============================================================
 // TASKS
@@ -2149,6 +2282,7 @@ function addTask(){
   DB.tasks.push({id:genId(),title,priority:document.getElementById('taskPriority').value,due:document.getElementById('taskDue').value,ownerId:document.getElementById('taskOwner').value,caseId:document.getElementById('taskCase').value,status:'pending'});
   saveDB(); logActivity('إضافة مهمة: '+title); closeModal('addTaskModal'); renderTasks(); showToast('تم إضافة المهمة');
   document.getElementById('taskTitle').value='';
+  syncWithGitHub();
 }
 function renderTasks(){
   const cols={pending:'tasks-pending',inprogress:'tasks-inprogress',done:'tasks-done'};
@@ -2168,9 +2302,9 @@ function renderTasks(){
       </div>`).join(''):`<p style="color:var(--text-muted);font-size:11px;text-align:center;padding:12px;">لا توجد مهام</p>`;
   });
 }
-function moveTask(id,newStatus){ const t=DB.tasks.find(x=>x.id===id); if(t){ t.status=newStatus; saveDB(); renderTasks(); } }
-function deleteTask(id){ DB.tasks=DB.tasks.filter(t=>t.id!==id); saveDB(); renderTasks(); showToast('تم الحذف','warning'); }
-function toggleTask(id){ const t=DB.tasks.find(x=>x.id===id); if(t){ t.status=t.status==='done'?'pending':'done'; saveDB(); renderDashboard(); } }
+function moveTask(id,newStatus){ const t=DB.tasks.find(x=>x.id===id); if(t){ t.status=newStatus; saveDB(); renderTasks(); syncWithGitHub(); } }
+function deleteTask(id){ DB.tasks=DB.tasks.filter(t=>t.id!==id); saveDB(); renderTasks(); showToast('تم الحذف','warning'); syncWithGitHub(); }
+function toggleTask(id){ const t=DB.tasks.find(x=>x.id===id); if(t){ t.status=t.status==='done'?'pending':'done'; saveDB(); renderDashboard(); syncWithGitHub(); } }
 
 // ============================================================
 // FINANCE
@@ -2180,7 +2314,7 @@ function addPayment(){
   const amount=+document.getElementById('payAmount').value;
   if(!client||!amount){ showToast('الرجاء إدخال الموكل والمبلغ','error'); return; }
   DB.payments.push({id:genId(),client,caseId:document.getElementById('payCase').value,desc:document.getElementById('payDesc').value.trim(),type:document.getElementById('payType').value,amount,date:document.getElementById('payDate').value,status:document.getElementById('payStatus').value});
-  saveDB(); logActivity('تسجيل دفعة: '+amount+' ج.م'); closeModal('addPaymentModal'); renderFinance(); showToast('تم تسجيل الدفعة');
+  saveDB(); logActivity('تسجيل دفعة: '+amount+' ج.م'); closeModal('addPaymentModal'); renderFinance(); showToast('تم تسجيل الدفعة'); syncWithGitHub();
 }
 function renderFinance(){
   const income=DB.payments.filter(p=>p.type==='إيراد').reduce((a,b)=>a+(+b.amount),0);
@@ -2232,7 +2366,7 @@ function renderFinance(){
       <td><button onclick="deletePayment('${p.id}')" class="btn-danger btn-sm"><i class="fas fa-trash"></i></button></td>
     </tr>`).join('');
 }
-function deletePayment(id){ DB.payments=DB.payments.filter(p=>p.id!==id); saveDB(); renderFinance(); showToast('تم الحذف','warning'); }
+function deletePayment(id){ DB.payments=DB.payments.filter(p=>p.id!==id); saveDB(); renderFinance(); showToast('تم الحذف','warning'); syncWithGitHub(); }
 
 // ============================================================
 // PAYROLL
@@ -2242,7 +2376,7 @@ function addSalary(){
   const month=document.getElementById('salaryMonth').value;
   if(!staffId||!month){ showToast('الرجاء اختيار الموظف والشهر','error'); return; }
   DB.salaries.push({id:genId(),staffId,month,base:+document.getElementById('salaryBase').value||0,bonus:+document.getElementById('salaryBonus').value||0,deduct:+document.getElementById('salaryDeduct').value||0,status:document.getElementById('salaryStatus').value,note:document.getElementById('salaryNote').value.trim()});
-  saveDB(); logActivity('صرف راتب'); closeModal('addSalaryModal'); renderPayroll(); showToast('تم صرف الراتب');
+  saveDB(); logActivity('صرف راتب'); closeModal('addSalaryModal'); renderPayroll(); showToast('تم صرف الراتب'); syncWithGitHub();
 }
 function renderPayroll(){
   document.getElementById('totalSalaries').textContent=fmt(DB.salaries.reduce((a,b)=>a+(+b.base||0),0));
@@ -2267,7 +2401,7 @@ function renderPayroll(){
     </tr>`;
   }).join('');
 }
-function deleteSalary(id){ DB.salaries=DB.salaries.filter(s=>s.id!==id); saveDB(); renderPayroll(); showToast('تم الحذف','warning'); }
+function deleteSalary(id){ DB.salaries=DB.salaries.filter(s=>s.id!==id); saveDB(); renderPayroll(); showToast('تم الحذف','warning'); syncWithGitHub(); }
 
 // ============================================================
 // DOCUMENTS
@@ -2275,13 +2409,13 @@ function deleteSalary(id){ DB.salaries=DB.salaries.filter(s=>s.id!==id); saveDB(
 function handleFileUpload(event){
   const files=event.target.files;
   for(const file of files){ DB.documents.push({id:genId(),name:file.name,cat:'أخرى',size:file.size,caseId:'',uploadedAt:new Date().toISOString()}); }
-  saveDB(); renderDocs(); showToast('تم رفع '+files.length+' ملف');
+  saveDB(); renderDocs(); showToast('تم رفع '+files.length+' ملف'); syncWithGitHub();
 }
 function addDoc(){
   const name=document.getElementById('docName').value.trim();
   if(!name){ showToast('الرجاء إدخال الاسم','error'); return; }
   DB.documents.push({id:genId(),name,cat:document.getElementById('docCat').value,caseId:document.getElementById('docCase').value,size:0,uploadedAt:new Date().toISOString()});
-  saveDB(); logActivity('رفع مستند: '+name); closeModal('addDocModal'); renderDocs(); showToast('تم إضافة المستند');
+  saveDB(); logActivity('رفع مستند: '+name); closeModal('addDocModal'); renderDocs(); showToast('تم إضافة المستند'); syncWithGitHub();
 }
 function renderDocs(){
   const grid=document.getElementById('docsGrid');
@@ -2299,7 +2433,7 @@ function renderDocs(){
       <button onclick="deleteDoc('${d.id}')" class="btn-danger btn-sm" style="margin-top:8px;"><i class="fas fa-trash"></i></button>
     </div>`).join('');
 }
-function deleteDoc(id){ DB.documents=DB.documents.filter(d=>d.id!==id); saveDB(); renderDocs(); showToast('تم الحذف','warning'); }
+function deleteDoc(id){ DB.documents=DB.documents.filter(d=>d.id!==id); saveDB(); renderDocs(); showToast('تم الحذف','warning'); syncWithGitHub(); }
 
 // ============================================================
 // SETTINGS
@@ -2307,7 +2441,19 @@ function deleteDoc(id){ DB.documents=DB.documents.filter(d=>d.id!==id); saveDB()
 function saveSettings(){
   DB.settings={officeName:document.getElementById('officeName').value,officeManager:document.getElementById('officeManager').value,officeAddress:document.getElementById('officeAddress').value,officePhone:document.getElementById('officePhone').value,officeEmail:document.getElementById('officeEmail').value};
   saveDB(); logActivity('حفظ إعدادات'); showToast('تم حفظ الإعدادات');
+  
+  // حفظ إعدادات GitHub
+  const token = document.getElementById('githubToken').value;
+  const repo = document.getElementById('githubRepo').value;
+  const path = document.getElementById('githubPath').value;
+  if(token) localStorage.setItem(GITHUB_TOKEN_KEY, token);
+  if(repo) localStorage.setItem(GITHUB_REPO_KEY, repo);
+  if(path) localStorage.setItem(GITHUB_PATH_KEY, path);
+  
+  // مزامنة مع GitHub
+  syncWithGitHub();
 }
+
 function renderSettings(){
   const s=DB.settings||{};
   if(s.officeName) document.getElementById('officeName').value=s.officeName;
@@ -2315,6 +2461,15 @@ function renderSettings(){
   if(s.officeAddress) document.getElementById('officeAddress').value=s.officeAddress||'';
   if(s.officePhone) document.getElementById('officePhone').value=s.officePhone||'';
   if(s.officeEmail) document.getElementById('officeEmail').value=s.officeEmail||'';
+  
+  // استرجاع إعدادات GitHub
+  const token = localStorage.getItem(GITHUB_TOKEN_KEY) || '';
+  const repo = localStorage.getItem(GITHUB_REPO_KEY) || 'amg-law/data';
+  const path = localStorage.getItem(GITHUB_PATH_KEY) || 'data.json';
+  if(document.getElementById('githubToken')) document.getElementById('githubToken').value = token;
+  if(document.getElementById('githubRepo')) document.getElementById('githubRepo').value = repo;
+  if(document.getElementById('githubPath')) document.getElementById('githubPath').value = path;
+  
   const log=DB.activityLog||[];
   document.getElementById('activityLog').innerHTML=log.slice(0,20).map(e=>`<div style="padding:3px 0;border-bottom:1px solid var(--glass-border);">${e.action} <span style="float:left;font-size:9px;">${e.time}</span></div>`).join('')||'<p>لا توجد أنشطة بعد</p>';
   updateStorageIndicator();
@@ -2333,7 +2488,7 @@ function restoreData(event){
   const file=event.target.files[0]; if(!file)return;
   if(!confirm('سيتم استبدال البيانات الحالية. هل أنت متأكد؟'))return;
   const reader=new FileReader();
-  reader.onload=e=>{ try{ DB=JSON.parse(e.target.result); saveDB(); showToast('تم استعادة البيانات'); refreshPage(currentPage); }catch(err){ showToast('خطأ في قراءة الملف','error'); } };
+  reader.onload=e=>{ try{ DB=JSON.parse(e.target.result); saveDB(); showToast('تم استعادة البيانات'); refreshPage(currentPage); renderDashboard(); syncWithGitHub(); }catch(err){ showToast('خطأ في قراءة الملف','error'); } };
   reader.readAsText(file);
   event.target.value='';
 }
