@@ -1,7 +1,21 @@
 {
   "cases": [],
   "clients": [],
-  "staff": [],
+  "staff": [
+    {
+      "id": "_rjkk49hk7mqlc6pch",
+      "name": "خالد شريف",
+      "role": "محامي",
+      "spec": "قانون جنائي",
+      "license": "",
+      "phone": "+201123961290",
+      "email": "",
+      "salary": 2000,
+      "joinDate": "2026-06-01",
+      "notes": "",
+      "photo": ""
+    }
+  ],
   "sessions": [],
   "tasks": [],
   "payments": [],
@@ -17,12 +31,8 @@
   },
   "activityLog": [
     {
-      "action": "مزامنة مع GitHub",
-      "time": "١٩‏/٦‏/٢٠٢٦، ١٢:٤١:١١ م"
-    },
-    {
-      "action": "حفظ إعدادات",
-      "time": "١٩‏/٦‏/٢٠٢٦، ١٢:٤١:٠٩ م"
+      "action": "إضافة موظف: خالد شريف",
+      "time": "١٩‏/٦‏/٢٠٢٦، ١٢:٤٣:٢٨ م"
     }
   ],
   "sessionLogs": [],
