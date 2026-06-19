@@ -1214,7 +1214,7 @@ body.light .session-log-item{background:var(--dark3);}
 
 <script>
 // ============================================================
-// STORAGE
+// STORAGE & CONFIG
 // ============================================================
 const STORAGE_KEY = 'amgLawData_v6';
 const SESSION_KEY = 'amgSession_v6';
@@ -1234,6 +1234,9 @@ const CREDENTIALS = [
   {username:'admin', password:'admin'},
   {username:'مصطفي', password:'مؤسسة المصطفي'}
 ];
+
+let syncTimeout = null;
+let isSyncing = false;
 
 // ============================================================
 // AUTH
@@ -1280,9 +1283,10 @@ function doLogout(){
 }
 
 // ============================================================
-// DATABASE
+// DATABASE - LOAD & SAVE
 // ============================================================
 function loadDB(){
+  // تحميل من localStorage
   const saved = localStorage.getItem(STORAGE_KEY);
   if(saved){
     try {
@@ -1294,6 +1298,11 @@ function loadDB(){
       if(!DB.settings) DB.settings = {};
     } catch(e){}
   }
+  
+  // جلب من GitHub بعد 1 ثانية
+  setTimeout(() => {
+    fetchFromGitHub();
+  }, 1000);
 }
 
 function saveDB(){
@@ -1320,35 +1329,102 @@ function updateStorageIndicator(){
 }
 
 // ============================================================
-// GITHUB SYNC
+// GITHUB - FETCH (جلب البيانات من GitHub)
 // ============================================================
-function getGithubConfig(){
-  const token = localStorage.getItem(GITHUB_TOKEN_KEY) || '';
-  const repo = localStorage.getItem(GITHUB_REPO_KEY) || 'amg-law/data';
-  const path = localStorage.getItem(GITHUB_PATH_KEY) || 'data.json';
-  return { token, repo, path };
-}
-
-function saveGithubConfig(token, repo, path){
-  if(token) localStorage.setItem(GITHUB_TOKEN_KEY, token);
-  if(repo) localStorage.setItem(GITHUB_REPO_KEY, repo);
-  if(path) localStorage.setItem(GITHUB_PATH_KEY, path);
-}
-
-async function syncWithGitHub() {
-    const { token, repo, path } = getGithubConfig();
+async function fetchFromGitHub() {
+    const token = localStorage.getItem(GITHUB_TOKEN_KEY) || '';
+    const repo = localStorage.getItem(GITHUB_REPO_KEY) || 'pLofdd/agm';
+    const path = localStorage.getItem(GITHUB_PATH_KEY) || 'data.json';
+    
     if (!token || !repo) {
-        showToast('يرجى إدخال GitHub Token واسم المستودع في الإعدادات', 'error');
+        console.log('⚠️ لم يتم إعداد GitHub بعد');
         return;
     }
     
-    showToast('جاري المزامنة مع GitHub...', 'info');
+    try {
+        const readResp = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
+            headers: {
+                'Authorization': `token ${token}`,
+                'Accept': 'application/vnd.github.v3+json'
+            }
+        });
+        
+        if (readResp.ok) {
+            const data = await readResp.json();
+            const content = atob(data.content);
+            const remoteDB = JSON.parse(content);
+            
+            if (remoteDB && typeof remoteDB === 'object') {
+                let mergedCount = 0;
+                
+                ['cases','clients','staff','sessions','tasks','payments','documents','attendance','salaries','sessionLogs'].forEach(key => {
+                    if (remoteDB[key] && Array.isArray(remoteDB[key])) {
+                        remoteDB[key].forEach(item => {
+                            if (!DB[key].find(local => local.id === item.id)) {
+                                DB[key].push(item);
+                                mergedCount++;
+                            }
+                        });
+                    }
+                });
+                
+                if (mergedCount > 0) {
+                    saveDB();
+                    console.log(`✅ تم دمج ${mergedCount} عنصر من GitHub`);
+                    showToast(`✅ تم استيراد ${mergedCount} عنصر من GitHub`, 'success');
+                    if (currentPage) refreshPage(currentPage);
+                    renderDashboard();
+                } else {
+                    console.log('✅ البيانات محدثة');
+                }
+            }
+        } else if (readResp.status === 404) {
+            console.log('📄 لا يوجد ملف على GitHub');
+        } else {
+            console.warn('⚠️ فشل جلب البيانات');
+        }
+    } catch(e) {
+        console.log('⚠️ لا يمكن الاتصال بـ GitHub:', e.message);
+    }
+}
+
+// ============================================================
+// GITHUB - SYNC (المزامنة التلقائية)
+// ============================================================
+function autoSync() {
+    clearTimeout(syncTimeout);
+    syncTimeout = setTimeout(() => {
+        const token = localStorage.getItem(GITHUB_TOKEN_KEY) || '';
+        const repo = localStorage.getItem(GITHUB_REPO_KEY) || '';
+        if (token && repo && !isSyncing) {
+            console.log('🔄 مزامنة تلقائية...');
+            syncWithGitHub();
+        }
+    }, 3000);
+}
+
+async function syncWithGitHub() {
+    if (isSyncing) return;
+    isSyncing = true;
+    
+    const token = localStorage.getItem(GITHUB_TOKEN_KEY) || '';
+    const repo = localStorage.getItem(GITHUB_REPO_KEY) || 'pLofdd/agm';
+    const path = localStorage.getItem(GITHUB_PATH_KEY) || 'data.json';
+    
+    if (!token || !repo) {
+        showToast('⚠️ يرجى إدخال GitHub Token واسم المستودع في الإعدادات', 'error');
+        isSyncing = false;
+        return;
+    }
+    
+    showToast('🔄 جاري المزامنة...', 'info');
     
     try {
-        // محاولة قراءة الملف أولاً للحصول على SHA
         let sha = null;
         let fileExists = false;
+        let remoteData = null;
         
+        // قراءة الملف من GitHub
         try {
             const readResp = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
                 headers: {
@@ -1361,39 +1437,51 @@ async function syncWithGitHub() {
                 const data = await readResp.json();
                 sha = data.sha;
                 fileExists = true;
-                console.log('✅ الملف موجود، SHA:', sha);
+                const content = atob(data.content);
+                remoteData = JSON.parse(content);
+                console.log('✅ تم قراءة الملف من GitHub');
             } else if (readResp.status === 404) {
                 console.log('📄 الملف غير موجود، سيتم إنشاؤه');
                 fileExists = false;
-            } else {
-                const err = await readResp.json();
-                showToast('خطأ في قراءة الملف: ' + (err.message || 'خطأ غير معروف'), 'error');
-                return;
             }
         } catch(e) {
-            console.log('⚠️ خطأ في القراءة، سيتم إنشاء الملف:', e.message);
+            console.log('⚠️ خطأ في القراءة:', e.message);
             fileExists = false;
         }
         
-        // تحضير المحتوى
-        const content = btoa(unescape(encodeURIComponent(JSON.stringify(DB, null, 2))));
+        // دمج البيانات من GitHub مع المحلية
+        if (remoteData && typeof remoteData === 'object') {
+            let mergedCount = 0;
+            ['cases','clients','staff','sessions','tasks','payments','documents','attendance','salaries','sessionLogs'].forEach(key => {
+                if (remoteData[key] && Array.isArray(remoteData[key]) && DB[key]) {
+                    remoteData[key].forEach(item => {
+                        if (!DB[key].find(local => local.id === item.id)) {
+                            DB[key].push(item);
+                            mergedCount++;
+                        }
+                    });
+                }
+            });
+            if (mergedCount > 0) {
+                console.log(`✅ تم دمج ${mergedCount} عنصر من GitHub`);
+                saveDB();
+            }
+        }
         
-        // بناء جسم الطلب
+        // رفع البيانات إلى GitHub
+        const jsonData = JSON.stringify(DB, null, 2);
+        const content = btoa(unescape(encodeURIComponent(jsonData)));
+        
         const body = {
             message: `تحديث البيانات: ${new Date().toLocaleString('ar-EG')}`,
             content: content,
             branch: 'main'
         };
         
-        // إضافة SHA فقط إذا كان الملف موجوداً
         if (fileExists && sha) {
             body.sha = sha;
-            console.log('🔄 تحديث ملف موجود');
-        } else {
-            console.log('✨ إنشاء ملف جديد');
         }
         
-        // رفع البيانات
         const writeResp = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
             method: 'PUT',
             headers: {
@@ -1405,26 +1493,29 @@ async function syncWithGitHub() {
         });
         
         if (writeResp.ok) {
-            const result = await writeResp.json();
-            console.log('✅ تم الرفع بنجاح:', result);
-            showToast('✅ تم رفع البيانات إلى GitHub بنجاح', 'success');
+            console.log('✅ تم الرفع بنجاح');
+            showToast('✅ تمت المزامنة مع GitHub', 'success');
             logActivity('مزامنة مع GitHub');
         } else {
             const err = await writeResp.json();
-            console.error('❌ فشل الرفع:', err);
-            
-            // رسائل خطأ مخصصة
             let errorMsg = err.message || 'خطأ غير معروف';
-            if (err.message && err.message.includes('sha')) {
-                errorMsg = 'خطأ في SHA. تأكد من أن الملف موجود أو حاول الحذف وإعادة المحاولة.';
+            if (errorMsg.includes('sha')) {
+                errorMsg = 'خطأ في SHA. حاول حذف الملف من GitHub ثم أعد المحاولة.';
+            } else if (errorMsg.includes('404')) {
+                errorMsg = 'المستودع غير موجود: ' + repo;
+            } else if (errorMsg.includes('401') || errorMsg.includes('403')) {
+                errorMsg = 'صلاحيات غير كافية. تحقق من التوكن.';
             }
-            showToast('فشل رفع البيانات: ' + errorMsg, 'error');
+            showToast('❌ ' + errorMsg, 'error');
         }
     } catch(e) {
         console.error('❌ خطأ:', e);
-        showToast('خطأ في المزامنة: ' + e.message, 'error');
+        showToast('❌ خطأ في المزامنة: ' + e.message, 'error');
     }
+    
+    isSyncing = false;
 }
+
 // ============================================================
 // FILE EXPORT / IMPORT
 // ============================================================
@@ -1452,6 +1543,7 @@ function loadFromFile(event){
       showToast('تم استيراد البيانات بنجاح','success');
       refreshPage(currentPage);
       renderDashboard();
+      autoSync();
     } catch(err){ showToast('خطأ في قراءة الملف','error'); }
   };
   reader.readAsText(file);
@@ -1543,14 +1635,12 @@ function populateSel(selId, arr, labelFn){
   });
 }
 
-// Fill tawkeel num when client selected in case modal
 function fillCaseTawkeel(){
   const clientId = document.getElementById('caseClient').value;
   const client = DB.clients.find(x=>x.id===clientId);
   document.getElementById('caseTawkeelNum').value = client ? (client.tawkeelNum||'') : '';
 }
 
-// Preview tawkeel image
 function previewTawkeel(event){
   const file = event.target.files[0]; if(!file) return;
   const reader = new FileReader();
@@ -1587,6 +1677,7 @@ function showToast(msg, type='success'){
   t.style.transform = 'translateX(-50%) translateY(0)';
   setTimeout(()=>{ t.style.transform = 'translateX(-50%) translateY(120px)'; }, 3000);
 }
+
 function logActivity(a){ if(!DB.activityLog)DB.activityLog=[]; DB.activityLog.unshift({action:a,time:new Date().toLocaleString('ar-EG')}); if(DB.activityLog.length>100)DB.activityLog.pop(); }
 
 function previewPhoto(event,previewId,dataId){
@@ -1613,7 +1704,6 @@ function renderAvatar(photo,name,size=36,fontSize=13){
 // ============================================================
 function buildClientCard(client){
   const cases = DB.cases.filter(x=>x.clientId===client.id);
-  const caseInfo = cases.length ? cases.map(c=>`${c.num}`).join('، ') : 'لا توجد قضايا';
   const caseDetails = cases.length ? cases.map(c=>`<div style="font-size:9px;color:rgba(255,255,255,.7);">⚖️ ${c.num} (${c.type}) - ${c.court}</div>`).join('') : '';
   const avatarHtml = client.photo
     ? `<img src="${client.photo}" style="width:100%;height:100%;object-fit:cover;">`
@@ -1836,9 +1926,7 @@ function addCase(){
   document.getElementById('caseModalTitle').textContent='إضافة قضية جديدة';
   document.getElementById('caseSaveBtn').textContent='حفظ القضية';
   ['caseNum','caseCourt','caseDivision','caseDate','caseNotes','caseFee','casePaid','caseTawkeelNum'].forEach(id=>{ const el=document.getElementById(id); if(el)el.value=''; });
-  
-  // مزامنة مع GitHub بعد التعديل
-  syncWithGitHub();
+  autoSync();
 }
 
 function editCase(id){
@@ -1939,8 +2027,9 @@ function renderCases(){
   document.getElementById('caseTableWrap').style.display=caseViewMode==='table'?'block':'none';
 }
 
-function deleteCase(id){ if(!confirm('حذف هذه القضية؟'))return; DB.cases=DB.cases.filter(c=>c.id!==id); saveDB(); logActivity('حذف قضية'); renderCases(); showToast('تم الحذف','warning'); syncWithGitHub(); }
-function archiveCase(id){ const c=DB.cases.find(x=>x.id===id); if(!c)return; c.archived=!c.archived; c.status=c.archived?'مؤرشفة':c.status==='مؤرشفة'?'مغلقة':c.status; saveDB(); renderCases(); showToast(c.archived?'تم أرشفة القضية':'تم إلغاء الأرشفة','info'); syncWithGitHub(); }
+function deleteCase(id){ if(!confirm('حذف هذه القضية؟'))return; DB.cases=DB.cases.filter(c=>c.id!==id); saveDB(); logActivity('حذف قضية'); renderCases(); showToast('تم الحذف','warning'); autoSync(); }
+
+function archiveCase(id){ const c=DB.cases.find(x=>x.id===id); if(!c)return; c.archived=!c.archived; c.status=c.archived?'مؤرشفة':c.status==='مؤرشفة'?'مغلقة':c.status; saveDB(); renderCases(); showToast(c.archived?'تم أرشفة القضية':'تم إلغاء الأرشفة','info'); autoSync(); }
 
 function viewCase(id){
   const c=DB.cases.find(x=>x.id===id); if(!c)return;
@@ -2006,7 +2095,7 @@ function addClient(){
   document.getElementById('tawkeelImgData').value='';
   document.getElementById('tawkeelImgPreviewWrap').style.display='none';
   ['clientName','clientPhone','clientEmail','clientID','clientAddress','clientNotes','clientTawkeelNum','clientTawkeelDate'].forEach(id=>{ const el=document.getElementById(id); if(el)el.value=''; });
-  syncWithGitHub();
+  autoSync();
 }
 
 function editClient(id){
@@ -2062,7 +2151,7 @@ function renderClients(){
     </div>`;
   }).join('');
 }
-function deleteClient(id){ if(!confirm('حذف هذا الموكل؟'))return; DB.clients=DB.clients.filter(c=>c.id!==id); saveDB(); renderClients(); showToast('تم الحذف','warning'); syncWithGitHub(); }
+function deleteClient(id){ if(!confirm('حذف هذا الموكل؟'))return; DB.clients=DB.clients.filter(c=>c.id!==id); saveDB(); renderClients(); showToast('تم الحذف','warning'); autoSync(); }
 
 // ============================================================
 // STAFF
@@ -2080,7 +2169,7 @@ function addStaff(){
   document.getElementById('staffSaveBtn').textContent='حفظ';
   document.getElementById('staffPhotoPreview').innerHTML='👤';
   document.getElementById('staffPhotoData').value='';
-  syncWithGitHub();
+  autoSync();
 }
 function editStaff(id){
   const s=DB.staff.find(x=>x.id===id); if(!s)return;
@@ -2132,7 +2221,7 @@ function renderStaff(){
     </div>`;
   }).join('');
 }
-function deleteStaff(id){ if(!confirm('حذف هذا الموظف؟'))return; DB.staff=DB.staff.filter(s=>s.id!==id); saveDB(); renderStaff(); showToast('تم الحذف','warning'); syncWithGitHub(); }
+function deleteStaff(id){ if(!confirm('حذف هذا الموظف؟'))return; DB.staff=DB.staff.filter(s=>s.id!==id); saveDB(); renderStaff(); showToast('تم الحذف','warning'); autoSync(); }
 
 // ============================================================
 // ATTENDANCE
@@ -2143,7 +2232,7 @@ function addAttendance(){
   if(!staffId||!date){ showToast('الرجاء اختيار الموظف والتاريخ','error'); return; }
   DB.attendance=DB.attendance.filter(a=>!(a.staffId===staffId&&a.date===date));
   DB.attendance.push({id:genId(),staffId,date,timeIn:document.getElementById('attendTimeIn').value,timeOut:document.getElementById('attendTimeOut').value,status:document.getElementById('attendStatus').value,deduct:+document.getElementById('attendDeduct').value||0,note:document.getElementById('attendNote').value.trim()});
-  saveDB(); logActivity('تسجيل حضور'); closeModal('addAttendModal'); renderAttendance(); showToast('تم تسجيل الحضور'); syncWithGitHub();
+  saveDB(); logActivity('تسجيل حضور'); closeModal('addAttendModal'); renderAttendance(); showToast('تم تسجيل الحضور'); autoSync();
 }
 function renderAttendance(){
   const selDate=document.getElementById('attendDate')?.value||new Date().toISOString().split('T')[0];
@@ -2176,7 +2265,7 @@ function renderAttendance(){
     </tr>`;
   }).join('');
 }
-function deleteAttend(id){ DB.attendance=DB.attendance.filter(a=>a.id!==id); saveDB(); renderAttendance(); showToast('تم الحذف','warning'); syncWithGitHub(); }
+function deleteAttend(id){ DB.attendance=DB.attendance.filter(a=>a.id!==id); saveDB(); renderAttendance(); showToast('تم الحذف','warning'); autoSync(); }
 
 // ============================================================
 // SESSIONS
@@ -2185,7 +2274,7 @@ function addSession(){
   const date=document.getElementById('sessionDate').value;
   if(!date){ showToast('الرجاء إدخال التاريخ','error'); return; }
   DB.sessions.push({id:genId(),caseId:document.getElementById('sessionCase').value,date,time:document.getElementById('sessionTime').value,court:document.getElementById('sessionCourt').value.trim(),notes:document.getElementById('sessionNotes').value.trim()});
-  saveDB(); logActivity('إضافة جلسة'); closeModal('addSessionModal'); renderCalendar(); showToast('تم إضافة الجلسة'); checkSessionAlerts(); syncWithGitHub();
+  saveDB(); logActivity('إضافة جلسة'); closeModal('addSessionModal'); renderCalendar(); showToast('تم إضافة الجلسة'); checkSessionAlerts(); autoSync();
 }
 function renderCalendar(){
   const months=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
@@ -2221,7 +2310,7 @@ function renderCalendar(){
   }).join(''):'<p style="color:var(--text-muted);font-size:12px;text-align:center;padding:20px;">لا توجد جلسات</p>';
 }
 function openWhatsAppSession(caseId){ const c=DB.cases.find(x=>x.id===caseId); if(!c)return; const client=DB.clients.find(x=>x.id===c.clientId); if(!client||!client.phone){ showToast('لا يوجد رقم هاتف للموكل','error'); return; } openWhatsApp(client.name,client.phone,c.num); }
-function deleteSession(id){ if(!confirm('حذف هذه الجلسة؟'))return; DB.sessions=DB.sessions.filter(s=>s.id!==id); saveDB(); renderCalendar(); showToast('تم الحذف','warning'); checkSessionAlerts(); syncWithGitHub(); }
+function deleteSession(id){ if(!confirm('حذف هذه الجلسة؟'))return; DB.sessions=DB.sessions.filter(s=>s.id!==id); saveDB(); renderCalendar(); showToast('تم الحذف','warning'); checkSessionAlerts(); autoSync(); }
 function showDaySessions(ds){ const d=DB.sessions.filter(s=>s.date===ds); if(d.length) showToast(`${d.length} جلسة في ${formatDate(ds)}`,'info'); }
 function prevMonth(){ calDate.setMonth(calDate.getMonth()-1); renderCalendar(); }
 function nextMonth(){ calDate.setMonth(calDate.getMonth()+1); renderCalendar(); }
@@ -2240,7 +2329,7 @@ function addSessionLog(){
   saveDB(); logActivity('تسجيل جلسة منتهية: '+getCaseName(caseId)); closeModal('addSessionLogModal'); renderSessionHistory(); showToast('تم حفظ سجل الجلسة');
   document.getElementById('editSessionLogId').value='';
   ['sessionLogCourt','sessionLogJudge','sessionLogWhat','sessionLogNotes','sessionLogNext'].forEach(id=>{ const el=document.getElementById(id); if(el)el.value=''; });
-  syncWithGitHub();
+  autoSync();
 }
 function renderSessionHistory(){
   const filter=document.getElementById('historyFilterCase');
@@ -2271,7 +2360,7 @@ function renderSessionHistory(){
       ${l.notes?`<div style="font-size:11px;color:var(--text-muted);background:rgba(201,168,76,.05);padding:7px 10px;border-radius:7px;margin-top:6px;"><i class="fas fa-sticky-note" style="color:var(--gold);margin-left:5px;"></i>${l.notes}</div>`:''}
     </div>`).join(''):'<div style="text-align:center;padding:40px;color:var(--text-muted);"><i class="fas fa-history" style="font-size:40px;opacity:.2;margin-bottom:12px;display:block;"></i><p>لا توجد سجلات جلسات</p></div>';
 }
-function deleteSessionLog(id){ if(!confirm('حذف هذا السجل؟'))return; DB.sessionLogs=DB.sessionLogs.filter(l=>l.id!==id); saveDB(); renderSessionHistory(); showToast('تم الحذف','warning'); syncWithGitHub(); }
+function deleteSessionLog(id){ if(!confirm('حذف هذا السجل؟'))return; DB.sessionLogs=DB.sessionLogs.filter(l=>l.id!==id); saveDB(); renderSessionHistory(); showToast('تم الحذف','warning'); autoSync(); }
 
 // ============================================================
 // TASKS
@@ -2282,7 +2371,7 @@ function addTask(){
   DB.tasks.push({id:genId(),title,priority:document.getElementById('taskPriority').value,due:document.getElementById('taskDue').value,ownerId:document.getElementById('taskOwner').value,caseId:document.getElementById('taskCase').value,status:'pending'});
   saveDB(); logActivity('إضافة مهمة: '+title); closeModal('addTaskModal'); renderTasks(); showToast('تم إضافة المهمة');
   document.getElementById('taskTitle').value='';
-  syncWithGitHub();
+  autoSync();
 }
 function renderTasks(){
   const cols={pending:'tasks-pending',inprogress:'tasks-inprogress',done:'tasks-done'};
@@ -2302,9 +2391,9 @@ function renderTasks(){
       </div>`).join(''):`<p style="color:var(--text-muted);font-size:11px;text-align:center;padding:12px;">لا توجد مهام</p>`;
   });
 }
-function moveTask(id,newStatus){ const t=DB.tasks.find(x=>x.id===id); if(t){ t.status=newStatus; saveDB(); renderTasks(); syncWithGitHub(); } }
-function deleteTask(id){ DB.tasks=DB.tasks.filter(t=>t.id!==id); saveDB(); renderTasks(); showToast('تم الحذف','warning'); syncWithGitHub(); }
-function toggleTask(id){ const t=DB.tasks.find(x=>x.id===id); if(t){ t.status=t.status==='done'?'pending':'done'; saveDB(); renderDashboard(); syncWithGitHub(); } }
+function moveTask(id,newStatus){ const t=DB.tasks.find(x=>x.id===id); if(t){ t.status=newStatus; saveDB(); renderTasks(); autoSync(); } }
+function deleteTask(id){ DB.tasks=DB.tasks.filter(t=>t.id!==id); saveDB(); renderTasks(); showToast('تم الحذف','warning'); autoSync(); }
+function toggleTask(id){ const t=DB.tasks.find(x=>x.id===id); if(t){ t.status=t.status==='done'?'pending':'done'; saveDB(); renderDashboard(); autoSync(); } }
 
 // ============================================================
 // FINANCE
@@ -2314,7 +2403,7 @@ function addPayment(){
   const amount=+document.getElementById('payAmount').value;
   if(!client||!amount){ showToast('الرجاء إدخال الموكل والمبلغ','error'); return; }
   DB.payments.push({id:genId(),client,caseId:document.getElementById('payCase').value,desc:document.getElementById('payDesc').value.trim(),type:document.getElementById('payType').value,amount,date:document.getElementById('payDate').value,status:document.getElementById('payStatus').value});
-  saveDB(); logActivity('تسجيل دفعة: '+amount+' ج.م'); closeModal('addPaymentModal'); renderFinance(); showToast('تم تسجيل الدفعة'); syncWithGitHub();
+  saveDB(); logActivity('تسجيل دفعة: '+amount+' ج.م'); closeModal('addPaymentModal'); renderFinance(); showToast('تم تسجيل الدفعة'); autoSync();
 }
 function renderFinance(){
   const income=DB.payments.filter(p=>p.type==='إيراد').reduce((a,b)=>a+(+b.amount),0);
@@ -2327,7 +2416,6 @@ function renderFinance(){
   document.getElementById('netProfit').textContent=fmt(income-expense);
   document.getElementById('stat-revenue').textContent=income.toLocaleString('ar-EG')+' ج.م';
 
-  // Case fees table
   const caseFeesBody=document.getElementById('caseFeesBody');
   if(caseFeesBody){
     caseFeesBody.innerHTML=DB.cases.length?DB.cases.map(c=>{
@@ -2366,7 +2454,7 @@ function renderFinance(){
       <td><button onclick="deletePayment('${p.id}')" class="btn-danger btn-sm"><i class="fas fa-trash"></i></button></td>
     </tr>`).join('');
 }
-function deletePayment(id){ DB.payments=DB.payments.filter(p=>p.id!==id); saveDB(); renderFinance(); showToast('تم الحذف','warning'); syncWithGitHub(); }
+function deletePayment(id){ DB.payments=DB.payments.filter(p=>p.id!==id); saveDB(); renderFinance(); showToast('تم الحذف','warning'); autoSync(); }
 
 // ============================================================
 // PAYROLL
@@ -2376,7 +2464,7 @@ function addSalary(){
   const month=document.getElementById('salaryMonth').value;
   if(!staffId||!month){ showToast('الرجاء اختيار الموظف والشهر','error'); return; }
   DB.salaries.push({id:genId(),staffId,month,base:+document.getElementById('salaryBase').value||0,bonus:+document.getElementById('salaryBonus').value||0,deduct:+document.getElementById('salaryDeduct').value||0,status:document.getElementById('salaryStatus').value,note:document.getElementById('salaryNote').value.trim()});
-  saveDB(); logActivity('صرف راتب'); closeModal('addSalaryModal'); renderPayroll(); showToast('تم صرف الراتب'); syncWithGitHub();
+  saveDB(); logActivity('صرف راتب'); closeModal('addSalaryModal'); renderPayroll(); showToast('تم صرف الراتب'); autoSync();
 }
 function renderPayroll(){
   document.getElementById('totalSalaries').textContent=fmt(DB.salaries.reduce((a,b)=>a+(+b.base||0),0));
@@ -2401,7 +2489,7 @@ function renderPayroll(){
     </tr>`;
   }).join('');
 }
-function deleteSalary(id){ DB.salaries=DB.salaries.filter(s=>s.id!==id); saveDB(); renderPayroll(); showToast('تم الحذف','warning'); syncWithGitHub(); }
+function deleteSalary(id){ DB.salaries=DB.salaries.filter(s=>s.id!==id); saveDB(); renderPayroll(); showToast('تم الحذف','warning'); autoSync(); }
 
 // ============================================================
 // DOCUMENTS
@@ -2409,13 +2497,13 @@ function deleteSalary(id){ DB.salaries=DB.salaries.filter(s=>s.id!==id); saveDB(
 function handleFileUpload(event){
   const files=event.target.files;
   for(const file of files){ DB.documents.push({id:genId(),name:file.name,cat:'أخرى',size:file.size,caseId:'',uploadedAt:new Date().toISOString()}); }
-  saveDB(); renderDocs(); showToast('تم رفع '+files.length+' ملف'); syncWithGitHub();
+  saveDB(); renderDocs(); showToast('تم رفع '+files.length+' ملف'); autoSync();
 }
 function addDoc(){
   const name=document.getElementById('docName').value.trim();
   if(!name){ showToast('الرجاء إدخال الاسم','error'); return; }
   DB.documents.push({id:genId(),name,cat:document.getElementById('docCat').value,caseId:document.getElementById('docCase').value,size:0,uploadedAt:new Date().toISOString()});
-  saveDB(); logActivity('رفع مستند: '+name); closeModal('addDocModal'); renderDocs(); showToast('تم إضافة المستند'); syncWithGitHub();
+  saveDB(); logActivity('رفع مستند: '+name); closeModal('addDocModal'); renderDocs(); showToast('تم إضافة المستند'); autoSync();
 }
 function renderDocs(){
   const grid=document.getElementById('docsGrid');
@@ -2433,7 +2521,7 @@ function renderDocs(){
       <button onclick="deleteDoc('${d.id}')" class="btn-danger btn-sm" style="margin-top:8px;"><i class="fas fa-trash"></i></button>
     </div>`).join('');
 }
-function deleteDoc(id){ DB.documents=DB.documents.filter(d=>d.id!==id); saveDB(); renderDocs(); showToast('تم الحذف','warning'); syncWithGitHub(); }
+function deleteDoc(id){ DB.documents=DB.documents.filter(d=>d.id!==id); saveDB(); renderDocs(); showToast('تم الحذف','warning'); autoSync(); }
 
 // ============================================================
 // SETTINGS
@@ -2442,7 +2530,6 @@ function saveSettings(){
   DB.settings={officeName:document.getElementById('officeName').value,officeManager:document.getElementById('officeManager').value,officeAddress:document.getElementById('officeAddress').value,officePhone:document.getElementById('officePhone').value,officeEmail:document.getElementById('officeEmail').value};
   saveDB(); logActivity('حفظ إعدادات'); showToast('تم حفظ الإعدادات');
   
-  // حفظ إعدادات GitHub
   const token = document.getElementById('githubToken').value;
   const repo = document.getElementById('githubRepo').value;
   const path = document.getElementById('githubPath').value;
@@ -2450,8 +2537,7 @@ function saveSettings(){
   if(repo) localStorage.setItem(GITHUB_REPO_KEY, repo);
   if(path) localStorage.setItem(GITHUB_PATH_KEY, path);
   
-  // مزامنة مع GitHub
-  syncWithGitHub();
+  autoSync();
 }
 
 function renderSettings(){
@@ -2462,9 +2548,8 @@ function renderSettings(){
   if(s.officePhone) document.getElementById('officePhone').value=s.officePhone||'';
   if(s.officeEmail) document.getElementById('officeEmail').value=s.officeEmail||'';
   
-  // استرجاع إعدادات GitHub
   const token = localStorage.getItem(GITHUB_TOKEN_KEY) || '';
-  const repo = localStorage.getItem(GITHUB_REPO_KEY) || 'amg-law/data';
+  const repo = localStorage.getItem(GITHUB_REPO_KEY) || 'pLofdd/agm';
   const path = localStorage.getItem(GITHUB_PATH_KEY) || 'data.json';
   if(document.getElementById('githubToken')) document.getElementById('githubToken').value = token;
   if(document.getElementById('githubRepo')) document.getElementById('githubRepo').value = repo;
@@ -2488,7 +2573,7 @@ function restoreData(event){
   const file=event.target.files[0]; if(!file)return;
   if(!confirm('سيتم استبدال البيانات الحالية. هل أنت متأكد؟'))return;
   const reader=new FileReader();
-  reader.onload=e=>{ try{ DB=JSON.parse(e.target.result); saveDB(); showToast('تم استعادة البيانات'); refreshPage(currentPage); renderDashboard(); syncWithGitHub(); }catch(err){ showToast('خطأ في قراءة الملف','error'); } };
+  reader.onload=e=>{ try{ DB=JSON.parse(e.target.result); saveDB(); showToast('تم استعادة البيانات'); refreshPage(currentPage); renderDashboard(); autoSync(); }catch(err){ showToast('خطأ في قراءة الملف','error'); } };
   reader.readAsText(file);
   event.target.value='';
 }
