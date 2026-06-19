@@ -9,12 +9,12 @@
       "court": "جنوب",
       "division": "شرق",
       "date": "2026-06-22",
-      "status": "مؤرشفة",
+      "status": "مغلقة",
       "notes": "",
       "fee": 7500,
       "paid": 0,
       "tawkeelNum": "2026-1097",
-      "archived": true,
+      "archived": false,
       "createdAt": "2026-06-19T19:51:11.700Z"
     }
   ],
@@ -137,6 +137,10 @@
     "officeEmail": ""
   },
   "activityLog": [
+    {
+      "action": "تعديل قضية: 2026-456",
+      "time": "١٩‏/٦‏/٢٠٢٦، ١١:٥٩:٤٦ م"
+    },
     {
       "action": "تعديل موظف: خالد شريف",
       "time": "١٩‏/٦‏/٢٠٢٦، ١١:٥٦:٤٣ م"
